@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dossiê Eleitor 2026 — Guia Cívico Imparcial</title>
+  <title>Dossiê Eleitor 2026 — VOTE CERTO, NÃO VOTE NO ESCURO</title>
   
   <!-- Basecoat CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
@@ -145,46 +145,57 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       scroll-behavior: smooth;
     }
 
-    /* Header Nav */
+    /* Sticky Top Nav — 4 botões mobile-first (≥48px) */
     .civic-nav {
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
+      background: #0f172a;
+      border-bottom: 2px solid #2563eb;
       position: sticky;
       top: 0;
-      z-index: 90;
+      z-index: 900;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.25);
     }
     .civic-nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 1.25rem;
-      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 6px 10px;
+      max-width: 900px;
       margin: 0 auto;
     }
-    .civic-brand {
-      display: flex;
+    .nav-touch-btn {
+      display: inline-flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.6rem;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: #0f172a;
+      justify-content: center;
+      min-height: 48px;
+      padding: 4px 6px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
       text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
-    .civic-flag-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      background: linear-gradient(135deg, #009c3b 40%, #ffdf00 40% 70%, #002776 70%);
-      display: inline-block;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    .nav-touch-btn:hover, .nav-touch-btn:active {
+      background: #2563eb;
+      border-color: #60a5fa;
+      color: #ffffff;
+      transform: translateY(-1px);
     }
-    .civic-nav-meta {
-      font-size: 0.85rem;
-      color: #1e3a8a;
-      background: #dbeafe;
-      padding: 0.35rem 0.8rem;
-      border-radius: 9999px;
-      font-weight: 700;
+    .nav-touch-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .nav-touch-btn.nav-votar {
+      background: linear-gradient(135deg, #16a34a, #2563eb);
+      border-color: #4ade80;
     }
 
     /* Hero (compacto) */
@@ -288,6 +299,134 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       border-radius: 8px;
       font-size: 0.82rem;
       font-weight: 600;
+    }
+
+    /* BARRA DE PROGRESSO GAMIFICADA */
+    .gamify-progress-card {
+      margin: 1.1rem auto 0.5rem;
+      max-width: 600px;
+      width: 95%;
+      background: #ffffff;
+      border: 2px solid #2563eb;
+      border-radius: 16px;
+      padding: 0.9rem 1.1rem;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.12);
+      text-align: left;
+      box-sizing: border-box;
+    }
+    .gamify-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.45rem;
+    }
+    .gamify-title {
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .gamify-level-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #eff6ff;
+      border: 1.5px solid #93c5fd;
+      color: #1e40af;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+    .gamify-bar-track {
+      background: #e2e8f0;
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 0.45rem;
+    }
+    .gamify-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #10b981, #f59e0b);
+      width: 0%;
+      border-radius: 999px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .gamify-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: #475569;
+      font-weight: 700;
+    }
+    .gamify-quiz-btn {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      padding: 0.3rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.15s ease;
+      min-height: 34px;
+    }
+    .gamify-quiz-btn:hover {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #1d4ed8;
+    }
+
+    /* TOAST NOTIFICATION */
+    .civic-toast {
+      position: fixed;
+      top: 68px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      border: 2px solid #38bdf8;
+      font-size: 0.9rem;
+      font-weight: 800;
+      z-index: 99999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .civic-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* CONFETTI CANVAS */
+    #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 99998;
+      display: none;
     }
 
     /* Como ler rápido (compacto) */
@@ -944,40 +1083,177 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       }
     }
 
-    /* Card Candidato (compacto) */
+    /* Card Candidato GAMIFICADO (Card de Jogo) */
     .c-card {
       background: #ffffff;
-      border: 2px solid #cbd5e1;
-      border-radius: 16px;
+      border: 3px solid #cbd5e1;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
       display: flex;
       flex-direction: column;
+      position: relative;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .c-header {
-      padding: 0.9rem 1.1rem;
+    .c-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+    }
+    .c-card.conferido {
+      border-color: #10b981;
+    }
+
+    /* FRASE-CHOCANTE NO TOPO (Nua e Crua) */
+    .legal-notice-strip {
+      display: block;
+      margin: 0 0 0.9rem;
+      padding: 0.5rem 0.75rem;
+      background: #f1f5f9;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: #475569;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .legal-notice-strip:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .c-shock-header {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.6rem 0.95rem;
+      font-size: 0.88rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      border-bottom: 2px solid #e2e8f0;
       display: flex;
       align-items: center;
-      gap: 0.9rem;
-      background: #f8fafc;
-      border-bottom: 2px solid #e2e8f0;
+      justify-content: space-between;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+    .c-shock-content {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .c-shock-source-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.18rem 0.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .c-shock-source-pill:hover {
+      background: rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+    }
+    .legal-full-card {
+      background: #ffffff;
+      border: 2px solid #f59e0b;
+      border-radius: 14px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.08);
+    }
+    .legal-full-card h3 {
+      margin: 0 0 0.75rem;
+      color: #92400e;
+      font-size: 1.1rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .legal-full-card ol {
+      margin: 0 0 1rem;
+      padding-left: 1.25rem;
+      color: #1e293b;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .legal-full-card ol li {
+      margin-bottom: 0.55rem;
+    }
+    .legal-report-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 0.5rem 0.95rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+    .legal-report-btn:hover {
+      background: #2563eb;
+      color: #ffffff;
+    }
+    .c-shock-header.danger {
+      background: linear-gradient(135deg, #7f1d1d, #b91c1c);
+      color: #ffffff;
+    }
+    .c-shock-header.warning {
+      background: linear-gradient(135deg, #78350f, #c2410c);
+      color: #ffffff;
+    }
+    .c-shock-header.money {
+      background: linear-gradient(135deg, #064e3b, #059669);
+      color: #ffffff;
+    }
+    .c-shock-header.neutral {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      color: #ffffff;
+    }
+
+    .c-header {
+      padding: 0.95rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #ffffff;
+      border-bottom: 2px solid #f1f5f9;
+      position: relative;
+    }
+    .c-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
     }
     .c-avatar {
-      width: 62px;
-      height: 62px;
+      width: 74px;
+      height: 74px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 900;
-      font-size: 1.35rem;
+      font-size: 1.5rem;
       color: #ffffff;
-      flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-      border: 2.5px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      border: 3.5px solid #ffffff;
       user-select: none;
       position: relative;
       overflow: hidden;
+      outline: 3px solid #2563eb;
     }
     .c-avatar-img {
       width: 100%;
@@ -988,22 +1264,43 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       inset: 0;
       display: block;
     }
+    .c-conferido-badge {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      background: #10b981;
+      color: #ffffff;
+      border: 2px solid #ffffff;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 900;
+      padding: 0.15rem 0.4rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      display: none;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .c-card.conferido .c-conferido-badge {
+      display: flex;
+    }
     .c-info {
       flex: 1;
       min-width: 0;
     }
     .c-ballot-name {
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       font-weight: 900;
       color: #0f172a;
-      line-height: 1.15;
+      line-height: 1.1;
       margin: 0;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
     }
     .c-full-name {
-      font-size: 0.84rem;
-      color: #475569;
-      margin: 0.1rem 0 0.35rem;
-      font-weight: 500;
+      font-size: 0.82rem;
+      color: #64748b;
+      margin: 0.15rem 0 0.4rem;
+      font-weight: 600;
     }
     .c-badges-row {
       display: flex;
@@ -1014,27 +1311,27 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
     .party-tag {
       background: #0f172a;
       color: #ffffff;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 0.78rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 5px;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
     }
     .role-tag {
-      background: #e2e8f0;
+      background: #f1f5f9;
       color: #1e293b;
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.76rem;
+      font-weight: 700;
       padding: 0.2rem 0.5rem;
-      border-radius: 5px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
     }
     .status-pill {
       font-size: 0.72rem;
       font-weight: 800;
       padding: 0.2rem 0.5rem;
-      border-radius: 5px;
+      border-radius: 6px;
       background: #dbeafe;
       color: #1e40af;
-      margin-left: auto;
     }
     .status-pill.irregular {
       background: #fee2e2;
@@ -1042,31 +1339,59 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       border: 1px solid #f87171;
     }
 
-    /* Resumo em 1 frase */
-    .c-one-liner {
-      background: #f1f5f9;
-      border-left: 4px solid #2563eb;
-      padding: 0.7rem 1rem;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin: 0;
-      line-height: 1.35;
+    /* CHIPS COLORIDOS DE STATUS (Escaneáveis Gen Z) */
+    .c-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding: 0.75rem 1.1rem;
+      background: #f8fafc;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .c-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .c-chip.red {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1.5px solid #fca5a5;
+    }
+    .c-chip.green {
+      background: #dcfce7;
+      color: #166534;
+      border: 1.5px solid #86efac;
+    }
+    .c-chip.blue {
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1.5px solid #93c5fd;
+    }
+    .c-chip.amber {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1.5px solid #fde68a;
     }
 
     /* O Essencial (Leia em 1 minuto) */
     .c-essential-box {
-      padding: 0.85rem 1.1rem;
+      padding: 0.9rem 1.1rem;
       background: #ffffff;
-      border-bottom: 2px solid #e2e8f0;
+      flex: 1;
     }
     .c-essential-title {
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       font-weight: 900;
-      color: #2563eb;
+      color: #475569;
       letter-spacing: 0.05em;
-      margin: 0 0 0.45rem;
+      margin: 0 0 0.5rem;
       display: flex;
       align-items: center;
       gap: 0.35rem;
@@ -1077,11 +1402,11 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.38rem;
+      gap: 0.45rem;
     }
     .essential-item {
-      font-size: 0.92rem;
-      color: #1e293b;
+      font-size: 0.9rem;
+      color: #0f172a;
       font-weight: 600;
       display: flex;
       align-items: flex-start;
@@ -1090,95 +1415,447 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
     }
     .essential-bullet {
       color: #2563eb;
-      font-size: 1.1rem;
-      line-height: 1;
+      font-size: 1rem;
+      line-height: 1.2;
     }
 
-    /* Botão Toggle Quero Saber Mais */
-    .deep-dive-toggle-btn {
-      width: 100%;
+    /* BOTÃO GRANDE GAMIFICADO "ABRIR FICHA COMPLETA" */
+    .c-card-action-bar {
+      padding: 0.9rem 1.1rem;
       background: #f8fafc;
+      border-top: 2px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .c-open-ficha-btn {
+      width: 100%;
+      min-height: 52px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
       border: none;
-      border-top: 1px solid #e2e8f0;
-      border-bottom: 1px solid #e2e8f0;
-      padding: 0.9rem 1.25rem;
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #1d4ed8;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      transition: background-color 0.15s;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .deep-dive-toggle-btn:hover {
-      background: #eff6ff;
+    .c-open-ficha-btn:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
     }
-    .toggle-icon {
-      font-size: 1.1rem;
-      transition: transform 0.2s ease;
-    }
-    .deep-dive-toggle-btn.open .toggle-icon {
-      transform: rotate(180deg);
+    .c-card.conferido .c-open-ficha-btn {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
     }
 
-    /* Área recolhível de aprofundamento */
-    .deep-dive-content {
+    /* MODAL FICHA COMPLETA (NEXO JORNAL STYLE) */
+    .ficha-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.8);
+      z-index: 99990;
       display: none;
-      background: #ffffff;
-    }
-    .deep-dive-content.open {
-      display: block;
-    }
-
-    /* Abas de Navegação interna no Quero Saber Mais */
-    .card-tabs-nav {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      background: #f1f5f9;
-      border-bottom: 2px solid #cbd5e1;
-    }
-    @media (min-width: 540px) {
-      .card-tabs-nav {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-    .tab-btn {
-      padding: 0.75rem 0.6rem;
-      border: none;
-      background: transparent;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #475569;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      transition: all 0.15s ease;
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.35rem;
+      padding: 0;
+      backdrop-filter: blur(4px);
     }
-    .tab-btn:hover {
-      color: #0f172a;
-      background: #e2e8f0;
+    .ficha-modal-overlay.open {
+      display: flex;
     }
-    .tab-btn.active {
-      color: #1d4ed8;
-      border-bottom-color: #1d4ed8;
+    .ficha-modal-container {
       background: #ffffff;
-      font-weight: 800;
+      width: 100%;
+      max-width: 820px;
+      height: 100%;
+      max-height: 100vh;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    @media (min-width: 768px) {
+      .ficha-modal-overlay {
+        padding: 1.5rem;
+      }
+      .ficha-modal-container {
+        height: auto;
+        max-height: 92vh;
+        border-radius: 20px;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+        border: 2px solid #cbd5e1;
+      }
+    }
+    .ficha-topbar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+      border-bottom: 2px solid #334155;
+    }
+    .ficha-topbar-candidate {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+    .ficha-topbar-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid #ffffff;
+    }
+    .ficha-topbar-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .ficha-topbar-name {
+      font-size: 1.15rem;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ficha-topbar-meta {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+    .ficha-close-btn {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #ffffff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+    .ficha-close-btn:hover {
+      background: #ef4444;
     }
 
-    /* Painéis de conteúdo das abas */
-    .c-body {
+    /* ABAS DA FICHA (Grandes, ≥48px) */
+    .ficha-tabs-nav {
+      display: flex;
+      overflow-x: auto;
+      background: #f8fafc;
+      border-bottom: 2px solid #cbd5e1;
+      flex-shrink: 0;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .ficha-tabs-nav::-webkit-scrollbar {
+      display: none;
+    }
+    .ficha-tab-btn {
+      min-height: 50px;
+      padding: 0.6rem 0.95rem;
+      background: transparent;
+      border: none;
+      border-bottom: 4px solid transparent;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #475569;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+      flex: 1 0 auto;
+      text-align: center;
+      justify-content: center;
+    }
+    .ficha-tab-btn:hover {
+      background: #eff6ff;
+      color: #0f172a;
+    }
+    .ficha-tab-btn.active.tab-justica {
+      color: #b91c1c;
+      border-bottom-color: #dc2626;
+      background: #ffffff;
+    }
+    .ficha-tab-btn.active.tab-dinheiro {
+      color: #047857;
+      border-bottom-color: #059669;
+      background: #ffffff;
+    }
+    .ficha-tab-btn.active.tab-propostas {
+      color: #1d4ed8;
+      border-bottom-color: #2563eb;
+      background: #ffffff;
+    }
+    .ficha-tab-btn.active.tab-balanco {
+      color: #b45309;
+      border-bottom-color: #d97706;
+      background: #ffffff;
+    }
+    .ficha-tab-btn.active.tab-historia {
+      color: #6b21a8;
+      border-bottom-color: #7c3aed;
+      background: #ffffff;
+    }
+
+    /* CONTEÚDO DA FICHA */
+    .ficha-content-body {
+      flex: 1;
+      overflow-y: auto;
       padding: 1.25rem;
       background: #ffffff;
     }
-    .tab-pane {
+    .ficha-tab-pane {
       display: none;
+      animation: accFade 0.2s ease;
     }
-    .tab-pane.active {
+    .ficha-tab-pane.active {
       display: block;
+    }
+
+    /* CARDS DA ABA DINHEIRO */
+    .dinheiro-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    @media (min-width: 600px) {
+      .dinheiro-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .dinheiro-stat-card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .dinheiro-stat-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #64748b;
+      letter-spacing: 0.03em;
+    }
+    .dinheiro-stat-val {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.1;
+    }
+    .dinheiro-stat-note {
+      font-size: 0.82rem;
+      color: #334155;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    /* COLUNAS BONS & RUINS */
+    .balanco-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+    @media (min-width: 680px) {
+      .balanco-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .balanco-col {
+      border-radius: 14px;
+      padding: 1.1rem;
+    }
+    .balanco-col.bons {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+    }
+    .balanco-col.ruins {
+      background: #fffbeb;
+      border: 2px solid #fde68a;
+    }
+    .balanco-col-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      margin: 0 0 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .balanco-col.bons .balanco-col-title { color: #166534; }
+    .balanco-col.ruins .balanco-col-title { color: #92400e; }
+
+    /* RODAPÉ DA FICHA */
+    .ficha-footer {
+      background: #f8fafc;
+      border-top: 2px solid #e2e8f0;
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .ficha-footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .ficha-tse-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      color: #1e40af;
+      font-weight: 800;
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .ficha-tse-btn:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+    .ficha-btn-fechar {
+      min-height: 44px;
+      padding: 0.5rem 1.2rem;
+      background: #0f172a;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* MODAL DE QUIZ ELEITORAL */
+    .quiz-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      z-index: 99995;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      backdrop-filter: blur(3px);
+    }
+    .quiz-modal-overlay.open {
+      display: flex;
+    }
+    .quiz-modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 520px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      border: 2px solid #2563eb;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .quiz-modal-header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .quiz-modal-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+    .quiz-modal-body {
+      padding: 1.25rem;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+    .quiz-q-box {
+      margin-bottom: 1.2rem;
+      padding-bottom: 1.1rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .quiz-q-title {
+      font-size: 0.98rem;
+      font-weight: 900;
+      color: #0f172a;
+      margin: 0 0 0.65rem;
+      line-height: 1.35;
+    }
+    .quiz-opts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .quiz-opt-btn {
+      padding: 0.65rem 0.9rem;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e293b;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 44px;
+    }
+    .quiz-opt-btn:hover:not(:disabled) {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+    .quiz-opt-btn.correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+      color: #166534 !important;
+      font-weight: 900;
+    }
+    .quiz-opt-btn.wrong {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+      color: #991b1b !important;
+    }
+    .quiz-feedback {
+      margin-top: 0.45rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: none;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
     }
 
     .c-list {
@@ -1998,28 +2675,45 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
 </head>
 <body>
 
-  <!-- Top Navigation -->
-  <header class="civic-nav">
+  <!-- Canvas de Confetes para Gamificação -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Toast Flutuante -->
+  <div id="civicToast" class="civic-toast" role="status" aria-live="polite">
+    <span id="toastText">✅ Ficha conferida!</span>
+  </div>
+
+  <!-- Barra Fixa Sticky Superior (4 botões mobile-first ≥48px) -->
+  <nav class="civic-nav" aria-label="Navegação rápida">
     <div class="civic-nav-inner">
-      <a href="#" class="civic-brand">
-        <span class="civic-flag-icon" aria-hidden="true"></span>
-        <span>Dossiê Eleitor 2026</span>
+      <a href="#" class="nav-touch-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+        <span class="nav-touch-icon" aria-hidden="true">🏠</span>
+        <span>Início</span>
       </a>
-      <div class="civic-nav-meta">
-        Atualizado: Outubro/2026
-      </div>
+      <a href="#candidatos" class="nav-touch-btn">
+        <span class="nav-touch-icon" aria-hidden="true">🎮</span>
+        <span>Candidatos</span>
+      </a>
+      <button type="button" class="nav-touch-btn" onclick="openAccordion('como-funciona')">
+        <span class="nav-touch-icon" aria-hidden="true">🧒</span>
+        <span>Como funciona</span>
+      </button>
+      <button type="button" class="nav-touch-btn nav-votar" onclick="VOTACAO.abrirModal()">
+        <span class="nav-touch-icon" aria-hidden="true">🗳️</span>
+        <span>Votar</span>
+      </button>
     </div>
-  </header>
+  </nav>
 
   <!-- Hero Section -->
   <section class="hero-wrapper">
     <div class="shell-container">
       <div class="hero-badge">
-        <span>🗳️ 1º turno: 4 de outubro • 2º turno: 25 de outubro</span>
+        <span>🗳️ 1º turno: 4 de outubro • 2º turno: 25 de outubro (se precisar)</span>
       </div>
-      <h1 class="hero-title">VOTA CERTO, NÃO VOTA NO ESCURO.</h1>
+      <h1 class="hero-title">VOTE CERTO, NÃO VOTE NO ESCURO.</h1>
       <p class="hero-subtitle">
-        O que cada candidato fez, o que promete e o que responde na Justiça. Tudo em 5 minutos, sem enrolação.
+        VOCÊ SABE EXATAMENTE EM QUEM VOTAR? OU SÓ ESTÁ INDO COM A MANADA? <strong>NÃO SEJA ENGANADO</strong>
       </p>
       <div>
         <a href="#candidatos" class="hero-cta-btn">
@@ -2030,6 +2724,27 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       <div class="hero-urgent-stripe" role="alert">
         ⚠️ POR FAVOR, GASTE AO MENOS 5 MINUTOS LENDO E SALVE O BRASIL
       </div>
+
+      <!-- BARRA DE PROGRESSO GAMIFICADA -->
+      <div class="gamify-progress-card" id="gamifyProgressCard">
+        <div class="gamify-header-row">
+          <span class="gamify-title">🔥 SEU PROGRESSO ELEITORAL</span>
+          <span class="gamify-level-pill" id="gamifyLevelPill">🌱 NOVATO</span>
+        </div>
+        <div class="gamify-bar-track" aria-hidden="true">
+          <div class="gamify-bar-fill" id="gamifyBarFill" style="width: 0%;"></div>
+        </div>
+        <div class="gamify-footer-row">
+          <span id="gamifyCountText">0/13 fichas abertas</span>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span id="gamifyPointsText">⭐ 0 pts</span>
+            <button type="button" class="gamify-quiz-btn" onclick="openQuizModal()">
+              🎓 Testar conhecimento
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div>
         <div class="hero-disclaimer-pill">
           ⚖️ <strong>Honestidade total:</strong> Não dizemos em quem votar. Mostramos os fatos para você decidir sozinho.
@@ -2476,10 +3191,33 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       </div>
     </div>
 
+    <!-- Linha Clicável de Transparência Legal Acima dos Cards -->
+    <a href="#aviso-legal" class="legal-notice-strip" title="Clique para ver o aviso de isenção e fontes">
+      ⚖️ As frases dos cards são FATOS PÚBLICOS com fonte (TSE, justiça eleitoral e imprensa) — não são opinião nossa nem acusação. <u>Ver aviso completo 👇</u>
+    </a>
+
     <!-- Cards dos Candidatos -->
     <section aria-label="Lista de Candidatos">
       <div class="candidates-grid" id="candidatesContainer">
         <!-- Renderizado dinamicamente via JS com linguagem simples e honesta -->
+      </div>
+    </section>
+
+    <!-- BLOCO AVISO LEGAL COMPLETO (ÂNCORA) -->
+    <section id="aviso-legal" class="legal-full-card" aria-label="Aviso Legal e Transparência">
+      <h3>⚠️ AVISO LEGAL — LEIA</h3>
+      <ol>
+        <li><strong>Este site NÃO recomenda voto em nenhum candidato.</strong> A decisão é exclusivamente sua.</li>
+        <li><strong>Fatos públicos com fonte comprovada:</strong> As frases e dados apresentados são fatos públicos apurados em fontes oficiais (TSE/DivulgaCandContas, Constituição Federal, imprensa profissional), com link direto para a fonte em cada ponto. Não são opinião do site nem acusação contra ninguém.</li>
+        <li><strong>"EM INVESTIGAÇÃO" NÃO É CONDENAÇÃO:</strong> Vale estritamente a presunção de inocência para todos os candidatos (CF/88, art. 5º, LVII). Investigação e denúncia são apenas o que está sendo apurado pelos órgãos de Justiça competentes.</li>
+        <li><strong>Compromisso de retificação rápida:</strong> Se você identificar qualquer erro, incorreção ou dado desatualizado, nos avise imediatamente com a fonte correspondente que faremos a checagem e atualização.</li>
+        <li><strong>Independência:</strong> Este é um projeto cívico independente e sem vínculo com partidos, coligações, candidatos ou órgãos governamentais.</li>
+      </ol>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;">
+        <a href="mailto:contato@votarcorreto.com.br?subject=Reportar%20erro%20ou%20desatualiza%C3%A7%C3%A3o%20-%20Dossi%C3%AA%20Eleitor%202026" class="legal-report-btn">
+          📩 Reportar erro ou desatualização
+        </a>
+        <span style="font-size: 0.78rem; color: #64748b;">(Abre o aplicativo de e-mail padrão do seu aparelho)</span>
       </div>
     </section>
 
@@ -2637,6 +3375,97 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       <!-- Mensagens inseridas via script -->
     </div>
   </aside>
+
+  <!-- MODAL FICHA COMPLETA ESTILO NEXO JORNAL -->
+  <div id="fichaModalOverlay" class="ficha-modal-overlay" aria-hidden="true" onclick="fecharFichaOverlay(event)">
+    <div class="ficha-modal-container" role="dialog" aria-modal="true" aria-labelledby="fichaModalTitle">
+      
+      <!-- Topbar do Modal -->
+      <div class="ficha-topbar">
+        <div class="ficha-topbar-candidate">
+          <div class="ficha-topbar-avatar" id="fichaAvatar"></div>
+          <div>
+            <div class="ficha-topbar-name" id="fichaModalTitle">CANDIDATO</div>
+            <div class="ficha-topbar-meta" id="fichaModalMeta">PARTIDO • Nº 00 • STATUS</div>
+          </div>
+        </div>
+        <button type="button" class="ficha-close-btn" onclick="fecharFichaModal()" aria-label="Fechar ficha">✕</button>
+      </div>
+
+      <!-- Abas Grandes Coloridas (≥48px) — Justiça SEMPRE em 1º -->
+      <nav class="ficha-tabs-nav" aria-label="Abas da Ficha Completa">
+        <button type="button" class="ficha-tab-btn tab-justica active" onclick="switchFichaTab('justica', this)">
+          ⚖️ NA JUSTIÇA
+        </button>
+        <button type="button" class="ficha-tab-btn tab-dinheiro" onclick="switchFichaTab('dinheiro', this)">
+          💰 DINHEIRO
+        </button>
+        <button type="button" class="ficha-tab-btn tab-propostas" onclick="switchFichaTab('propostas', this)">
+          📌 PROPOSTAS
+        </button>
+        <button type="button" class="ficha-tab-btn tab-balanco" onclick="switchFichaTab('balanco', this)">
+          👍 BONS & 👎 RUINS
+        </button>
+        <button type="button" class="ficha-tab-btn tab-historia" onclick="switchFichaTab('historia', this)">
+          📜 HISTÓRIA
+        </button>
+      </nav>
+
+      <!-- Conteúdo das Abas da Ficha -->
+      <div class="ficha-content-body" id="fichaContentBody">
+        
+        <!-- ABA 1: NA JUSTIÇA (Vermelho) -->
+        <div id="pane-justica" class="ficha-tab-pane active">
+          <!-- Injetado dinamicamente -->
+        </div>
+
+        <!-- ABA 2: DINHEIRO (Verde) -->
+        <div id="pane-dinheiro" class="ficha-tab-pane">
+          <!-- Injetado dinamicamente -->
+        </div>
+
+        <!-- ABA 3: PROPOSTAS (Azul) -->
+        <div id="pane-propostas" class="ficha-tab-pane">
+          <!-- Injetado dinamicamente -->
+        </div>
+
+        <!-- ABA 4: BONS E RUINS (Âmbar) -->
+        <div id="pane-balanco" class="ficha-tab-pane">
+          <!-- Injetado dinamicamente -->
+        </div>
+
+        <!-- ABA 5: HISTÓRIA (Roxo) -->
+        <div id="pane-historia" class="ficha-tab-pane">
+          <!-- Injetado dinamicamente -->
+        </div>
+
+      </div>
+
+      <!-- Rodapé da Ficha -->
+      <div class="ficha-footer">
+        <div class="ficha-footer-links" id="fichaFooterLinks">
+          <!-- Links oficiais TSE -->
+        </div>
+        <button type="button" class="ficha-btn-fechar" onclick="fecharFichaModal()">
+          ✕ FECHAR FICHA
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL MINI-QUIZ ELEITORAL -->
+  <div id="quizModalOverlay" class="quiz-modal-overlay" aria-hidden="true" onclick="fecharQuizOverlay(event)">
+    <div class="quiz-modal-card" role="dialog" aria-modal="true" aria-labelledby="quizModalTitle">
+      <div class="quiz-modal-header">
+        <h3 id="quizModalTitle" class="quiz-modal-title">🎓 TESTE SEU CONHECIMENTO ELEITORAL</h3>
+        <button type="button" class="chat-close-btn" onclick="fecharQuizModal()" aria-label="Fechar quiz">✕</button>
+      </div>
+      <div class="quiz-modal-body" id="quizModalBody">
+        <!-- Perguntas do Quiz -->
+      </div>
+    </div>
+  </div>
 
   <!-- Lógica da Aplicação -->
   <script>
@@ -2801,7 +3630,7 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       return '';
     }
 
-    // Base de dados completa dos 13 candidatos
+    // Base de dados completa dos 13 candidatos — enriquecida com Ficha Nexo + Dinheiro
     const CANDIDATES = [
       {
         id: "lula",
@@ -2815,41 +3644,59 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         category: "esquerda",
         isTop3: true,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Lula: já foi presidente 3 vezes. Quer voltar com mais programas sociais.",
+        shockPhrase: "JÁ FOI PRESO. Condenações ANULADAS pelo STF em 2021. Quer continuar.",
+        shockType: "danger",
+        shockSourceUrl: "https://noticias.uol.com.br/eleicoes/2026/09/27/propostas-de-lula-veja-os-principais-pontos-do-plano-de-governo.ghtml",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/lula-propostas-de-governo",
+        pdfUrl: "https://static.poder360.com.br/uploads/2026/08/Programa-Governo-LULA-2026.pdf",
+        chips: [
+          { text: "⚖️ 1 anulada STF", type: "red" },
+          { text: "💰 R$ 65,6 mi gastos", type: "green" },
+          { text: "📌 6 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "R$ 65,6 milhões (TSE até 08/set)",
+          gastosDesc: "O maior gastador de campanha até agora segundo prestação de contas do TSE.",
+          patrimonio: "Declarou queda de bens em relação a 2022",
+          patrimonioDesc: "Fonte: Declaração entregue ao TSE / reportagem Folha de S.Paulo.",
+          teto: "R$ 88,9 mi (1º turno) • Total legal até R$ 133,4 mi",
+          tetoDesc: "Teto estabelecido pelo TSE mantendo os mesmos valores de 2022 (R7/Terra)."
+        },
+        historia: "Ex-metalúrgico e líder sindical em São Bernardo do Campo nos anos 1970. Fundou o PT em 1980. Foi eleito presidente em 2002, reeleito em 2006 e voltou ao Planalto na eleição de 2022 ao derrotar Jair Bolsonaro.",
         essential: [
-          "Muita experiência de governo (foi presidente de 2003 a 2010 e agora).",
-          "Foco total em programas sociais como Bolsa Família e aumento do salário mínimo.",
-          "Críticos apontam aumento dos gastos públicos e da dívida do governo.",
-          "Teve prisões e condenações na Lava Jato que o STF anulou em 2021."
+          "Experiência máxima: comanda o Brasil pela 3ª vez.",
+          "Foco nos programas sociais (Bolsa Família, Minha Casa, Farmácia Popular).",
+          "Dívida pública e gastos do governo subiram, atraindo fortes críticas."
         ],
         fortes: [
-          "Tem muita experiência em comandar o país há mais de 10 anos.",
-          "Criou e manteve programas sociais fortes como o Bolsa Família e Farmácia Popular.",
-          "Sempre aumenta o salário mínimo acima da inflação todo ano.",
-          "Tem muito respeito e diálogo com líderes de outros países no mundo."
+          "Experiência de mais de 10 anos governando o país.",
+          "Aumento real do salário mínimo acima da inflação todo ano.",
+          "Programas sociais consolidados que atendem milhões de famílias.",
+          "Prestígio diplomático internacional restabelecido no exterior."
         ],
         fracos: [
-          "Tem idade avançada, gerando debate sobre o papel do vice na gestão.",
-          "Crescimento da economia ainda é moderado e os juros continuam altos.",
-          "Gastos do governo e a dívida pública subiram nos últimos anos."
+          "Idade avançada: debate sobre o papel do vice na próxima gestão.",
+          "Dívida e gastos do governo em alta com resistência a cortes.",
+          "Crescimento moderado e taxas de juros mantidas em patamar elevado."
         ],
         propostas: [
-          "Acabar com a escala 6x1 de trabalho, mudando para 40 horas por semana.",
-          "Construir mais casas populares pelo Minha Casa Minha Vida.",
-          "Cobrar mais impostos sobre os super-ricos e menos sobre quem ganha pouco.",
-          "Investir dinheiro público em energia limpa e proteger a Amazônia."
+          "Fim da escala 6x1 / jornada de 40h sem perder salário",
+          "Ampliar o Minha Casa, Minha Vida",
+          "Taxar mais quem ganha muito",
+          "Saneamento básico pra mais gente",
+          "Mais segurança com o governo federal presente",
+          "Salário mínimo sempre subindo acima da inflação"
         ],
         justicaProvado: [
-          "Foi condenado na Operação Lava Jato e ficou preso entre 2018 e 2019. Essas condenações foram ANULADAS pelo STF em 2021 porque o ex-juiz Sergio Moro foi considerado suspeito e o tribunal do Paraná incompetente."
+          "Preso entre abril de 2018 e novembro de 2019 na Operação Lava Jato. Todas as condenações foram ANULADAS pelo STF em 2021 por incompetência territorial de Curitiba e suspeição reconhecida do ex-juiz Sergio Moro."
         ],
         justicaInvestigacao: [
-          "Críticas e questionamentos sobre o crescimento rápido da dívida pública.",
-          "Debates no Congresso sobre a liberação e controle de emendas parlamentares."
+          "Questionamentos no Tribunal de Contas sobre cumprimento das metas fiscais.",
+          "Polêmicas no Congresso sobre liberação e transparência de emendas parlamentares."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Propostas na BBC", url: "https://www.bbc.com/portuguese/articles/cm2gryker9mo" },
-          { name: "Plano de Lula no UOL", url: "https://noticias.uol.com.br/eleicoes/2026/09/27/propostas-de-lula-veja-os-principais-pontos-do-plano-de-governo.ghtml" }
+          { name: "Página Oficial Lula no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/lula-propostas-de-governo" },
+          { name: "Plano de Governo Lula (PDF)", url: "https://static.poder360.com.br/uploads/2026/08/Programa-Governo-LULA-2026.pdf" }
         ]
       },
       {
@@ -2864,40 +3711,57 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         category: "direita",
         isTop3: true,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Flávio: filho de Bolsonaro. Quer cortar ministérios e reduzir gastos do governo.",
+        shockPhrase: "RACHADINHA E MILÍCIA nas investigações. Ele nega tudo. 0 condenações.",
+        shockType: "warning",
+        shockSourceUrl: "https://www.bbc.com/portuguese/articles/crmpv9r7mz9o",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/flavio-bolsonaro",
+        pdfUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-pl",
+        chips: [
+          { text: "⚖️ 3 investigações", type: "red" },
+          { text: "💰 R$ 55,2 mi gastos", type: "green" },
+          { text: "📌 5 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "R$ 55,2 milhões (TSE até 08/set)",
+          gastosDesc: "2º maior volume de gastos da campanha presidencial (Fonte: TSE / R7).",
+          patrimonio: "Imóveis declarados em Brasília e Rio de Janeiro",
+          patrimonioDesc: "Detalhes oficiais declarados no sistema do TSE (Folha / DivulgaCandContas).",
+          teto: "R$ 88,9 mi (1º turno) • Total legal até R$ 133,4 mi",
+          tetoDesc: "Limite legal oficial do TSE para campanha presidencial (Terra/TSE)."
+        },
+        historia: "Advogado e empresário, filho mais velho de Jair Bolsonaro. Foi deputado estadual no Rio de Janeiro por quatro mandatos consecutivos (2003 a 2019) e elegeu-se senador da República pelo RJ em 2018.",
         essential: [
-          "Principal candidato do grupo político de Jair Bolsonaro.",
-          "Promete fechar 10 ministérios e diminuir o tamanho do governo.",
-          "Nunca governou uma prefeitura ou um estado antes.",
-          "Responde a denúncias de 'rachadinha' na Alerj, mas nega e não foi condenado."
+          "Principal herdeiro eleitoral do bolsonarismo conservador.",
+          "Promete fechar 10 ministérios e travar novos concursos.",
+          "Nunca foi prefeito nem governador: zero experiência no Executivo."
         ],
         fortes: [
-          "Tem apoio fiel dos eleitores conservadores e de direita no Brasil.",
-          "Fala em tom mais moderado para atrair eleitores indecisos de centro.",
-          "Defende com força cortar privilégios e supersalários de políticos e juízes.",
-          "Quer simplificar as regras e baixar os impostos sobre as empresas."
+          "Base eleitoral conservadora muito engajada e fiel pelo país.",
+          "Estilo de fala mais sereno que o pai para dialogar com eleitores de centro.",
+          "Defesa incisiva de corte de privilégios públicos e supersalários.",
+          "Pauta de desoneração fiscal agressiva para comércio e indústria."
         ],
         fracos: [
-          "Nunca exerceu cargo de prefeito ou governador no Poder Executivo.",
-          "Carrega o desgaste de denúncias antigas do seu tempo de deputado estadual.",
-          "Forte ligação com o pai Jair Bolsonaro, que está inelegível até 2030."
+          "Nunca governou uma prefeitura ou estado no Poder Executivo.",
+          "Desgaste político permanente de investigações da época da Alerj.",
+          "Dependência da imagem de Jair Bolsonaro, que está inelegível."
         ],
         propostas: [
-          "Fechar pelo menos 10 ministérios e cortar milhares de cargos políticos.",
-          "Proibir de vez os supersalários nos três poderes do governo.",
-          "Baixar impostos sobre indústrias e comércio para incentivar contratações.",
-          "Equilibrar as contas públicas com limite rígido para despesas da União."
+          "Cortar pelo menos 10 ministérios",
+          "Acabar com supersalários e penduricalhos",
+          "Revisar a Reforma Tributária pra diminuir imposto sobre produção e consumo",
+          "Buscar superávit (gastar menos do que arrecada)",
+          "Economia digital nas escolas"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Caso das 'rachadinhas': suspeita de desviar salários de funcionários quando era deputado na Alerj (ele nega qualquer crime).",
-          "Vínculo apontado em investigações com o ex-assessor Fabrício Queiroz e o ex-policial Adriano da Nóbrega (ele nega elos ilegais).",
-          "Recursos judiciais pedindo o afastamento de ministros do STF em casos da família."
+          "Caso das 'Rachadinhas': denúncia de desvio de salário de funcionários do gabinete na Alerj (ele nega qualquer crime; processos tiveram anulações técnicas no STJ).",
+          "Vínculos apontados em relatórios com o ex-capitão da PM Adriano da Nóbrega e Fabrício Queiroz (ele nega qualquer elo criminoso).",
+          "Pedidos no STF para anular provas obtidas pelo Coaf."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Ficha na BBC", url: "https://www.bbc.com/portuguese/articles/crmpv9r7mz9o" },
-          { name: "Plano de Flávio no UOL", url: "https://noticias.uol.com.br/eleicoes/2026/09/27/propostas-de-flavio-bolsonaro-veja-principais-pontos-do-plano-de-governo.ghtml" }
+          { name: "Página Oficial Flávio no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/flavio-bolsonaro" },
+          { name: "Plano de Governo Flávio (PDF)", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-pl" }
         ]
       },
       {
@@ -2906,44 +3770,60 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         fullName: "Augusto Jorge Cury",
         party: "AVANTE",
         number: "70",
-        role: "Médico Psiquiatra e Escritor Famoso",
+        role: "Médico Psiquiatra e Escritor",
         avatarBg: "linear-gradient(135deg, #0284c7, #38bdf8)",
         initials: "AC",
         category: "centro",
         isTop3: true,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Augusto Cury: médico e escritor. Propõe cuidar da saúde mental e pacificar o país.",
+        shockPhrase: "O MAIS RICO: R$ 242 milhões. Nunca governou absolutamente nada.",
+        shockType: "money",
+        shockSourceUrl: "https://www1.folha.uol.com.br/poder/2026/08/augusto-cury-tem-maior-patrimonio-entre-presidenciaveis-e-lula-registra-queda-de-bens.shtml",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/escritor-augusto-cury-propostas-de-governo",
+        pdfUrl: "",
+        chips: [
+          { text: "💰 R$ 242,2 mi bens", type: "green" },
+          { text: "🚫 0 processos", type: "red" },
+          { text: "📌 5 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Confira a prestação no DivulgaCandContas",
+          gastosDesc: "Dados parciais sendo atualizados no portal do TSE.",
+          patrimonio: "R$ 242,2 milhões declarados",
+          patrimonioDesc: "O candidato mais rico da eleição de 2026, fruto de direitos autorais e empresas (Folha).",
+          teto: "R$ 88,9 mi (1º turno) • Total legal até R$ 133,4 mi",
+          tetoDesc: "Teto geral do TSE para a corrida ao Palácio do Planalto."
+        },
+        historia: "Médico psiquiatra, pesquisador da psicologia multifocal e autor com mais de 40 milhões de livros vendidos no Brasil e no exterior. Entrou na disputa eleitoral pela primeira vez em 2026 sem carreira partidária anterior.",
         essential: [
-          "Vendeu mais de 40 milhões de livros e é muito conhecido.",
-          "Aparece em 3º lugar nas pesquisas de intenção de voto com cerca de 6%.",
-          "Nunca disputou uma eleição nem trabalhou no governo.",
-          "Sem condenação criminal na Justiça."
+          "O mais rico da corrida: patrimônio de R$ 242 milhões.",
+          "Terceiro lugar nas pesquisas eleitorais com cerca de 6%.",
+          "Propostas centradas em saúde mental, mas sem experiência em gestão pública."
         ],
         fortes: [
-          "Comunicação calma, voltada para diminuir brigas e polarização no país.",
-          "Foco pioneiro na saúde mental e inteligência emocional nas escolas públicas.",
-          "Iniciou a corrida em 3º lugar nas pesquisas eleitorais.",
-          "Discurso humanista para apoiar pequenos empreendedores e famílias."
+          "Alta popularidade pessoal e diálogo sem agressividade partidária.",
+          "Foco inovador em saúde mental e inteligência emocional na educação pública.",
+          "Sem qualquer acusação de corrupção ou processo na Justiça.",
+          "Atrai eleitores exaustos da polarização Lula x Bolsonaro."
         ],
         fracos: [
-          "Totalmente novato na política sem experiência em gestão pública.",
-          "Críticos dizem que suas propostas são poéticas e faltam cálculos de dinheiro.",
-          "Pouco apoio e estrutura de deputados e partidos grandes no Congresso."
+          "Zero experiência em gestão pública ou negociação no Congresso.",
+          "Críticos apontam propostas conceituais sem cálculo de orçamento federal.",
+          "Partido com bancada pequena na Câmara dos Deputados."
         ],
         propostas: [
-          "Colocar aulas de inteligência emocional e combate à ansiedade em todas as escolas.",
-          "Limitar em 8 anos o mandato de ministros do Supremo Tribunal Federal (STF).",
-          "Adotar o semipresidencialismo para dividir o poder do presidente com um premiê.",
-          "Incentivar o microcrédito e pequenos negócios sem juros abusivos."
+          "Semipresidencialismo",
+          "Mandato de 8 anos para ministros do STF",
+          "Emendas parlamentares públicas e rastreáveis",
+          "Saúde emocional e educação como prioridade",
+          "Empreendedorismo pra gerar trabalho"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Dúvidas de especialistas se suas ideias de mudar a Constituição têm apoio no Congresso."
+          "Debate entre juristas sobre a viabilidade constitucional de mudar o STF e criar semipresidencialismo sem Assembleia Constituinte."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Notícia na Agência Brasil", url: "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/augusto-cury-propoe-mandato-de-oito-anos-no-stf-e-semipresidencialismo" },
-          { name: "Propostas na BBC", url: "https://www.bbc.com/portuguese/articles/cm2gryker9mo" }
+          { name: "Página Oficial Cury no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/escritor-augusto-cury-propostas-de-governo" }
         ]
       },
       {
@@ -2952,43 +3832,58 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         fullName: "Pablo Henrique Costa Marçal",
         party: "PRTB",
         number: "28",
-        role: "Empresário e Comunicador na Internet",
+        role: "Empresário e Influenciador Digital",
         avatarBg: "linear-gradient(135deg, #059669, #34d399)",
         initials: "PM",
         category: "direita",
         isTop3: false,
-        statusBadge: "Não pode ser candidato",
+        statusBadge: "INELEGÍVEL (TSE)",
         statusIrregular: true,
-        oneLiner: "Pablo Marçal: influenciador digital. A Justiça Eleitoral o proibiu de concorrer.",
+        shockPhrase: "INELEGÍVEL ATÉ 2032. Condenado pela Justiça Eleitoral. Não assume.",
+        shockType: "danger",
+        shockSourceUrl: "https://www.bbc.com/portuguese/articles/c5ywwwy4qx4o",
+        tseUrl: "https://divulgacandcontas.tse.jus.br/divulga/rest/arquivo/doc/280017134368",
+        pdfUrl: "https://divulgacandcontas.tse.jus.br/divulga/rest/arquivo/doc/280017134368",
+        chips: [
+          { text: "⚖️ Inelegível 2032", type: "red" },
+          { text: "💰 Dados no TSE", type: "green" },
+          { text: "📌 3 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte prestações no DivulgaCandContas",
+          gastosDesc: "Registros contábeis disponíveis no sistema oficial do TSE.",
+          patrimonio: "Patrimônio multimilionário de empresas digitais",
+          patrimonioDesc: "Declarado nas instâncias de registro eleitoral.",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto padrão de campanha fixado pelo TSE."
+        },
+        historia: "Ficou famoso vendendo treinamentos de desenvolvimento pessoal e finanças online. Disputou eleições para deputado federal e a prefeitura de São Paulo em 2024, acumulando decisões punitivas na Justiça Eleitoral.",
         essential: [
-          "Tem milhões de seguidores nas redes sociais e apelo com jovens.",
-          "PROVADO NA JUSTIÇA: Foi declarado inelegível até 2032 (chance zero de validação).",
-          "Defende desregulamentação total e empreendedorismo.",
-          "Sem experiência prévia em administração pública."
+          "PROVADO: Declarado inelegível pelo TSE até 2032.",
+          "Fenômeno viral nas redes sociais com milhões de seguidores jovens.",
+          "Promessas polêmicas como transferir a capital federal para o Maranhão."
         ],
         fortes: [
-          "Enorme capacidade de chamar atenção nas redes sociais sem gastar TV.",
-          "Discurso fácil sobre como enriquecer trabalhando por conta própria."
+          "Imenso poder de tração e mobilização nas redes sociais sem gastar TV.",
+          "Discurso persuasivo sobre enriquecimento rápido e empreendedorismo."
         ],
         fracos: [
-          "Não possui nenhuma experiência governamental ou legislativa.",
-          "Promessas consideradas impossíveis de cumprir por especialistas técnicos."
+          "Juridicamente barrado: votos computados para ele tendem a ser anulados.",
+          "Propostas sem amparo legal, fiscal ou orçamentário viável."
         ],
         propostas: [
-          "Reduzir regras e burocracia para empresas e quem vende cursos na internet.",
-          "Ideia polêmica de mudar a capital de Brasília para o interior do Maranhão.",
-          "Digitalizar todos os serviços do governo para acabar com cartórios."
+          "Agenda liberal e empreendedora",
+          "Menos Estado",
+          "Proposta polêmica citada na imprensa: mudar a capital de Brasília para o Maranhão"
         ],
         justicaProvado: [
-          "INELEGÍVEL ATÉ 2032 por decisões da Justiça Eleitoral por abuso de poder e uso indevido de meios de comunicação. Reportagens apontam chance zero de ser candidato válido."
+          "INELEGÍVEL ATÉ 2032 condenado pelo TSE por abuso de poder político e uso indevido de meios de comunicação social nas eleições passadas."
         ],
         justicaInvestigacao: [
-          "Processos e disputas por laudos controversos divulgados em campanhas anteriores."
+          "Inquéritos sobre divulgação de laudos médicos falsificados em campanha anterior."
         ],
         sources: [
-          { name: "Inelegibilidade na BBC", url: "https://www.bbc.com/portuguese/articles/c5ywwwy4qx4o" },
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Guia no Estadão", url: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" }
+          { name: "Proposta em PDF (DivulgaCandContas)", url: "https://divulgacandcontas.tse.jus.br/divulga/rest/arquivo/doc/280017134368" }
         ]
       },
       {
@@ -3003,36 +3898,52 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         category: "direita",
         isTop3: false,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Ronaldo Caiado: governador de Goiás. Tem fama de combater o crime com rigor.",
+        shockPhrase: "GOVERNADOR MAIS POPULAR EM GOIÁS. Quase desconhecido no resto.",
+        shockType: "neutral",
+        shockSourceUrl: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/ronaldo-caiado-propostas-de-governo",
+        pdfUrl: "",
+        chips: [
+          { text: "⚖️ 0 condenações", type: "red" },
+          { text: "💰 Dados no TSE", type: "green" },
+          { text: "📌 4 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Prestações parciais alimentadas pela campanha partidária.",
+          patrimonio: "Fazendas e patrimônio rural no Centro-Oeste",
+          patrimonioDesc: "Declarado formalmente ao Tribunal Superior Eleitoral.",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Limite estipulado pelas normas do TSE."
+        },
+        historia: "Médico ortopedista e fazendeiro, líder histórico da UDR (União Democrática Ruralista) nos anos 1980. Foi deputado federal por vários mandatos, senador da República e governa Goiás desde 2019 com alta taxa de aprovação.",
         essential: [
-          "Governador muito bem avaliado em Goiás e ex-senador experiente.",
-          "Pauta principal é tolerância zero contra facções e crime organizado.",
-          "Menos conhecido fora do Centro-Oeste e do agronegócio.",
-          "Sem condenação criminal comprovada."
+          "Bandeira máxima: linha-dura na segurança e choque de policiamento.",
+          "Aprovação recorde no seu estado, mas baixa lembrança no Norte e Nordeste.",
+          "Ficha limpa sem condenações criminais no histórico."
         ],
         fortes: [
-          "Larga experiência em cargos públicos e alta aprovação no seu estado.",
-          "Reduziu índices de violência em Goiás usando a força das polícias.",
-          "Forte ligação com os produtores do agronegócio nacional."
+          "Queda brutal dos índices de criminalidade em Goiás sob sua gestão.",
+          "Respaldo maciço dos gigantes do agronegócio e exportadores.",
+          "Experiência política de mais de 30 anos no Congresso e Executivo."
         ],
         fracos: [
-          "Dificuldade de se tornar popular nas regiões Norte e Nordeste.",
-          "Disputa os mesmos eleitores de direita com a chapa de Flávio Bolsonaro."
+          "Dificuldade de conexão popular fora do Centro-Oeste.",
+          "Disputa o mesmo eleitor de direita com Flávio Bolsonaro."
         ],
         propostas: [
-          "Levar para o Brasil o modelo de policiamento ostensivo usado em Goiás.",
-          "Modernizar ferrovias e estradas para escoar a produção de alimentos.",
-          "Mandar mais recursos federais diretamente para prefeituras e estados."
+          "Economia, trabalho e responsabilidade fiscal",
+          "Saúde pública com foco em atenção básica",
+          "Segurança pública e justiça",
+          "Educação, ciência e meio ambiente"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Questionamentos de entidades de direitos humanos sobre ações policiais duras.",
-          "Discussões pontuais sobre gastos de publicidade do estado de Goiás."
+          "Questionamentos de defensores públicos sobre mortes em confrontos policiais em Goiás.",
+          "Auditorias do TCE-GO sobre contratos de publicidade governamental."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Guia no Estadão", url: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" },
-          { name: "Economia na DW", url: "https://www.dw.com/pt-br/os-planos-econ%C3%B4micos-dos-presidenci%C3%A1veis-para-o-brasil/a-79301755" }
+          { name: "Página Oficial Caiado no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/ronaldo-caiado-propostas-de-governo" }
         ]
       },
       {
@@ -3047,36 +3958,52 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         category: "direita",
         isTop3: false,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Romeu Zema: governador de Minas Gerais. Defende privatizar estatais e cortar custos.",
+        shockPhrase: "2º MAIS RICO. Quer vender estatais, cortar ministérios e enxugar o Estado.",
+        shockType: "money",
+        shockSourceUrl: "https://www.dw.com/pt-br/os-planos-econ%C3%B4micos-dos-presidenci%C3%A1veis-para-o-brasil/a-79301755",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/zema",
+        pdfUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-novo",
+        chips: [
+          { text: "💰 2º mais rico (bens)", type: "green" },
+          { text: "⚖️ 0 condenações", type: "red" },
+          { text: "📌 3 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Campanha financiada por doações privadas e fundo partidário do NOVO.",
+          patrimonio: "2º candidato mais rico da disputa",
+          patrimonioDesc: "Acionista e herdeiro do Grupo Zema de eletrodomésticos e postos (Folha).",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto oficial do TSE."
+        },
+        historia: "Empresário do setor de varejo de eletrodomésticos e combustíveis em Minas Gerais. Estreou na política em 2018 pelo Partido NOVO vencendo a eleição para governador de Minas e foi reeleito no primeiro turno em 2022.",
         essential: [
-          "Administrador e empresário reeleito no 2º maior estado do país.",
-          "Defende vender empresas do governo para pagar dívidas públicas.",
-          "Enfrentou greves e atritos com servidores públicos em Minas.",
-          "Sem condenação criminal comprovada."
+          "Segundo mais rico do páreo: fortuna vinda do setor privado.",
+          "Foco em privatização radical de estatais e equilíbrio do orçamento.",
+          "Atritos históricos com sindicatos de professores e policiais em MG."
         ],
         fortes: [
-          "Perfil de gestor de empresas com foco em não gastar mais do que arrecada.",
-          "Governa o segundo colégio eleitoral mais importante do Brasil.",
-          "Ideias liberais claras sobre diminuir o peso do Estado na economia."
+          "Visão gerencial pragmática e austeridade nos gastos públicos.",
+          "Governa o segundo maior colégio eleitoral do país.",
+          "Discurso liberal sem escândalos pessoais de corrupção."
         ],
         fracos: [
-          "Perdeu parte da popularidade em Minas Gerais nos últimos anos.",
-          "Conflitos constantes com professores e policiais do estado por causa de salários."
+          "Conflitos severos com servidores públicos e reajustes salariais atrasados.",
+          "Ainda não equacionou a gigantesca dívida fiscal de Minas com a União."
         ],
         propostas: [
-          "Vender empresas estatais federais para abater a dívida do Brasil.",
-          "Cortar milhares de cargos de indicação política em Brasília.",
-          "Acabar com burocracias que atrapalham quem quer abrir e manter empresas."
+          "Choque fiscal (cortar gasto forte)",
+          "Vender estatais (privatização)",
+          "Acabar com o 'Custo Brasil' em 4 anos"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Alegações locais em Minas Gerais sob análise de órgãos de controle sobre contratos e contas do governo estadual.",
-          "Discussões com o governo federal sobre o atraso no pagamento da dívida de Minas."
+          "Disputas federativas no STF sobre o plano de recuperação fiscal de Minas Gerais.",
+          "Processos administrativos de órgãos de controle sobre incentivos fiscais estaduais."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Economia na DW", url: "https://www.dw.com/pt-br/os-planos-econ%C3%B4micos-dos-presidenci%C3%A1veis-para-o-brasil/a-79301755" },
-          { name: "Guia no Estadão", url: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" }
+          { name: "Página Oficial Zema no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/zema" },
+          { name: "Plano de Governo Zema (PDF)", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-novo" }
         ]
       },
       {
@@ -3085,40 +4012,56 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         fullName: "Renan Antônio Ferreira dos Santos",
         party: "MISSÃO",
         number: "99",
-        role: "Ativista do MBL",
+        role: "Coordenador Nacional do MBL",
         avatarBg: "linear-gradient(135deg, #7c3aed, #c084fc)",
         initials: "RS",
         category: "direita",
         isTop3: false,
         statusBadge: "Candidatura em Formação",
-        oneLiner: "Renan Santos: líder do MBL. Critica tanto a esquerda quanto Bolsonaro.",
+        shockPhrase: "O CANDIDATO TIKTOK. Bate no PT e no Bolsonaro. Aposta em viralizar.",
+        shockType: "neutral",
+        shockSourceUrl: "https://oglobo.globo.com/blogs/bernardo-mello-franco/coluna/2026/08/renan-santos-o-candidato-tigrinho-e-a-versao-2026-de-pablo-marcal.ghtml",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/renan-santos-propostas-de-governo",
+        pdfUrl: "",
+        chips: [
+          { text: "⚖️ Processos cíveis", type: "red" },
+          { text: "💰 Partido novo", type: "green" },
+          { text: "📌 3 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Verbas de campanha baseadas em vaquinhas e doações online.",
+          patrimonio: "Declarado nas prestações da legenda",
+          patrimonioDesc: "Disponível no sistema do Tribunal Superior Eleitoral.",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto fixado pelo TSE."
+        },
+        historia: "Militante e um dos principais fundadores do Movimento Brasil Livre (MBL), com papel ativo nas manifestações pelo impeachment de Dilma Rousseff em 2015-2016. Lançou o partido Missão como projeto de nova direita.",
         essential: [
-          "Mobiliza jovens usando vídeos rápidos nas redes sociais.",
-          "Critica ao mesmo tempo Lula e a família Bolsonaro.",
-          "Partido novo com pouco tempo de rádio e TV.",
-          "Sem condenação criminal comprovada."
+          "Estratégia 100% digital baseada em vídeos curtos e debates provocativos.",
+          "Oposição simultânea tanto a Lula quanto ao clã Bolsonaro.",
+          "Legenda nova com mínimo tempo de televisão e fundo partidário reduzido."
         ],
         fortes: [
-          "Usa as redes sociais com muita velocidade para debater assuntos quentes.",
-          "Tenta construir uma nova direita independente de velhos políticos."
+          "Habilidade na produção de conteúdo e comunicação rápida para jovens.",
+          "Projeto de longo prazo de descolamento da velha política partidária."
         ],
         fracos: [
-          "Falta estrutura política clássica e quase não tem tempo de propaganda na TV.",
-          "Estilo agressivo de debate afasta muitos eleitores mais calmos."
+          "Estrutura partidária incipiente com dificuldades de palanques regionais.",
+          "Alta rejeição gerada pelo estilo combativo e polarizador nas redes."
         ],
         propostas: [
-          "Fechar órgãos reguladores federais que considera desnecessários.",
-          "Acabar com o fundo partidário com dinheiro público dos impostos.",
-          "Mudar leis sobre atuação da imprensa e debates políticos."
+          "Pauta de direita radical",
+          "Corte de regras e burocracia",
+          "Crítico ferrenho da esquerda"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Processos cíveis por ofensas e debates inflamados na internet.",
-          "Polêmicas de bastidores envolvendo debates sobre sites de apostas e bets."
+          "Ações judiciais cíveis por danos morais e ofensas em vídeos na internet.",
+          "Disputas políticas sobre financiamento de atos e enquetes virtuais."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Valor Econômico", url: "https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" }
+          { name: "Página Oficial Renan Santos no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/renan-santos-propostas-de-governo" }
         ]
       },
       {
@@ -3127,39 +4070,55 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         fullName: "Hertz da Silva Dias",
         party: "PSTU",
         number: "16",
-        role: "Professor e Militante Social",
+        role: "Professor e Rapper",
         avatarBg: "linear-gradient(135deg, #991b1b, #dc2626)",
         initials: "HD",
         category: "esquerda",
         isTop3: false,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Hertz Dias: professor e socialista. Quer bancos controlados pelos trabalhadores.",
+        shockPhrase: "SOCIALISTA RADICAL: quer estatizar 100% dos bancos e parar de pagar juros.",
+        shockType: "danger",
+        shockSourceUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/hertz-dias-propostas-de-governo",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/hertz-dias-propostas-de-governo",
+        pdfUrl: "",
+        chips: [
+          { text: "⚖️ 0 condenações", type: "red" },
+          { text: "💰 Campanha militante", type: "green" },
+          { text: "📌 3 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Campanha autossustentada por militância e fundo eleitoral proporcional.",
+          patrimonio: "Patrimônio modesto compatível com salário de professor",
+          patrimonioDesc: "Declarado no TSE.",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto legal fixado pelo TSE."
+        },
+        historia: "Professor da rede pública no Maranhão e militante do movimento negro e hip-hop. Cofundador do grupo Quilombo Urbano e militante histórico do PSTU.",
         essential: [
-          "Ligado ao movimento hip-hop, educação e luta contra o racismo.",
-          "Defende o socialismo tradicional sem aliança com empresários.",
-          "Sem experiência anterior em cargos de governo.",
-          "Sem condenação criminal comprovada."
+          "Defende revolução socialista e controle operário sem aliança com patrões.",
+          "Crítico severo do PT por considerar suas gestões conciliações burguesas.",
+          "Campanha militante com foco em protesto e debate ideológico."
         ],
         fortes: [
-          "Coerência total com a defesa da classe trabalhadora e das periferias.",
-          "Voz firme na defesa das escolas públicas e dos professores."
+          "Coerência absoluta com a cartilha comunista clássica.",
+          "Defesa apaixonada da escola pública e dos direitos da periferia."
         ],
         fracos: [
-          "Partido muito pequeno e sem chances reais de ir ao segundo turno.",
-          "Ideias radicais que não encontram consenso na sociedade ampla."
+          "Propostas radicais sem tração com a maior parte do eleitorado.",
+          "Partido sem representação no Congresso Nacional."
         ],
         propostas: [
-          "Colocar todos os grandes bancos sob o controle do povo trabalhador.",
-          "Parar de pagar imediatamente as dívidas com banqueiros internacionais.",
-          "Reestatizar empresas que foram vendidas no passado."
+          "Salário mínimo bem maior",
+          "Fortalecer direitos trabalhistas",
+          "Reformas estruturais (esquerda radical)"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Sem condenações ou processos criminais relevantes."
+          "Sem investigações criminais na Justiça."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "BBC Notícias", url: "https://www.bbc.com/portuguese/articles/cm2gryker9mo" }
+          { name: "Página Oficial Hertz Dias no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/hertz-dias-propostas-de-governo" }
         ]
       },
       {
@@ -3168,39 +4127,55 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         fullName: "Rui Costa Pimenta",
         party: "PCO",
         number: "29",
-        role: "Jornalista e Presidente do PCO",
+        role: "Presidente Nacional do PCO",
         avatarBg: "linear-gradient(135deg, #831843, #db2777)",
         initials: "RP",
         category: "esquerda",
         isTop3: false,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Rui Costa Pimenta: líder operário. Defende liberdade total de expressão.",
+        shockPhrase: "BATE NO STF TODO DIA. Defende armas pro povo e liberdade irrestrita.",
+        shockType: "danger",
+        shockSourceUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/rui-costa-pimenta-propostas-de-governo",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/rui-costa-pimenta-propostas-de-governo",
+        pdfUrl: "",
+        chips: [
+          { text: "⚖️ Inquérito no STF", type: "red" },
+          { text: "💰 Campanha PCO", type: "green" },
+          { text: "📌 3 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Verbas do PCO com prestação formal no TSE.",
+          patrimonio: "Declarado no TSE",
+          patrimonioDesc: "Registros patrimoniais públicos.",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto oficial do TSE."
+        },
+        historia: "Jornalista, escritor e principal dirigente do Partido da Causa Operária (PCO) desde a sua fundação nos anos 1990. Conhecido por debates diários nas redes do partido com posições marxistas heterodoxas.",
         essential: [
-          "Fala o que pensa sem rodeios e critica os tribunais superiores.",
-          "Defende salário mínimo muito maior baseado em cálculos sindicais.",
-          "Quase nenhum tempo de televisão.",
-          "Sem condenação criminal transitada em julgado."
+          "Combina marxismo operário com defesa de armas para a população.",
+          "Críticas frontais aos ministros do STF e ao sistema de censura judicial.",
+          "Candidatura de denúncia sem pretensões pragmáticas de poder."
         ],
         fortes: [
-          "Discurso direto contra o que chama de abusos do sistema financeiro.",
-          "Defesa irrestrita da liberdade para qualquer pessoa falar o que quiser."
+          "Voz sem meias-palavras nem concessões ao politicamente correto.",
+          "Defesa irrestrita da liberdade de expressão para todos os espectros."
         ],
         fracos: [
-          "Partido sem deputados eleitos e sem estrutura nacional forte.",
-          "Posições internacionais controversas que causam espanto na opinião pública."
+          "Posicionamentos externos polêmicos que geram forte repúdio popular.",
+          "Partido sem capilaridade eleitoral para atingir coeficiente eleitoral."
         ],
         propostas: [
-          "Multiplicar o valor do salário mínimo atual para garantir vida digna.",
-          "Alinhar a diplomacia do Brasil com países rivais dos Estados Unidos.",
-          "Dar armas e poder de decisão direta para os comitês de fábrica."
+          "Apoio à Rússia, Venezuela, Irã e resistência palestina (política externa)",
+          "Emendas parlamentares públicas e rastreáveis",
+          "Ministros escolhidos por critério técnico com currículo divulgado"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Investigações abertas no STF por críticas duras feitas contra ministros da Corte."
+          "Inquérito das Fake News no STF por críticas ácidas aos ministros da Corte."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Valor Econômico", url: "https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" }
+          { name: "Página Oficial Rui Costa Pimenta no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/rui-costa-pimenta-propostas-de-governo" }
         ]
       },
       {
@@ -3209,39 +4184,55 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         fullName: "Samara Cristina Martins",
         party: "UP",
         number: "80",
-        role: "Líder Comunitária de Moradia",
+        role: "Militante de Movimentos de Moradia",
         avatarBg: "linear-gradient(135deg, #047857, #10b981)",
         initials: "SM",
         category: "esquerda",
         isTop3: false,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Samara Martins: ativista popular. Luta por moradia digna para quem não tem teto.",
+        shockPhrase: "LÍDER DE OCUPAÇÃO: quer tomar prédios vazios para famílias sem teto.",
+        shockType: "neutral",
+        shockSourceUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/samara-propostas-de-governo",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/samara-propostas-de-governo",
+        pdfUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-up",
+        chips: [
+          { text: "⚖️ 0 condenações", type: "red" },
+          { text: "💰 Campanha popular", type: "green" },
+          { text: "📌 2 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Verbas da Unidade Popular declaradas no portal oficial.",
+          patrimonio: "Sem bens vultosos declarados",
+          patrimonioDesc: "Reflete histórico da classe trabalhadora urbana (TSE).",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto do TSE."
+        },
+        historia: "Jovem liderança comunitária atuante no Movimento de Luta nos Bairros, Vilas e Favelas (MLB) e na Unidade Popular pelo Socialismo (UP). Tem trajetória ligada a ocupações de moradia digna.",
         essential: [
-          "Mulher trabalhadora que vive o dia a dia das ocupações urbanas.",
-          "Quer desapropriar imóveis abandonados para entregar a famílias pobres.",
-          "Não possui experiência governamental no Poder Executivo.",
-          "Sem condenação criminal comprovada."
+          "Representante das famílias de periferia e das ocupações urbanas.",
+          "Pauta central em moradia, congelamento de aluguéis e combate à fome.",
+          "Zero vivência burocrática em gabinetes do governo."
         ],
         fortes: [
-          "Representa a juventude da periferia e mulheres que batalham por casa própria.",
-          "Foco total em saúde pública gratuita e fim da fome."
+          "Conhece de perto a realidade mais pobre das grandes capitais.",
+          "Coerência com as pautas comunitárias e direitos das mulheres da periferia."
         ],
         fracos: [
-          "Quase não tem espaço nas televisões ou debates grandes.",
-          "Nunca chefiou repartições públicas antes."
+          "Quase nenhum tempo de televisão e espaço em debates nacionais.",
+          "Falta de equipe com experiência técnica em finanças públicas."
         ],
         propostas: [
-          "Entregar prédios vazios no centro das cidades para famílias sem moradia.",
-          "Aumentar o dinheiro da saúde e das escolas sem limite de teto de gastos.",
-          "Fazer reformas para aproximar a polícia das comunidades pacíficas."
+          "Pautas sociais, moradia e feminismo",
+          "Esquerda radical (Unidade Popular)"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Envolvimento em protestos e ocupações com pedidos judiciais de reintegração de posse."
+          "Processos cíveis de reintegração de posse decorrentes de ocupações."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "BBC Notícias", url: "https://www.bbc.com/portuguese/articles/cm2gryker9mo" }
+          { name: "Página Oficial Samara no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/samara-propostas-de-governo" },
+          { name: "Plano de Governo Samara (PDF)", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-up" }
         ]
       },
       {
@@ -3250,39 +4241,54 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         fullName: "Edmilson Silva Costa",
         party: "PCB",
         number: "21",
-        role: "Economista e Professor",
+        role: "Economista e Secretário-Geral do PCB",
         avatarBg: "linear-gradient(135deg, #7f1d1d, #b91c1c)",
         initials: "EC",
         category: "esquerda",
         isTop3: false,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Edmilson Costa: economista comunista. Quer reforma agrária radical e fim dos latifúndios.",
+        shockPhrase: "ECONOMISTA COMUNISTA. Fim do agronegócio e estatização do comércio exterior.",
+        shockType: "danger",
+        shockSourceUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/edmilson-costa-propostas-de-governo",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/edmilson-costa-propostas-de-governo",
+        pdfUrl: "",
+        chips: [
+          { text: "⚖️ 0 condenações", type: "red" },
+          { text: "💰 Campanha modesta", type: "green" },
+          { text: "📌 2 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Valores divulgados na página oficial do TSE.",
+          patrimonio: "Declarado no TSE",
+          patrimonioDesc: "Disponível na plataforma do TSE.",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto oficial do TSE."
+        },
+        historia: "Doutor em economia pela Unicamp com pós-doutorado, autor de diversos livros teóricos sobre capitalismo brasileiro e imperialismo. Militante histórico e secretário-geral do Partido Comunista Brasileiro (PCB).",
         essential: [
-          "Doutor em economia com vários livros escritos sobre o trabalho.",
-          "Fidelidade ao partido comunista mais antigo do Brasil.",
-          "Pouquíssimo tempo de televisão e recursos de campanha.",
-          "Sem condenação criminal comprovada."
+          "Base teórica densa na teoria marxista da economia.",
+          "Defende a destruição do latifúndio e a estatização das exportações.",
+          "Partido abalado por dissidências e cisões internas recentes."
         ],
         fortes: [
-          "Conhecimento técnico da história econômica e financeira nacional.",
-          "Defesa convicta dos direitos dos empregados contra a exploração."
+          "Profundo preparo acadêmico em história econômica brasileira.",
+          "Integridade ideológica mantida há décadas."
         ],
         fracos: [
-          "Partido teve brigas internas recentes que diminuíram sua força.",
-          "Ideias de revolução popular não atraem a maioria dos eleitores comuns."
+          "Cisão na juventude do PCB fragilizou a campanha nacional.",
+          "Pouca capacidade de atrair eleitores fora da academia militante."
         ],
         propostas: [
-          "Tomar terras de grandes fazendeiros improdutivos para dividir com pequenos lavradores.",
-          "Romper acordos de pagamento de juros com órgãos internacionais.",
-          "Colocar o comércio de exportação sob comando do governo federal."
+          "Pautas socialistas",
+          "Candidatura de afirmação do PCB"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Sem processos de corrupção ou crimes financeiros na Justiça."
+          "Sem processos de corrupção ou crimes na Justiça."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Valor Econômico", url: "https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" }
+          { name: "Página Oficial Edmilson Costa no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/edmilson-costa-propostas-de-governo" }
         ]
       },
       {
@@ -3291,39 +4297,56 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         fullName: "Clariana de Souza Barão",
         party: "DC",
         number: "27",
-        role: "Advogada e Líder Cristã",
+        role: "Advogada e Líder Comunitária",
         avatarBg: "linear-gradient(135deg, #0369a1, #38bdf8)",
         initials: "CB",
         category: "centro",
         isTop3: false,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Clariana Barão: advogada. Defende a família e ajuda social comunitária.",
+        shockPhrase: "ENTROU AOS 45 DO 2º TEMPO. Discurso cristão focado em família e mães solo.",
+        shockType: "neutral",
+        shockSourceUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/clariana-barao-propostas-de-governo",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/clariana-barao-propostas-de-governo",
+        pdfUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/plano-de-governo-1/@@display-file/file/plano-de-governo.pdf",
+        chips: [
+          { text: "⚖️ 0 condenações", type: "red" },
+          { text: "💰 Campanha pequena", type: "green" },
+          { text: "📌 3 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Verbas da Democracia Cristã detalhadas no portal oficial.",
+          patrimonio: "Declarado no TSE",
+          patrimonioDesc: "Disponível no sistema oficial.",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto oficial do TSE."
+        },
+        historia: "Advogada atuante no direito de família e em obras de apoio social comunitário em igrejas cristãs. Assumiu a cabeça de chapa da Democracia Cristã após reconfigurações internas da executiva.",
         essential: [
-          "Defende princípios de amor ao próximo e acolhimento das famílias.",
-          "Foi escolhida pelo partido após trocas de candidatos na diretoria.",
-          "Pouco conhecida pela população fora do seu estado.",
-          "Sem condenação criminal comprovada."
+          "Pauta cristã de centro: ênfase no amparo à família e valorização de idosos.",
+          "Candidatura pouco conhecida no cenário político federal.",
+          "Ficha limpa sem manchas na Justiça."
         ],
         fortes: [
-          "Mensagem de fé com tom moderado e sem discursos de ódio.",
-          "Foco em ajudar idosos e projetos de caridade nas igrejas."
+          "Comunicação empática voltada a mães que sustentam o lar sozinhas.",
+          "Discurso religioso sem tons belicosos ou radicais."
         ],
         fracos: [
-          "Entrou na disputa aos 45 do segundo tempo com pouca verba de campanha.",
-          "Falta equipe política para negociar com os outros estados."
+          "Falta de densidade de alianças e bancadas no Congresso.",
+          "Entrou de forma tardia no processo eleitoral."
         ],
         propostas: [
-          "Dar descontos de impostos para asilos e obras de caridade.",
-          "Colocar aulas de ética e cidadania para as crianças nas escolas.",
-          "Empréstimos fáceis para mães de família começarem um negócio."
+          "Pautas conservadoras e cristãs",
+          "Ambiente de negócios simples e digitalização",
+          "Crédito e capacitação para pequenos negócios"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Sem condenações ou investigações criminais na ficha."
+          "Sem investigações ou condenações."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Guia no Estadão", url: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" }
+          { name: "Página Oficial Clariana Barão no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/clariana-barao-propostas-de-governo" },
+          { name: "Plano de Governo Clariana (PDF)", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/plano-de-governo-1/@@display-file/file/plano-de-governo.pdf" }
         ]
       },
       {
@@ -3338,38 +4361,214 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
         category: "centro",
         isTop3: false,
         statusBadge: "Candidatura Registrada",
-        oneLiner: "Wilson Grassi: veterinário. Quer hospitais públicos gratuitos para animais.",
+        shockPhrase: "O CANDIDATO DOS BICHOS. Quer hospitais públicos gratuitos para cães e gatos.",
+        shockType: "neutral",
+        shockSourceUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/wilson-grassi",
+        tseUrl: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/wilson-grassi",
+        pdfUrl: "",
+        chips: [
+          { text: "⚖️ 0 processos", type: "red" },
+          { text: "💰 Campanha de nicho", type: "green" },
+          { text: "📌 2 promessas", type: "blue" }
+        ],
+        dinheiro: {
+          gastos: "Consulte no DivulgaCandContas do TSE",
+          gastosDesc: "Prestações disponíveis no sistema do TSE.",
+          patrimonio: "Declarado no TSE",
+          patrimonioDesc: "Disponível na plataforma oficial.",
+          teto: "R$ 88,9 mi (1º turno)",
+          tetoDesc: "Teto oficial do TSE."
+        },
+        historia: "Médico veterinário atuante na clínica e em causas de defesa dos direitos animais há mais de duas décadas. Tornou-se porta-voz da criação de políticas públicas de controle populacional e saúde animal.",
         essential: [
-          "Defensor incansável dos animais de rua e do meio ambiente.",
-          "Focado em saúde única: quem cuida do bicho cuida do ser humano.",
-          "Campanha focada em nicho com poucos recursos partidários.",
-          "Sem condenação criminal comprovada."
+          "Pauta pioneira de Saúde Única: integração entre saúde humana e animal.",
+          "Candidatura monotemática sem propostas detalhadas de macroeconomia.",
+          "Zero envolvimento em escândalos políticos ou processos criminais."
         ],
         fortes: [
-          "Pauta autêntica e querida por quem ama cães, gatos e a natureza.",
-          "Discurso sereno e científico sem entrar em disputas partidárias raivosas."
+          "Causa simpática com grande adesão de tutores de animais e protetores.",
+          "Postura conciliadora e propositiva longe de bate-bocas raivosos."
         ],
         fracos: [
-          "Pouca proposta para temas gigantescos como a taxa de juros e indústria.",
-          "Falta de deputados apoiando a chapa no Congresso."
+          "Falta de posicionamento claro em temas como taxa de juros e política externa.",
+          "Partido minúsculo sem tempo relevante na propaganda eleitoral."
         ],
         propostas: [
-          "Construir hospitais veterinários públicos gratuitos em todas as cidades grandes.",
-          "Criar uma secretaria federal para proteger cães, gatos e fauna silvestre.",
-          "Dar incentivos a produtores rurais que preservarem matas e rios."
+          "Pauta conservadora e tradicional",
+          "Candidatura de nicho (Democrata)"
         ],
         justicaProvado: [],
         justicaInvestigacao: [
-          "Sem nenhuma investigação ou condenação na Justiça."
+          "Ficha totalmente limpa na Justiça."
         ],
         sources: [
-          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
-          { name: "Valor Econômico", url: "https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" }
+          { name: "Página Oficial Wilson Grassi no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026/wilson-grassi" }
         ]
       }
     ];
 
-    // Renderização dos Cards com formato acessível
+    // === SISTEMA DE GAMIFICAÇÃO ELEITORAL ===
+    const GAMIFICACAO = {
+      KEY: 'dossie_progresso_2026',
+      state: {
+        abertos: [],
+        pontos: 0,
+        quizResolvido: false
+      },
+      init() {
+        try {
+          const raw = localStorage.getItem(this.KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && Array.isArray(parsed.abertos)) {
+              this.state.abertos = parsed.abertos;
+            }
+            if (typeof parsed.pontos === 'number') {
+              this.state.pontos = parsed.pontos;
+            }
+            if (parsed.quizResolvido) {
+              this.state.quizResolvido = true;
+            }
+          }
+        } catch (e) {
+          console.warn('Erro ao carregar gamificação:', e);
+        }
+        this.renderBarra();
+      },
+      salvar() {
+        try {
+          localStorage.setItem(this.KEY, JSON.stringify(this.state));
+        } catch (e) {
+          console.warn('Erro ao salvar gamificação:', e);
+        }
+      },
+      getNivel(totalAbertos) {
+        if (totalAbertos >= 13) return { nivel: '🏆 LENDÁRIO', emoji: '🏆', cor: '#b45309' };
+        if (totalAbertos >= 9) return { nivel: '🦅 NINJA', emoji: '🦅', cor: '#7c3aed' };
+        if (totalAbertos >= 6) return { nivel: '🧠 ESPERTO', emoji: '🧠', cor: '#2563eb' };
+        if (totalAbertos >= 3) return { nivel: '🔎 CURIOSO', emoji: '🔎', cor: '#059669' };
+        return { nivel: '🌱 NOVATO', emoji: '🌱', cor: '#16a34a' };
+      },
+      registrarAbertura(candidatoId) {
+        const jaAbriu = this.state.abertos.includes(candidatoId);
+        if (!jaAbriu) {
+          this.state.abertos.push(candidatoId);
+          this.state.pontos += 1;
+          this.salvar();
+          this.renderBarra();
+          
+          const cand = CANDIDATES.find(c => c.id === candidatoId);
+          const nome = cand ? cand.ballotName : 'candidato';
+          mostrarToast(`✅ Ficha de ${nome} conferida! +1 🔥`);
+
+          // Marca o card visualmente
+          const card = document.getElementById(`card-${candidatoId}`);
+          if (card) card.classList.add('conferido');
+
+          // Verifica se bateu os 13
+          if (this.state.abertos.length === 13) {
+            soltarConfetes();
+            setTimeout(() => {
+              alert('🏆 PARABÉNS! VOCÊ VIU TUDO. AGORA É DECIDIR.\nVocê atingiu o nível máximo LENDÁRIO e conferiu os 13 candidatos!');
+            }, 600);
+          }
+        }
+      },
+      adicionarPontosQuiz(pts) {
+        this.state.pontos += pts;
+        this.state.quizResolvido = true;
+        this.salvar();
+        this.renderBarra();
+      },
+      renderBarra() {
+        const total = this.state.abertos.length;
+        const infoNivel = this.getNivel(total);
+        const pct = Math.min(100, Math.round((total / 13) * 100));
+
+        const barFill = document.getElementById('gamifyBarFill');
+        const countText = document.getElementById('gamifyCountText');
+        const levelPill = document.getElementById('gamifyLevelPill');
+        const pointsText = document.getElementById('gamifyPointsText');
+
+        if (barFill) barFill.style.width = `${pct}%`;
+        if (countText) countText.textContent = `${total}/13 fichas abertas (${pct}%)`;
+        if (levelPill) {
+          levelPill.textContent = `${infoNivel.nivel}`;
+          if (total === 13) {
+            levelPill.style.background = '#fef3c7';
+            levelPill.style.color = '#b45309';
+            levelPill.style.borderColor = '#f59e0b';
+          }
+        }
+        if (pointsText) pointsText.textContent = `⭐ ${this.state.pontos} pts`;
+      }
+    };
+
+    // Toast Utilitário
+    let toastTimeout = null;
+    function mostrarToast(texto) {
+      const toast = document.getElementById('civicToast');
+      const textEl = document.getElementById('toastText');
+      if (!toast || !textEl) return;
+      textEl.textContent = texto;
+      toast.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3200);
+    }
+
+    // Confetes simples e performáticos em Canvas
+    function soltarConfetes() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      canvas.style.display = 'block';
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height * 0.4,
+          r: Math.random() * 6 + 4,
+          c: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 4,
+          vy: Math.random() * 3 + 2,
+          rot: Math.random() * 360,
+          dRot: (Math.random() - 0.5) * 10
+        });
+      }
+
+      let frames = 0;
+      function animate() {
+        frames++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.dRot;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(-p.r, -p.r, p.r * 2, p.r * 2);
+          ctx.restore();
+        });
+
+        if (frames < 140) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          canvas.style.display = 'none';
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // RENDERIZAÇÃO DOS CARDS (GAMIFICADOS E ESCANEÁVEIS)
     function renderCandidates(list) {
       const container = document.getElementById("candidatesContainer");
       if (!list || list.length === 0) {
@@ -3383,22 +4582,40 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       }
 
       container.innerHTML = list.map(c => {
-        // Verifica bloco da Justiça e contadores
-        const hasProven = c.justicaProvado && c.justicaProvado.length > 0;
-        const hasInvestig = c.justicaInvestigacao && c.justicaInvestigacao.length > 0;
-        const totalJustica = (c.justicaProvado ? c.justicaProvado.length : 0) + (c.justicaInvestigacao ? c.justicaInvestigacao.length : 0);
         const photoUrl = getCandidatePhoto(c.id);
+        const isConferido = GAMIFICACAO.state.abertos.includes(c.id);
+        const shockClass = c.shockType || 'neutral';
 
+        const shockSource = c.shockSourceUrl || c.tseUrl || '#fontes';
         return `
-        <article class="c-card" id="card-${c.id}" data-category="${c.category}">
-          <!-- Cabeçalho do Card -->
-          <div class="c-header">
-            <div class="c-avatar" style="background: ${c.avatarBg};" title="${c.fullName}" aria-hidden="true">
-              <span>${c.initials}</span>
-              ${photoUrl ? `<img src="${photoUrl}" alt="${c.ballotName}" class="c-avatar-img" onerror="this.remove()">` : ''}
+        <article class="c-card ${isConferido ? 'conferido' : ''}" id="card-${c.id}" data-category="${c.category}">
+          
+          <!-- FRASE-CHOCANTE NO TOPO COM SELO DE FATO PÚBLICO E FONTE REAL -->
+          <div class="c-shock-header ${shockClass}">
+            <div class="c-shock-content">
+              <span aria-hidden="true">💥</span>
+              <span>${c.shockPhrase || c.oneLiner}</span>
             </div>
+            <a href="${shockSource}" target="_blank" rel="noopener noreferrer" class="c-shock-source-pill" title="Checar fonte pública desta informação">
+              fato público 🔍
+            </a>
+          </div>
+
+          <!-- Cabeçalho com Foto Grande e Selo Conferido -->
+          <div class="c-header">
+            <div class="c-avatar-wrap">
+              <div class="c-avatar" style="background: ${c.avatarBg};" title="${c.fullName}" aria-hidden="true">
+                <span>${c.initials}</span>
+                ${photoUrl ? `<img src="${photoUrl}" alt="${c.ballotName}" class="c-avatar-img" onerror="this.remove()">` : ''}
+              </div>
+              <div class="c-conferido-badge">
+                <span>✓</span>
+                <span>visto</span>
+              </div>
+            </div>
+            
             <div class="c-info">
-              <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
                 <h3 class="c-ballot-name">${c.ballotName}</h3>
                 <span class="status-pill ${c.statusIrregular ? 'irregular' : ''}">${c.statusBadge}</span>
               </div>
@@ -3410,16 +4627,18 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
             </div>
           </div>
 
-          <!-- Resumo em 1 frase -->
-          <div class="c-one-liner">
-            ${c.oneLiner}
+          <!-- CHIPS COLORIDOS DE STATUS (SEMPRE VISÍVEIS) -->
+          <div class="c-chips-row">
+            ${(c.chips || []).map(chip => `
+              <span class="c-chip ${chip.type}">${chip.text}</span>
+            `).join('')}
           </div>
 
-          <!-- O Essencial (Leia em 1 minuto) -->
+          <!-- O ESSENCIAL EM 1 MINUTO (3 bullets diretos) -->
           <div class="c-essential-box">
             <div class="c-essential-title">
               <span>⚡</span>
-              <span>O Essencial (leia em 1 minuto):</span>
+              <span>O ESSENCIAL EM 1 MINUTO:</span>
             </div>
             <ul class="essential-list">
               ${c.essential.map(item => `
@@ -3431,133 +4650,12 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
             </ul>
           </div>
 
-          <!-- Botão para aprofundar (aberto por padrão com Na Justiça em 1º) -->
-          <button type="button" class="deep-dive-toggle-btn open" onclick="toggleDeepDive('${c.id}', this)" aria-expanded="true">
-            <span>📖 DETALHES COMPLETOS</span>
-            <span class="toggle-icon">▲</span>
-          </button>
-
-          <!-- Seção de Aprofundamento Aberta por Padrão com 'Na Justiça' selecionada -->
-          <div class="deep-dive-content open" id="deep-${c.id}">
-            <!-- Abas do Aprofundamento: Na Justiça em primeiro lugar -->
-            <nav class="card-tabs-nav" aria-label="Detalhes de ${c.ballotName}">
-              <button type="button" class="tab-btn active" onclick="switchCardTab('${c.id}', 'justica', this)">
-                ⚖️ NA JUSTIÇA (${totalJustica})
-              </button>
-              <button type="button" class="tab-btn" onclick="switchCardTab('${c.id}', 'propostas', this)">
-                📌 PROPOSTAS
-              </button>
-              <button type="button" class="tab-btn" onclick="switchCardTab('${c.id}', 'fortes', this)">
-                👍 BONS
-              </button>
-              <button type="button" class="tab-btn" onclick="switchCardTab('${c.id}', 'fracos', this)">
-                👎 RUINS
-              </button>
-            </nav>
-
-            <div class="c-body">
-              <!-- ⚖️ PROBLEMAS NA JUSTIÇA (PRIMEIRA ABA ABERTA POR PADRÃO) -->
-              <div id="${c.id}-justica" class="tab-pane active" data-type="justica">
-                
-                <!-- Bloco 1: PROVADO / CONDENADO -->
-                <div class="justice-group justice-group-proven">
-                  <div class="justice-header-proven">
-                    <span>🚨</span>
-                    <span>PROVADO / CONDENADO (fatos e decisões da Justiça)</span>
-                  </div>
-                  <div class="justice-items-box">
-                    ${hasProven ? `
-                      <ul class="c-list" style="gap: 0.5rem;">
-                        ${c.justicaProvado.map(p => `
-                          <li class="c-list-item" style="color: #991b1b; font-weight: 700;">
-                            ${p}
-                            <a href="${c.sources[1]?.url || c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
-                          </li>
-                        `).join('')}
-                      </ul>
-                    ` : `
-                      <p class="justice-empty-note">
-                        <span>✅</span>
-                        <span>Sem condenação criminal comprovada.</span>
-                      </p>
-                    `}
-                  </div>
-                </div>
-
-                <!-- Bloco 2: EM INVESTIGAÇÃO / ACUSAÇÃO -->
-                <div class="justice-group justice-group-investigation">
-                  <div class="justice-header-investigation">
-                    <span>⚠️</span>
-                    <span>EM INVESTIGAÇÃO / ACUSAÇÃO</span>
-                  </div>
-                  <div class="justice-items-box">
-                    <span class="justice-notice-banner">Lembrete: denúncia ainda não é culpa comprovada.</span>
-                    ${hasInvestig ? `
-                      <ul class="c-list" style="gap: 0.5rem;">
-                        ${c.justicaInvestigacao.map(inv => `
-                          <li class="c-list-item" style="color: #9a3412;">
-                            ${inv}
-                            <a href="${c.sources[1]?.url || c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
-                          </li>
-                        `).join('')}
-                      </ul>
-                    ` : `
-                      <p style="font-size: 0.85rem; color: #475569; margin: 0;">Sem investigações de grande repercussão registradas.</p>
-                    `}
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- 📌 O QUE PROMETE -->
-              <div id="${c.id}-propostas" class="tab-pane" data-type="propostas">
-                <ul class="c-list">
-                  ${c.propostas.map(item => `
-                    <li class="c-list-item">
-                      ${item}
-                      <a href="${c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
-                    </li>
-                  `).join('')}
-                </ul>
-              </div>
-
-              <!-- 👍 PONTOS BONS -->
-              <div id="${c.id}-fortes" class="tab-pane" data-type="fortes">
-                <ul class="c-list">
-                  ${c.fortes.map(item => `
-                    <li class="c-list-item">
-                      ${item}
-                      <a href="${c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
-                    </li>
-                  `).join('')}
-                </ul>
-              </div>
-
-              <!-- 👎 O QUE É RUIM -->
-              <div id="${c.id}-fracos" class="tab-pane" data-type="fracos">
-                <ul class="c-list">
-                  ${c.fracos.map(item => `
-                    <li class="c-list-item">
-                      ${item}
-                      <a href="${c.sources[1]?.url || c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
-                    </li>
-                  `).join('')}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Rodapé do Card: QUER CONFERIR? com fontes reais -->
-          <div class="c-sources-footer">
-            <span class="c-sources-label">Quer conferir? Links diretos checados:</span>
-            <div class="c-sources-links">
-              ${c.sources.map(s => `
-                <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="c-sources-chip">
-                  <span>🔗</span>
-                  <span>${s.name}</span>
-                </a>
-              `).join('')}
-            </div>
+          <!-- BOTÃO GRANDE GAMIFICADO "ABRIR FICHA COMPLETA" -->
+          <div class="c-card-action-bar">
+            <button type="button" class="c-open-ficha-btn" onclick="abrirFichaModal('${c.id}')" aria-label="Abrir ficha completa de ${c.ballotName}">
+              <span>🎮</span>
+              <span>${isConferido ? 'VER FICHA NOVAMENTE' : 'ABRIR FICHA COMPLETA'}</span>
+            </button>
           </div>
 
         </article>
@@ -3565,43 +4663,400 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       }).join('');
     }
 
-    // Alternar o bloco Quero Saber Mais
-    window.toggleDeepDive = function(candidateId, btn) {
-      const content = document.getElementById(`deep-${candidateId}`);
-      if (!content) return;
-      const isOpen = content.classList.contains('open');
-      if (isOpen) {
-        content.classList.remove('open');
-        btn.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        btn.querySelector('.toggle-icon').textContent = '▼';
+    // === MODAL FICHA COMPLETA (NEXO JORNAL) ===
+    let currentFichaCandidate = null;
+
+    window.abrirFichaModal = function(candidateId) {
+      const c = CANDIDATES.find(item => item.id === candidateId);
+      if (!c) return;
+
+      currentFichaCandidate = c;
+      GAMIFICACAO.registrarAbertura(c.id);
+
+      // Atualiza Topbar
+      const photoUrl = getCandidatePhoto(c.id);
+      const titleEl = document.getElementById('fichaModalTitle');
+      const metaEl = document.getElementById('fichaModalMeta');
+      const avatarEl = document.getElementById('fichaAvatar');
+
+      if (titleEl) titleEl.textContent = `${c.ballotName} (${c.party})`;
+      if (metaEl) metaEl.textContent = `${c.fullName} • Nº ${c.number} • ${c.role}`;
+      if (avatarEl) {
+        avatarEl.innerHTML = photoUrl 
+          ? `<img src="${photoUrl}" alt="${c.ballotName}">`
+          : `<div style="background:${c.avatarBg}; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:900;">${c.initials}</div>`;
+      }
+
+      // Preenche ABA 1: NA JUSTIÇA (Vermelho) — Sempre a primeira
+      const paneJustica = document.getElementById('pane-justica');
+      const hasProven = c.justicaProvado && c.justicaProvado.length > 0;
+      const hasInvestig = c.justicaInvestigacao && c.justicaInvestigacao.length > 0;
+
+      paneJustica.innerHTML = `
+        <div style="margin-bottom: 0.9rem;">
+          <h4 style="margin: 0 0 0.4rem; font-size: 1.1rem; color: #b91c1c; font-weight: 900;">
+            ⚖️ SITUAÇÃO NA JUSTIÇA
+          </h4>
+          <p style="margin: 0; font-size: 0.85rem; color: #475569; font-weight: 600;">
+            A verdade nua e crua, separando fatos comprovados de acusações ainda em andamento.
+          </p>
+        </div>
+
+        <!-- Bloco 1: PROVADO / CONDENADO -->
+        <div class="justice-group justice-group-proven" style="margin-bottom: 1rem;">
+          <div class="justice-header-proven">
+            <span>🔴</span>
+            <span>CONFIRMADO / CONDENADO / DECISÕES FINAIS</span>
+          </div>
+          <div class="justice-items-box">
+            ${hasProven ? `
+              <ul class="c-list">
+                ${c.justicaProvado.map(p => `
+                  <li class="c-list-item" style="color: #991b1b; font-weight: 700;">
+                    ${p}
+                    <a href="${c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 fonte oficial</a>
+                  </li>
+                `).join('')}
+              </ul>
+            ` : `
+              <p class="justice-empty-note">
+                <span>✅</span>
+                <span>Sem condenação criminal comprovada nas fontes públicas.</span>
+              </p>
+            `}
+          </div>
+        </div>
+
+        <!-- Bloco 2: EM INVESTIGAÇÃO / ACUSAÇÃO -->
+        <div class="justice-group justice-group-investigation">
+          <div class="justice-header-investigation">
+            <span>🟠</span>
+            <span>EM INVESTIGAÇÃO / ACUSAÇÃO (AINDA NÃO É CULPA • ELE NEGA)</span>
+          </div>
+          <div class="justice-items-box">
+            <span class="justice-notice-banner">Presunção de inocência mantida: acusação não é condenação.</span>
+            ${hasInvestig ? `
+              <ul class="c-list">
+                ${c.justicaInvestigacao.map(inv => `
+                  <li class="c-list-item" style="color: #9a3412;">
+                    ${inv}
+                    <a href="${c.sources[1]?.url || c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 checar apuração</a>
+                  </li>
+                `).join('')}
+              </ul>
+            ` : `
+              <p style="font-size: 0.88rem; color: #475569; margin: 0; font-weight: 600;">Nenhum inquérito ou denúncia de grande repercussão em aberto.</p>
+            `}
+          </div>
+        </div>
+      `;
+
+      // Preenche ABA 2: DINHEIRO (Verde)
+      const paneDinheiro = document.getElementById('pane-dinheiro');
+      const d = c.dinheiro || {};
+      paneDinheiro.innerHTML = `
+        <div style="margin-bottom: 0.9rem;">
+          <h4 style="margin: 0 0 0.4rem; font-size: 1.1rem; color: #047857; font-weight: 900;">
+            💰 ONDE ESTÁ O DINHEIRO? GASTOS E PATRIMÔNIO
+          </h4>
+          <p style="margin: 0; font-size: 0.85rem; color: #475569; font-weight: 600;">
+            Dados reais da prestação de contas do TSE e declaração de bens oficial.
+          </p>
+        </div>
+
+        <div class="dinheiro-grid">
+          <div class="dinheiro-stat-card">
+            <span class="dinheiro-stat-label">💸 Gastos de Campanha (TSE)</span>
+            <span class="dinheiro-stat-val">${d.gastos || 'Consulte no TSE'}</span>
+            <p class="dinheiro-stat-note">${d.gastosDesc || 'Prestação oficial no DivulgaCandContas.'}</p>
+          </div>
+
+          <div class="dinheiro-stat-card">
+            <span class="dinheiro-stat-label">🏦 Patrimônio Declarado</span>
+            <span class="dinheiro-stat-val">${d.patrimonio || 'Declarado no TSE'}</span>
+            <p class="dinheiro-stat-note">${d.patrimonioDesc || 'Bens informados à Justiça Eleitoral.'}</p>
+          </div>
+
+          <div class="dinheiro-stat-card" style="grid-column: 1 / -1; background: #eff6ff; border-color: #93c5fd;">
+            <span class="dinheiro-stat-label" style="color: #1e40af;">⚖️ Teto Legal de Gastos (TSE)</span>
+            <span class="dinheiro-stat-val" style="font-size: 1.25rem; color: #1e3a8a;">${d.teto || 'R$ 88,9 mi no 1º turno'}</span>
+            <p class="dinheiro-stat-note" style="color: #1e293b;">
+              ${d.tetoDesc || 'Limite legal máximo permitido por candidato no 1º turno (mantido igual a 2022).'}
+            </p>
+            <div style="margin-top: 0.4rem;">
+              <a href="https://divulgacandcontas.tse.jus.br/" target="_blank" rel="noopener noreferrer" class="src-inline-link" style="font-size: 0.82rem;">
+                🔍 Acessar sistema DivulgaCandContas do TSE
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Preenche ABA 3: PROPOSTAS (Azul) — Com bullets e links individuais do TSE + PDF
+      const panePropostas = document.getElementById('pane-propostas');
+      const tsePageUrl = c.tseUrl || c.sources[0]?.url || 'https://www.tse.jus.br/';
+      const pdfDirectUrl = c.pdfUrl || '';
+
+      panePropostas.innerHTML = `
+        <div style="margin-bottom: 0.9rem;">
+          <h4 style="margin: 0 0 0.4rem; font-size: 1.1rem; color: #1d4ed8; font-weight: 900;">
+            📌 O QUE ELE PROMETE SE FOR ELEITO
+          </h4>
+          <p style="margin: 0; font-size: 0.85rem; color: #475569; font-weight: 600;">
+            Principais propostas resumidas em linguagem simples e direta:
+          </p>
+        </div>
+        <ul class="c-list" style="margin-bottom: 1.25rem;">
+          ${c.propostas.map(p => `
+            <li class="c-list-item" style="font-size: 0.95rem; font-weight: 600;">
+              ${p}
+            </li>
+          `).join('')}
+        </ul>
+
+        <!-- LINKS ESPECÍFICOS NO RODAPÉ DA ABA DE PROPOSTAS -->
+        <div style="background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 0.85rem 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <span style="font-size: 0.78rem; font-weight: 900; color: #334155; text-transform: uppercase; letter-spacing: 0.03em;">Documentos Oficiais de ${c.ballotName}:</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <a href="${tsePageUrl}" target="_blank" rel="noopener noreferrer" class="ficha-tse-btn" style="background: #ffffff; border-color: #2563eb; color: #1d4ed8;">
+              <span>📄</span> <span>Plano de governo (página oficial no TSE)</span>
+            </a>
+            ${pdfDirectUrl ? `
+              <a href="${pdfDirectUrl}" target="_blank" rel="noopener noreferrer" class="ficha-tse-btn" style="background: #eff6ff; border-color: #1d4ed8; color: #1e40af;">
+                <span>⬇️</span> <span>Baixar plano (PDF)</span>
+              </a>
+            ` : ''}
+          </div>
+        </div>
+      `;
+
+      // Preenche ABA 4: BONS & RUINS (Âmbar)
+      const paneBalanco = document.getElementById('pane-balanco');
+      paneBalanco.innerHTML = `
+        <div style="margin-bottom: 0.9rem;">
+          <h4 style="margin: 0 0 0.4rem; font-size: 1.1rem; color: #b45309; font-weight: 900;">
+            ⚖️ BALANÇO: PONTOS FORTES E FRACOS
+          </h4>
+          <p style="margin: 0; font-size: 0.85rem; color: #475569; font-weight: 600;">
+            O que apoiadores elogiam vs o que críticos apontam como problema.
+          </p>
+        </div>
+        <div class="balanco-grid">
+          <div class="balanco-col bons">
+            <h5 class="balanco-col-title">👍 PONTOS FORTES / ELOGIOS</h5>
+            <ul class="c-list">
+              ${c.fortes.map(f => `<li class="c-list-item" style="color: #14532d; font-weight: 600;">${f}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="balanco-col ruins">
+            <h5 class="balanco-col-title">👎 PONTOS FRACOS / CRÍTICAS</h5>
+            <ul class="c-list">
+              ${c.fracos.map(fr => `<li class="c-list-item" style="color: #78350f; font-weight: 600;">${fr}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+
+      // Preenche ABA 5: HISTÓRIA (Roxo)
+      const paneHistoria = document.getElementById('pane-historia');
+      paneHistoria.innerHTML = `
+        <div style="margin-bottom: 0.9rem;">
+          <h4 style="margin: 0 0 0.4rem; font-size: 1.1rem; color: #6b21a8; font-weight: 900;">
+            📜 QUEM É E O QUE JÁ FEZ
+          </h4>
+          <p style="margin: 0; font-size: 0.85rem; color: #475569; font-weight: 600;">
+            Trajetória profissional, cargos que ocupou e feitos documentados.
+          </p>
+        </div>
+        <div style="background: #faf5ff; border: 2px solid #e9d5ff; border-radius: 12px; padding: 1.1rem; line-height: 1.6; font-size: 0.95rem; color: #3b0764; font-weight: 600;">
+          <p style="margin: 0 0 0.75rem;">${c.historia || c.oneLiner}</p>
+          <p style="margin: 0; font-size: 0.85rem; color: #581c87;">
+            <strong>Candidatura:</strong> ${c.role} • <strong>Partido:</strong> ${c.party} (${c.number})
+          </p>
+        </div>
+      `;
+
+      // Rodapé da Ficha com URLs individuais reais
+      const linksContainer = document.getElementById('fichaFooterLinks');
+      linksContainer.innerHTML = `
+        <a href="https://divulgacandcontas.tse.jus.br/" target="_blank" rel="noopener noreferrer" class="ficha-tse-btn">
+          <span>🏛️</span> <span>DivulgaCandContas TSE</span>
+        </a>
+        <a href="${tsePageUrl}" target="_blank" rel="noopener noreferrer" class="ficha-tse-btn">
+          <span>📄</span> <span>Página do Candidato no TSE</span>
+        </a>
+        ${pdfDirectUrl ? `
+          <a href="${pdfDirectUrl}" target="_blank" rel="noopener noreferrer" class="ficha-tse-btn">
+            <span>⬇️</span> <span>Baixar plano (PDF)</span>
+          </a>
+        ` : ''}
+      `;
+
+      // Reset para a 1ª aba (Na Justiça)
+      const firstTabBtn = document.querySelector('.ficha-tabs-nav .tab-justica');
+      if (firstTabBtn) switchFichaTab('justica', firstTabBtn);
+
+      const overlay = document.getElementById('fichaModalOverlay');
+      if (overlay) {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+    };
+
+    window.switchFichaTab = function(tabName, btnEl) {
+      document.querySelectorAll('.ficha-tab-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      document.querySelectorAll('.ficha-tab-pane').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(`pane-${tabName}`);
+      if (target) target.classList.add('active');
+    };
+
+    window.fecharFichaModal = function() {
+      const overlay = document.getElementById('fichaModalOverlay');
+      if (overlay) {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+    };
+
+    window.fecharFichaOverlay = function(e) {
+      if (e.target.id === 'fichaModalOverlay') {
+        fecharFichaModal();
+      }
+    };
+
+    // Abre acordeão via botão da barra superior
+    window.openAccordion = function(accordionId) {
+      const el = document.getElementById(accordionId);
+      if (el) {
+        el.open = true;
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    // MINI-QUIZ ELEITORAL GAMIFICADO
+    const QUIZ_QUESTIONS = [
+      {
+        pergunta: "1) Pra ganhar no 1º turno, o que o candidato a presidente precisa?",
+        opcoes: [
+          { texto: "A) Ter mais votos que o segundo colocado, não importa a porcentagem.", correta: false },
+          { texto: "B) Mais da metade dos votos válidos (50% + 1 dos votos).", correta: true },
+          { texto: "C) 70% de todos os eleitores cadastrados no Brasil.", correta: false }
+        ],
+        explicacao: "CF, art. 77: só vence de primeira quem passa de 50% dos votos válidos (excluídos brancos e nulos)."
+      },
+      {
+        pergunta: "2) Se mais da metade da população votar NULO, a eleição é cancelada?",
+        opcoes: [
+          { texto: "A) Não. Isso é mito. Voto nulo não anula nem cancela eleição (TSE).", correta: true },
+          { texto: "B) Sim, a eleição é remarcada e nenhum candidato pode disputar de novo.", correta: false },
+          { texto: "C) Sim, o Exército assume o poder interinamente.", correta: false }
+        ],
+        explicacao: "Mito clássico desmentido pelo TSE: o cálculo da vitória considera apenas os votos válidos em candidatos."
+      },
+      {
+        pergunta: "3) Voto em BRANCO vai para o candidato que está ganhando?",
+        opcoes: [
+          { texto: "A) Sim, sempre soma pro candidato líder da pesquisa.", correta: false },
+          { texto: "B) Não. Mito antigo. Branco é descartado igual ao nulo.", correta: true },
+          { texto: "C) Vai para o partido com a maior bancada de deputados.", correta: false }
+        ],
+        explicacao: "TSE: votos em branco e nulos não são transferidos para ninguém e não entram no cálculo final."
+      }
+    ];
+
+    let quizAnswersState = {};
+
+    window.openQuizModal = function() {
+      const overlay = document.getElementById('quizModalOverlay');
+      const body = document.getElementById('quizModalBody');
+      if (!overlay || !body) return;
+
+      quizAnswersState = {};
+
+      body.innerHTML = `
+        <p style="font-size: 0.88rem; color: #475569; margin: 0 0 1rem; font-weight: 600;">
+          Responda as 3 perguntas rápidas. Acerte todas e ganhe o selo <strong>🎓 SABIDO DO VOTO</strong> + bônus de pontos!
+        </p>
+        ${QUIZ_QUESTIONS.map((q, qIdx) => `
+          <div class="quiz-q-box" id="quiz-box-${qIdx}">
+            <h4 class="quiz-q-title">${q.pergunta}</h4>
+            <div class="quiz-opts">
+              ${q.opcoes.map((opt, oIdx) => `
+                <button type="button" class="quiz-opt-btn" onclick="responderQuiz(${qIdx}, ${oIdx})">
+                  ${opt.texto}
+                </button>
+              `).join('')}
+            </div>
+            <div class="quiz-feedback" id="quiz-feedback-${qIdx}"></div>
+          </div>
+        `).join('')}
+      `;
+
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+    };
+
+    window.responderQuiz = function(qIdx, oIdx) {
+      if (quizAnswersState[qIdx] !== undefined) return;
+
+      const q = QUIZ_QUESTIONS[qIdx];
+      const opt = q.opcoes[oIdx];
+      const box = document.getElementById(`quiz-box-${qIdx}`);
+      const fb = document.getElementById(`quiz-feedback-${qIdx}`);
+      const btns = box.querySelectorAll('.quiz-opt-btn');
+
+      btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (q.opcoes[idx].correta) {
+          btn.classList.add('correct');
+        } else if (idx === oIdx && !opt.correta) {
+          btn.classList.add('wrong');
+        }
+      });
+
+      fb.style.display = 'block';
+      if (opt.correta) {
+        fb.style.background = '#dcfce7';
+        fb.style.color = '#15803d';
+        fb.innerHTML = `✅ <strong>Acertou em cheio!</strong> ${q.explicacao}`;
+        quizAnswersState[qIdx] = true;
       } else {
-        content.classList.add('open');
-        btn.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-        btn.querySelector('.toggle-icon').textContent = '▲';
+        fb.style.background = '#fee2e2';
+        fb.style.color = '#991b1b';
+        fb.innerHTML = `❌ <strong>Errou!</strong> ${q.explicacao}`;
+        quizAnswersState[qIdx] = false;
+      }
+
+      // Verifica se respondeu as 3
+      if (Object.keys(quizAnswersState).length === 3) {
+        const totalAcertos = Object.values(quizAnswersState).filter(Boolean).length;
+        if (totalAcertos === 3) {
+          soltarConfetes();
+          GAMIFICACAO.adicionarPontosQuiz(3);
+          mostrarToast("🎓 SABIDO DO VOTO! Acertou as 3! +3 ⭐");
+        } else {
+          mostrarToast(`Você acertou ${totalAcertos} de 3 perguntas.`);
+        }
       }
     };
 
-    // Alternar Abas no card
-    window.switchCardTab = function(candidateId, tabName, btnElement) {
-      const card = document.getElementById(`card-${candidateId}`);
-      if (!card) return;
-
-      const buttons = card.querySelectorAll('.tab-btn');
-      buttons.forEach(b => b.classList.remove('active'));
-      btnElement.classList.add('active');
-
-      const panes = card.querySelectorAll('.tab-pane');
-      panes.forEach(p => p.classList.remove('active'));
-
-      const targetPane = document.getElementById(`${candidateId}-${tabName}`);
-      if (targetPane) {
-        targetPane.classList.add('active');
+    window.fecharQuizModal = function() {
+      const overlay = document.getElementById('quizModalOverlay');
+      if (overlay) {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
       }
     };
 
-    // Funções de Interação das Novas Seções Didáticas
+    window.fecharQuizOverlay = function(e) {
+      if (e.target.id === 'quizModalOverlay') {
+        fecharQuizModal();
+      }
+    };
+
+    // Funções de Interação das Seções Didáticas
     window.focusCandidateFilter = function(filterVal) {
       const candidatesEl = document.getElementById('candidatos');
       if (candidatesEl) {
@@ -3616,21 +5071,10 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
       if (candidatesEl) {
         candidatesEl.scrollIntoView({ behavior: 'smooth' });
       }
-      // Garante que todas as abas 'justica' estejam ativas e visíveis
-      CANDIDATES.forEach(c => {
-        const deep = document.getElementById(`deep-${c.id}`);
-        if (deep && !deep.classList.contains('open')) {
-          deep.classList.add('open');
-          const toggleBtn = deep.previousElementSibling;
-          if (toggleBtn && toggleBtn.classList.contains('deep-dive-toggle-btn')) {
-            toggleBtn.classList.add('open');
-          }
-        }
-        const justicaBtn = document.querySelector(`#card-${c.id} .tab-btn:first-child`);
-        if (justicaBtn) {
-          switchCardTab(c.id, 'justica', justicaBtn);
-        }
-      });
+      // Abre a ficha do primeiro candidato diretamente na aba Na Justiça
+      if (CANDIDATES.length > 0) {
+        abrirFichaModal(CANDIDATES[0].id);
+      }
     };
 
     window.openCivicAssistant = function() {
@@ -4230,6 +5674,7 @@ table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 
 
     // Inicialização ao carregar o DOM
     document.addEventListener("DOMContentLoaded", () => {
+      GAMIFICACAO.init();
       renderCandidates(CANDIDATES);
       VOTACAO.init();
       initChat();
