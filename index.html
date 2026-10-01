@@ -1,0 +1,4419 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dossiê Eleitor 2026 — Guia Cívico Imparcial</title>
+  
+  <!-- Basecoat CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  
+  <!-- Shell System -->
+  <style>
+/* Skip artifact shell — fixed styles served beside every artifact.
+   Complements basecoat; artifacts override --accent for their own identity. */
+:root {
+  color-scheme: light dark;
+  --accent: #2563eb;
+  --accent-contrast: #ffffff;
+  --accent-text: color-mix(in srgb, var(--accent) 72%, #000);
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --text: #14171f;
+  --text-muted: #5b6472;
+  --border: rgba(20, 23, 31, 0.10);
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(20, 23, 31, 0.08);
+  --space: 16px;
+}
+/* Theme resolution. Without data-theme the viewer's system preference decides,
+   as it always did. With it, the artifact's own choice wins in BOTH directions:
+   a page that hardcodes one palette must not be handed the opposite set of
+   tokens by the machine it happens to be opened on. The dark values appear
+   twice because a media query cannot be folded into a selector list.
+   The attribute sits inside :where() so these blocks keep the specificity of a
+   bare :root — the page's own <style> is linked after this file and must go on
+   overriding any token it wants, exactly as it could before. */
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --accent-text: color-mix(in srgb, var(--accent) 78%, #fff);
+    --bg: #101318;
+    --surface: #181c23;
+    --text: #eef1f6;
+    --text-muted: #9aa4b2;
+    --border: rgba(238, 241, 246, 0.12);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+}
+:root:where([data-theme="dark"]) {
+  color-scheme: dark;
+  --accent-text: color-mix(in srgb, var(--accent) 78%, #fff);
+  --bg: #101318;
+  --surface: #181c23;
+  --text: #eef1f6;
+  --text-muted: #9aa4b2;
+  --border: rgba(238, 241, 246, 0.12);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+:root:where([data-theme="light"]) { color-scheme: light; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+
+.shell-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.shell-section { padding: calc(var(--space) * 2) 0; }
+.shell-grid { display: grid; gap: var(--space); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.shell-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: var(--space); }
+.shell-footer { padding: 24px 0 40px; color: var(--text-muted); font-size: 13px; }
+
+.shell-hero { padding: calc(var(--space) * 3) 0 calc(var(--space) * 2); }
+.shell-hero h1 { font-size: clamp(26px, 4vw, 40px); line-height: 1.15; margin: 0 0 10px; text-wrap: balance; }
+.shell-hero p { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space);
+}
+
+.kpi { display: flex; flex-direction: column; gap: 4px; }
+.kpi .kpi-value { font-size: 28px; font-weight: 650; line-height: 1.1; }
+.kpi .kpi-label { font-size: 13px; color: var(--text-muted); }
+.kpi .kpi-delta { font-size: 12.5px; font-weight: 600; }
+.kpi .kpi-delta.up { color: #0a8f3c; }
+.kpi .kpi-delta.down { color: #cf3131; }
+
+table.shell-table { border-collapse: collapse; width: 100%; font-size: 14px; }
+table.shell-table th {
+  text-align: left; font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600;
+}
+table.shell-table th, table.shell-table td { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--border); }
+table.shell-table td.num, table.shell-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.shell-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+
+.chart-box { width: 100%; min-height: 220px; }
+.chart-box svg { width: 100%; height: auto; display: block; }
+
+.muted { color: var(--text-muted); }
+.accent { color: var(--accent-text); }
+.shell-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent-text);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shell-fade { animation: shell-fade 400ms ease both; }
+  @keyframes shell-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+
+</style>
+  
+
+  <style>
+    :root {
+      --accent: #1d4ed8;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #475569;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      margin: 0;
+      padding: 0 0 94px 0; /* Espaço inferior para garantir que os botões flutuantes não cubram o rodapé */
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    /* Header Nav */
+    .civic-nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+    .civic-nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1.25rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .civic-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #0f172a;
+      text-decoration: none;
+    }
+    .civic-flag-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #009c3b 40%, #ffdf00 40% 70%, #002776 70%);
+      display: inline-block;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .civic-nav-meta {
+      font-size: 0.85rem;
+      color: #1e3a8a;
+      background: #dbeafe;
+      padding: 0.35rem 0.8rem;
+      border-radius: 9999px;
+      font-weight: 700;
+    }
+
+    /* Hero (compacto) */
+    .hero-wrapper {
+      background: linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
+      border-bottom: 2px solid #bfdbfe;
+      padding: 2.2rem 1.25rem 1.8rem;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #1e3a8a;
+      color: #ffffff;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+      box-shadow: 0 2px 4px rgba(30, 58, 138, 0.15);
+    }
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 850px;
+      margin: 0 auto 0.85rem;
+      text-transform: uppercase;
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      color: #334155;
+      max-width: 700px;
+      margin: 0 auto 1.3rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .hero-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 0.85rem 1.9rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .hero-cta-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    }
+    .hero-urgent-stripe {
+      display: block;
+      margin: 1.15rem auto 0.4rem;
+      max-width: 560px;
+      width: 92%;
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+      animation: stripePulse 1.6s ease-in-out infinite;
+      box-sizing: border-box;
+      line-height: 1.35;
+      text-align: center;
+    }
+    @keyframes stripePulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(220, 38, 38, 0.55);
+        opacity: 0.94;
+      }
+    }
+    .hero-disclaimer-pill {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #475569;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* Como ler rápido (compacto) */
+    .guide-banner {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 0.9rem 1.2rem;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+    }
+    .guide-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex: 1 1 180px;
+    }
+    .guide-icon {
+      font-size: 1.4rem;
+      background: #f1f5f9;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .guide-text h4 {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .guide-text p {
+      margin: 0.1rem 0 0;
+      font-size: 0.8rem;
+      color: #475569;
+    }
+
+    /* Micro-banner de Missão Neutra */
+    .mission-banner {
+      background: #eff6ff;
+      border: 2px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 1.25rem;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      box-shadow: 0 2px 6px rgba(30, 58, 138, 0.06);
+    }
+
+    /* Grupo de Acordeões / Menus Suspensos Limpos (Fechados por Padrão) */
+    .accordions-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .civic-accordion {
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .civic-accordion:hover {
+      border-color: #93c5fd;
+    }
+    .civic-accordion[open] {
+      border-color: #2563eb;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+    }
+    .civic-accordion-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      min-height: 52px;
+      padding: 0.8rem 1.15rem;
+      cursor: pointer;
+      background: #f8fafc;
+      user-select: none;
+      list-style: none;
+      transition: background-color 0.15s ease;
+    }
+    .civic-accordion-summary::-webkit-details-marker {
+      display: none;
+    }
+    .civic-accordion-summary:hover {
+      background: #eff6ff;
+    }
+    .civic-accordion[open] > .civic-accordion-summary {
+      background: #eff6ff;
+      border-bottom: 2px solid #bfdbfe;
+    }
+    .acc-summary-left {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-align: left;
+      flex: 1;
+      min-width: 0;
+    }
+    .acc-icon {
+      font-size: 1.35rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .acc-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+    .acc-title {
+      font-size: 0.98rem;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    .acc-badge {
+      font-size: 0.76rem;
+      color: #475569;
+      font-weight: 600;
+    }
+    .acc-arrow {
+      font-size: 0.85rem;
+      color: #2563eb;
+      font-weight: 900;
+      transition: transform 0.2s ease;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .civic-accordion[open] .acc-arrow {
+      transform: rotate(90deg);
+    }
+    .acc-content-wrapper {
+      padding: 1.15rem;
+      background: #ffffff;
+      animation: accFade 0.2s ease;
+    }
+    @keyframes accFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SEÇÃO 1: Como Funciona a Eleição (dentro do acordeão) */
+    .civic-edu-box {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin-bottom: 0;
+      box-shadow: none;
+    }
+    .civic-edu-header {
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+    .civic-edu-header h2 {
+      font-size: clamp(1.25rem, 3.2vw, 1.7rem);
+      font-weight: 900;
+      color: #0f172a;
+      margin: 0 0 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .civic-edu-subtitle {
+      font-size: 0.95rem;
+      color: #334155;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .edu-blocks-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (min-width: 860px) {
+      .edu-blocks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .edu-card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .edu-card.full-width {
+      grid-column: 1 / -1;
+    }
+    .edu-card-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #0f172a;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .edu-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: #1e293b;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+    .edu-card p strong {
+      color: #0f172a;
+      font-weight: 800;
+    }
+    .edu-rule-highlight {
+      background: #dcfce7;
+      border-left: 4px solid #16a34a;
+      padding: 0.55rem 0.8rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #14532d;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .edu-card-svg-wrap {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .edu-card-svg-wrap svg {
+      width: 100%;
+      height: auto;
+      max-height: 190px;
+      display: block;
+    }
+
+    .myth-alert-banner {
+      background: #fef2f2;
+      border: 2px solid #f87171;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      color: #991b1b;
+      font-size: 0.92rem;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+    .myth-alert-banner strong {
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* Grade Mitos e Verdades */
+    .myths-truths-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    @media (min-width: 640px) {
+      .myths-truths-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .mv-item {
+      padding: 0.75rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .mv-item.myth {
+      background: #fff1f2;
+      border: 1.5px solid #fecdd3;
+      color: #9f1239;
+    }
+    .mv-item.truth {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      color: #166534;
+    }
+    .mv-tag {
+      font-weight: 900;
+      font-size: 0.82rem;
+      letter-spacing: 0.03em;
+    }
+    .mv-source {
+      font-size: 0.76rem;
+      font-weight: 700;
+      opacity: 0.85;
+    }
+
+    /* Links de fontes da seção */
+    .edu-sources-tray {
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      border: 1px solid #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .edu-sources-tray span.title {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .edu-sources-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .edu-src-link {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #1d4ed8;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.15s ease;
+    }
+    .edu-src-link:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    /* SEÇÃO 2: Como Votar Certo (dentro do acordeão) */
+    .votar-certo-box {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin-bottom: 0;
+      box-shadow: none;
+    }
+    .votar-certo-header {
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.85rem;
+      margin-bottom: 1.15rem;
+    }
+    .votar-certo-header h2 {
+      font-size: clamp(1.25rem, 3.2vw, 1.7rem);
+      font-weight: 900;
+      color: #0f172a;
+      margin: 0 0 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+    .votar-certo-subtitle {
+      font-size: 0.95rem;
+      color: #334155;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .votar-rules-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+    @media (min-width: 600px) {
+      .votar-rules-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .votar-rules-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    .rule-card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 0.95rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.65rem;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .rule-card:hover {
+      border-color: #93c5fd;
+      transform: translateY(-2px);
+    }
+    .rule-card-top {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .rule-card-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+    .rule-card-title {
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.25;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    .rule-card-text {
+      font-size: 0.85rem;
+      color: #334155;
+      font-weight: 600;
+      line-height: 1.35;
+      margin: 0;
+    }
+    .rule-card-action {
+      margin-top: 0.4rem;
+    }
+    .rule-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      width: 100%;
+      min-height: 48px;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      border-radius: 9px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.45rem 0.65rem;
+      transition: background 0.15s;
+      box-sizing: border-box;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .rule-action-btn:hover {
+      background: #1d4ed8;
+      color: #ffffff;
+    }
+    .rule-action-btn.secondary {
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 1.5px solid #cbd5e1;
+    }
+    .rule-action-btn.secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .votar-final-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      line-height: 1.4;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2);
+    }
+
+    /* Pesquisas (dentro do acordeão) */
+    .polls-box {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      margin-bottom: 0;
+    }
+
+    .polls-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+    .polls-header h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin: 0;
+      color: #0f172a;
+    }
+    .poll-simple-alert {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f172a;
+      background: #f8fafc;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 1rem;
+    }
+    .poll-bar-container {
+      background: #e2e8f0;
+      height: 44px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      margin-bottom: 1rem;
+    }
+    .poll-segment {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 6px;
+    }
+    .poll-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      font-size: 0.9rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #1e293b;
+      font-weight: 600;
+    }
+    .legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* Barra de Busca e Filtros */
+    .toolbar-sticky {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    @media (min-width: 768px) {
+      .toolbar-sticky {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 440px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 0.9rem 0.75rem 2.4rem;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      font-weight: 500;
+      box-sizing: border-box;
+    }
+    .search-input:focus {
+      border-color: #2563eb;
+    }
+    .search-icon-placeholder {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .filter-btn {
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      color: #1e293b;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-btn:hover {
+      background: #e2e8f0;
+    }
+    .filter-btn.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    /* Grid dos Candidatos (compacto) */
+    .candidates-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    @media (min-width: 960px) {
+      .candidates-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Card Candidato (compacto) */
+    .c-card {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+    }
+    .c-header {
+      padding: 0.9rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      background: #f8fafc;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .c-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.35rem;
+      color: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      border: 2.5px solid #ffffff;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .c-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      position: absolute;
+      inset: 0;
+      display: block;
+    }
+    .c-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .c-ballot-name {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.15;
+      margin: 0;
+    }
+    .c-full-name {
+      font-size: 0.84rem;
+      color: #475569;
+      margin: 0.1rem 0 0.35rem;
+      font-weight: 500;
+    }
+    .c-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      align-items: center;
+    }
+    .party-tag {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 5px;
+    }
+    .role-tag {
+      background: #e2e8f0;
+      color: #1e293b;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+    }
+    .status-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+      background: #dbeafe;
+      color: #1e40af;
+      margin-left: auto;
+    }
+    .status-pill.irregular {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #f87171;
+    }
+
+    /* Resumo em 1 frase */
+    .c-one-liner {
+      background: #f1f5f9;
+      border-left: 4px solid #2563eb;
+      padding: 0.7rem 1rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    /* O Essencial (Leia em 1 minuto) */
+    .c-essential-box {
+      padding: 0.85rem 1.1rem;
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .c-essential-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      font-weight: 900;
+      color: #2563eb;
+      letter-spacing: 0.05em;
+      margin: 0 0 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .essential-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.38rem;
+    }
+    .essential-item {
+      font-size: 0.92rem;
+      color: #1e293b;
+      font-weight: 600;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.35;
+    }
+    .essential-bullet {
+      color: #2563eb;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    /* Botão Toggle Quero Saber Mais */
+    .deep-dive-toggle-btn {
+      width: 100%;
+      background: #f8fafc;
+      border: none;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0.9rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #1d4ed8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background-color 0.15s;
+    }
+    .deep-dive-toggle-btn:hover {
+      background: #eff6ff;
+    }
+    .toggle-icon {
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+    .deep-dive-toggle-btn.open .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Área recolhível de aprofundamento */
+    .deep-dive-content {
+      display: none;
+      background: #ffffff;
+    }
+    .deep-dive-content.open {
+      display: block;
+    }
+
+    /* Abas de Navegação interna no Quero Saber Mais */
+    .card-tabs-nav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      background: #f1f5f9;
+      border-bottom: 2px solid #cbd5e1;
+    }
+    @media (min-width: 540px) {
+      .card-tabs-nav {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .tab-btn {
+      padding: 0.75rem 0.6rem;
+      border: none;
+      background: transparent;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+    .tab-btn:hover {
+      color: #0f172a;
+      background: #e2e8f0;
+    }
+    .tab-btn.active {
+      color: #1d4ed8;
+      border-bottom-color: #1d4ed8;
+      background: #ffffff;
+      font-weight: 800;
+    }
+
+    /* Painéis de conteúdo das abas */
+    .c-body {
+      padding: 1.25rem;
+      background: #ffffff;
+    }
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+
+    .c-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .c-list-item {
+      font-size: 0.92rem;
+      color: #1e293b;
+      line-height: 1.45;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .c-list-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      font-size: 1.3rem;
+      font-weight: 900;
+      line-height: 1;
+      top: -2px;
+    }
+    .tab-pane[data-type="fortes"] .c-list-item::before { color: #16a34a; }
+    .tab-pane[data-type="propostas"] .c-list-item::before { color: #2563eb; }
+    .tab-pane[data-type="fracos"] .c-list-item::before { color: #d97706; }
+
+    /* Links de fontes inline */
+    .src-inline-link {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #2563eb;
+      text-decoration: underline;
+      margin-left: 0.35rem;
+      white-space: nowrap;
+    }
+    .src-inline-link:hover {
+      color: #1e40af;
+    }
+
+    /* Seção ⚖️ PROBLEMAS NA JUSTIÇA (Destaque Provas vs Investigação) */
+    .justice-group {
+      margin-bottom: 1.1rem;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .justice-group-proven {
+      border: 2px solid #dc2626;
+      background: #fff5f5;
+    }
+    .justice-group-investigation {
+      border: 2px solid #f97316;
+      background: #fffaf0;
+    }
+    .justice-header-proven {
+      background: #dc2626;
+      color: #ffffff;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: 0.03em;
+    }
+    .justice-header-investigation {
+      background: #ea580c;
+      color: #ffffff;
+      padding: 0.5rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: 0.03em;
+    }
+    .justice-items-box {
+      padding: 0.85rem 1rem;
+    }
+    .justice-notice-banner {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #c2410c;
+      background: #ffedd5;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+      display: inline-block;
+    }
+    .justice-empty-note {
+      font-size: 0.85rem;
+      color: #15803d;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Seção Quer Conferir? Fontes no Rodapé do Card */
+    .c-sources-footer {
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 0.85rem 1.25rem;
+    }
+    .c-sources-label {
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .c-sources-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .c-sources-chip {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1e40af;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .c-sources-chip:hover {
+      background: #dbeafe;
+    }
+
+    /* Botão Flutuante de Voto — Canto Inferior Esquerdo Compacto */
+    .vote-fab-btn {
+      position: fixed;
+      bottom: 18px;
+      left: 16px;
+      z-index: 9990;
+      min-height: 46px;
+      height: 46px;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #16a34a 0%, #2563eb 100%);
+      color: #ffffff;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 16px rgba(22, 163, 74, 0.35);
+      cursor: pointer;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      font-family: inherit;
+      animation: voteFabPulse 2s infinite ease-in-out;
+      outline: none;
+      white-space: nowrap;
+      transition: filter 0.15s ease, transform 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    .vote-fab-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+    }
+    .vote-fab-btn:active {
+      transform: scale(0.96);
+    }
+    .vote-fab-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+    .vote-fab-label {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      line-height: 1.1;
+    }
+    .vote-fab-title {
+      font-size: 0.88rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    }
+    .vote-fab-sub {
+      font-size: 0.65rem;
+      font-weight: 700;
+      opacity: 0.92;
+      letter-spacing: 0.01em;
+    }
+    @keyframes voteFabPulse {
+      0% {
+        box-shadow: 0 3px 12px rgba(22, 163, 74, 0.35), 0 0 0 0 rgba(37, 99, 235, 0.35);
+      }
+      50% {
+        box-shadow: 0 5px 18px rgba(22, 163, 74, 0.5), 0 0 0 6px rgba(37, 99, 235, 0);
+      }
+      100% {
+        box-shadow: 0 3px 12px rgba(22, 163, 74, 0.35), 0 0 0 0 rgba(37, 99, 235, 0);
+      }
+    }
+
+    /* Modal de Votação */
+    .vote-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 9995;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      backdrop-filter: blur(2px);
+    }
+    .vote-modal-overlay.open {
+      display: flex;
+    }
+    .vote-modal-card {
+      background: #ffffff;
+      color: #0f172a;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+    }
+    .vote-modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      font-size: 1.15rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background-color 0.15s;
+    }
+    .vote-modal-close:hover {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .vote-modal-header {
+      padding: 1.25rem 1.25rem 0.4rem;
+      padding-right: 3.2rem;
+    }
+    .vote-modal-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin: 0 0 0.2rem;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+    .vote-modal-subtitle {
+      font-size: 0.85rem;
+      color: #475569;
+      margin: 0;
+      font-weight: 600;
+    }
+    .vote-modal-notice {
+      margin: 0.5rem 1.25rem 0.65rem;
+      font-size: 0.8rem;
+      color: #9a3412;
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+    .vote-leader-banner {
+      margin: 0 1.25rem 0.65rem;
+      padding: 0.5rem 0.8rem;
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .vote-status-bar {
+      margin: 0 1.25rem 0.65rem;
+      padding: 0.38rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      line-height: 1.3;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .vote-status-bar.online {
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .vote-status-bar.offline {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    .vote-modal-alert {
+      margin: 0 1.25rem 0.65rem;
+      padding: 0.55rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      line-height: 1.35;
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .vote-actions-bar {
+      margin: 0 1.25rem 0.65rem;
+      padding: 0.6rem 0.8rem;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .vote-my-choice-text {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #1e40af;
+    }
+    .vote-actions-btns {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .vote-sub-btn {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .vote-swap-btn {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #1d4ed8;
+    }
+    .vote-swap-btn:hover {
+      background: #1d4ed8;
+    }
+    .vote-reset-btn {
+      background: #ffffff;
+      color: #dc2626;
+      border-color: #fca5a5;
+    }
+    .vote-reset-btn:hover {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    .vote-candidates-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 1.25rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .vote-candidate-btn {
+      width: 100%;
+      min-height: 52px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.5rem 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+      font-family: inherit;
+      transition: border-color 0.2s, background-color 0.2s, transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .vote-candidate-btn:hover:not(:disabled) {
+      border-color: #93c5fd;
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+    .vote-candidate-btn:focus-visible {
+      outline: 3px solid #2563eb;
+      outline-offset: 2px;
+    }
+    .vote-candidate-btn.voted {
+      border-color: #16a34a;
+      background: #f0fdf4;
+      box-shadow: 0 0 0 1px #16a34a;
+    }
+    .vote-candidate-btn.locked {
+      opacity: 0.7;
+    }
+    .vote-candidate-btn:disabled {
+      cursor: not-allowed;
+    }
+    .vote-progress-fill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background: #e0f2fe;
+      opacity: 0.65;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .vote-candidate-btn.voted .vote-progress-fill {
+      background: #bbf7d0;
+      opacity: 0.75;
+    }
+    .vote-card-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 0;
+      flex: 1;
+    }
+    .vote-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.92rem;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    .vote-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+    .vote-cand-meta {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .vote-cand-name-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .vote-cand-name {
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .vote-cand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      background: #16a34a;
+      color: #ffffff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.12rem 0.4rem;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .vote-cand-party {
+      font-size: 0.76rem;
+      color: #475569;
+      font-weight: 600;
+    }
+    .vote-cand-metrics {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .vote-cand-pct {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+    .vote-cand-count {
+      font-size: 0.72rem;
+      color: #64748b;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .vote-modal-footer {
+      padding: 0.75rem 1.25rem 0.9rem;
+      border-top: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+    .vote-total-badge {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      margin-bottom: 0.35rem;
+    }
+    .vote-modal-legal-note {
+      font-size: 0.72rem;
+      color: #64748b;
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    /* Chat Bot "Decidir Junto" — Canto Inferior Direito Compacto */
+    .chat-trigger-btn {
+      position: fixed;
+      bottom: 18px;
+      right: 16px;
+      z-index: 1000;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.88rem;
+      min-height: 46px;
+      height: 46px;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .chat-trigger-btn:hover {
+      transform: translateY(-2px);
+      background: #1d4ed8;
+    }
+
+    /* Regras Mobile: Botão de Voto (esq) e Chat (dir) perfeitamente separados */
+    @media (max-width: 767px) {
+      .vote-fab-btn {
+        left: 12px;
+        bottom: 14px;
+        min-height: 42px;
+        height: 42px;
+        padding: 0.3rem 0.75rem;
+      }
+      .vote-fab-title {
+        font-size: 0.8rem;
+      }
+      .vote-fab-sub {
+        display: none;
+      }
+      .chat-trigger-btn {
+        right: 12px;
+        bottom: 14px;
+        min-height: 42px;
+        height: 42px;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.82rem;
+      }
+      .chat-trigger-btn span:last-child {
+        font-size: 0.8rem;
+      }
+    }
+    .chat-modal {
+      position: fixed;
+      bottom: 5.5rem;
+      right: 1.5rem;
+      width: calc(100vw - 3rem);
+      max-width: 400px;
+      height: 520px;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 18px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-modal.open {
+      display: flex;
+    }
+    .chat-modal-header {
+      background: #1e3a8a;
+      color: #ffffff;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-modal-header h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+    .chat-close-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .chat-modal-body {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      background: #f8fafc;
+    }
+    .chat-bubble {
+      padding: 0.75rem 0.95rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      line-height: 1.4;
+      max-width: 88%;
+    }
+    .chat-bubble-bot {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+      align-self: flex-start;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .chat-bubble-user {
+      background: #2563eb;
+      color: #ffffff;
+      align-self: flex-end;
+      font-weight: 600;
+    }
+    .chat-options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-top: 0.35rem;
+    }
+    .chat-option-btn {
+      background: #ffffff;
+      border: 1.5px solid #2563eb;
+      color: #1e3a8a;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chat-option-btn:hover {
+      background: #eff6ff;
+    }
+
+    /* Fontes Oficiais Seção */
+    .sources-box {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 3rem;
+    }
+    .sources-box h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem;
+      color: #0f172a;
+    }
+    .sources-box p {
+      font-size: 0.95rem;
+      color: #475569;
+      margin: 0 0 1.25rem;
+    }
+    .sources-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    @media (min-width: 640px) {
+      .sources-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .source-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 0.95rem;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #1e293b;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: border-color 0.15s, background-color 0.15s;
+    }
+    .source-item:hover {
+      border-color: #2563eb;
+      background: #eff6ff;
+      color: #1e40af;
+    }
+    .source-bullet {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #2563eb;
+      flex-shrink: 0;
+    }
+
+    /* Rodapé Institucional */
+    .civic-footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 3rem 1.25rem 2rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .footer-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.85rem;
+    }
+    .footer-disclaimer-box {
+      border: 1px solid #334155;
+      background: rgba(255,255,255,0.04);
+      padding: 1.2rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .footer-disclaimer-box strong {
+      color: #f1f5f9;
+    }
+    .footer-bottom {
+      border-top: 1px solid #1e293b;
+      padding-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    /* Print styles */
+    @media print {
+      .civic-nav, .toolbar-sticky, .filter-pills, .search-input-wrap, .btn-print-hide, .chat-trigger-btn, .chat-modal, .hero-cta-btn, .vote-fab-btn, .vote-modal-overlay, .deep-dive-toggle-btn {
+        display: none !important;
+      }
+      .deep-dive-content {
+        display: block !important;
+      }
+      .c-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        margin-bottom: 1.5rem;
+      }
+      .tab-pane {
+        display: block !important;
+        margin-bottom: 0.8rem;
+      }
+      .card-tabs-nav {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="civic-nav">
+    <div class="civic-nav-inner">
+      <a href="#" class="civic-brand">
+        <span class="civic-flag-icon" aria-hidden="true"></span>
+        <span>Dossiê Eleitor 2026</span>
+      </a>
+      <div class="civic-nav-meta">
+        Atualizado: Outubro/2026
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-wrapper">
+    <div class="shell-container">
+      <div class="hero-badge">
+        <span>🗳️ 1º turno: 4 de outubro • 2º turno: 25 de outubro</span>
+      </div>
+      <h1 class="hero-title">VOTA CERTO, NÃO VOTA NO ESCURO.</h1>
+      <p class="hero-subtitle">
+        O que cada candidato fez, o que promete e o que responde na Justiça. Tudo em 5 minutos, sem enrolação.
+      </p>
+      <div>
+        <a href="#candidatos" class="hero-cta-btn">
+          <span>COMEÇAR AGORA</span>
+          <span aria-hidden="true">👇</span>
+        </a>
+      </div>
+      <div class="hero-urgent-stripe" role="alert">
+        ⚠️ POR FAVOR, GASTE AO MENOS 5 MINUTOS LENDO E SALVE O BRASIL
+      </div>
+      <div>
+        <div class="hero-disclaimer-pill">
+          ⚖️ <strong>Honestidade total:</strong> Não dizemos em quem votar. Mostramos os fatos para você decidir sozinho.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="shell-container" style="padding-top: 1.5rem;">
+
+    <!-- Como Ler Rápido -->
+    <section>
+      <div class="guide-banner">
+        <div class="guide-item">
+          <div class="guide-icon">⏱️</div>
+          <div class="guide-text">
+            <h4>Leitura em 1 minuto</h4>
+            <p>Veja o resumo no topo do card. Se quiser mais detalhes, clique no botão.</p>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">⚖️</div>
+          <div class="guide-text">
+            <h4>Justiça sem mentira</h4>
+            <p>Vermelho para condenação comprovada. Laranja para denúncia ainda sem decisão.</p>
+          </div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-icon">🔍</div>
+          <div class="guide-text">
+            <h4>Fontes oficiais</h4>
+            <p>Cada frase tem link para checar no TSE e nos jornais.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Micro-banner de Missão Neutra -->
+      <div class="mission-banner" role="note">
+        Somos neutros de verdade: não defendemos partido nem candidato. Só juntamos a verdade, com fonte oficial, pra você decidir. 🇧🇷
+      </div>
+    </section>
+
+    <!-- GRUPO DE GUIAS EM MENU SUSPENSO (FECHADOS POR PADRÃO — SEM POLUIÇÃO VISUAL) -->
+    <div class="accordions-group" aria-label="Guias explicativos e pesquisas eleitorais">
+
+      <!-- ACORDEÃO 1: Como Funciona a Eleição -->
+      <details class="civic-accordion" id="como-funciona">
+        <summary class="civic-accordion-summary">
+          <div class="acc-summary-left">
+            <span class="acc-icon" aria-hidden="true">🧒</span>
+            <div class="acc-title-wrap">
+              <span class="acc-title">COMO FUNCIONA A ELEIÇÃO? EXPLICADO FÁCIL</span>
+              <span class="acc-badge">Regras de 1º e 2º turno, 50%+1, voto em branco e voto nulo</span>
+            </div>
+          </div>
+          <span class="acc-arrow" aria-hidden="true">▶</span>
+        </summary>
+        <div class="acc-content-wrapper">
+          <section class="civic-edu-box" aria-label="Como funciona a eleição explicado fácil">
+            <div class="civic-edu-header">
+              <h2>🧒 COMO FUNCIONA A ELEIÇÃO? EXPLICADO FÁCIL</h2>
+              <p class="civic-edu-subtitle">
+                Pra criança de 10 anos entender — e pro adulto que nunca parou pra pensar. Tudo com fonte oficial.
+              </p>
+            </div>
+
+            <div class="edu-blocks-grid">
+              <!-- BLOCO A: Pizza Metade + 1 -->
+              <article class="edu-card">
+                <h3 class="edu-card-title">🍕 PRA GANHAR DE PRIMEIRA, TEM QUE PASSAR DE METADE</h3>
+                <p>
+                  A gente não elege "quem tem mais voto".
+                  Pra ganhar no 1º turno, precisa de MAIS DA METADE dos votos válidos.
+                  Voto válido é só aquele que tem nome de candidato.
+                </p>
+
+                <div class="edu-rule-highlight">
+                  <span>Regra de ouro: <strong>50% + 1 dos votos válidos</strong></span>
+                  <a href="https://portal.stf.jus.br/constituicao-supremo/artigo.asp?abrirArtigo=77&abrirBase=CF" target="_blank" rel="noopener noreferrer" class="edu-src-link">🔍 CF, art. 77</a>
+                </div>
+
+                <div class="edu-card-svg-wrap" title="Desenho didático de uma pizza: 10 fatias, metade + 1 fatia leva a eleição">
+                  <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pizza de 10 fatias com mais da metade destacada para vitória no 1º turno">
+                    <g transform="translate(100, 90)">
+                      <path d="M 0,0 L 70,0 A 70 70 0 0,1 56.63,41.14 Z" fill="#22c55e" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L 56.63,41.14 A 70 70 0 0,1 21.63,66.57 Z" fill="#22c55e" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L 21.63,66.57 A 70 70 0 0,1 -21.63,66.57 Z" fill="#22c55e" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L -21.63,66.57 A 70 70 0 0,1 -56.63,41.14 Z" fill="#22c55e" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L -56.63,41.14 A 70 70 0 0,1 -70,0 Z" fill="#22c55e" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L -70,0 A 70 70 0 0,1 -56.63,-41.14 Z" fill="#16a34a" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L -56.63,-41.14 A 70 70 0 0,1 -21.63,-66.57 Z" fill="#cbd5e1" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L -21.63,-66.57 A 70 70 0 0,1 21.63,-66.57 Z" fill="#cbd5e1" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L 56.63,-41.14 A 70 70 0 0,1 56.63,-41.14 Z" fill="#cbd5e1" stroke="#ffffff" stroke-width="2"/>
+                      <path d="M 0,0 L 56.63,-41.14 A 70 70 0 0,1 70,0 Z" fill="#cbd5e1" stroke="#ffffff" stroke-width="2"/>
+                      <line x1="-75" y1="0" x2="75" y2="0" stroke="#0f172a" stroke-width="2.5" stroke-dasharray="4,3"/>
+                      <circle cx="0" cy="0" r="8" fill="#0f172a"/>
+                    </g>
+                    <text x="185" y="42" font-family="sans-serif" font-size="13" font-weight="900" fill="#0f172a">10 FATIAS DE VOTOS</text>
+                    <line x1="185" y1="52" x2="320" y2="52" stroke="#e2e8f0" stroke-width="2"/>
+                    <rect x="185" y="66" width="14" height="14" rx="3" fill="#16a34a"/>
+                    <text x="206" y="78" font-family="sans-serif" font-size="12" font-weight="800" fill="#14532d">6 fatias (50% + 1)</text>
+                    <text x="206" y="93" font-family="sans-serif" font-size="11" font-weight="700" fill="#15803d">GANHOU NO 1º TURNO 🎉</text>
+
+                    <rect x="185" y="112" width="14" height="14" rx="3" fill="#cbd5e1"/>
+                    <text x="206" y="124" font-family="sans-serif" font-size="12" font-weight="700" fill="#475569">4 fatias (outros)</text>
+                    <text x="185" y="156" font-family="sans-serif" font-size="11" font-weight="800" fill="#0f172a">Linha = corte dos 50%</text>
+                  </svg>
+                </div>
+              </article>
+
+              <!-- BLOCO B: Fluxograma 2º Turno -->
+              <article class="edu-card">
+                <h3 class="edu-card-title">🔁 SE NINGUÉM PASSA DE METADE, VAI PRO 2º TURNO</h3>
+                <p>
+                  Se ninguém chegar em 50% + 1, os DOIS mais votados voltam a se enfrentar.
+                  Lá, ganha quem tiver mais votos válidos (são só 2).
+                </p>
+
+                <div class="edu-rule-highlight" style="background: #eff6ff; border-color: #2563eb; color: #1e3a8a;">
+                  <span>1º turno: <strong>4/out</strong> • 2º turno: <strong>25/out</strong></span>
+                  <a href="https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/18/por-que-tem-segundo-turno-nas-eleicoes.ghtml" target="_blank" rel="noopener noreferrer" class="edu-src-link">🔍 fonte Valor</a>
+                </div>
+
+                <div class="edu-card-svg-wrap" title="Fluxograma do 1º ao 2º turno">
+                  <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxograma simples: 1º turno, pergunta se alguém passou de 50%+1, se sim eleito, se não vai ao 2º turno">
+                    <rect x="10" y="20" width="130" height="54" rx="8" fill="#1e3a8a" stroke="#1d4ed8" stroke-width="2"/>
+                    <text x="75" y="42" font-family="sans-serif" font-size="12" font-weight="900" fill="#ffffff" text-anchor="middle">1º TURNO</text>
+                    <text x="75" y="60" font-family="sans-serif" font-size="11" font-weight="700" fill="#93c5fd" text-anchor="middle">Dom, 4 de Outubro</text>
+
+                    <path d="M 140 47 L 175 47" stroke="#0f172a" stroke-width="2.5"/>
+
+                    <rect x="180" y="20" width="105" height="54" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                    <text x="232" y="42" font-family="sans-serif" font-size="11" font-weight="900" fill="#78350f" text-anchor="middle">Passou de 50%+1?</text>
+                    <text x="232" y="59" font-family="sans-serif" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle">🤔</text>
+
+                    <path d="M 285 40 L 305 40" stroke="#16a34a" stroke-width="2.5"/>
+                    <rect x="305" y="16" width="65" height="48" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                    <text x="337" y="36" font-family="sans-serif" font-size="11" font-weight="900" fill="#15803d" text-anchor="middle">SIM ✅</text>
+                    <text x="337" y="52" font-family="sans-serif" font-size="10" font-weight="800" fill="#166534" text-anchor="middle">ELEITO 🎉</text>
+
+                    <path d="M 232 74 L 232 105" stroke="#dc2626" stroke-width="2.5"/>
+                    <rect x="188" y="90" width="90" height="20" rx="4" fill="#fee2e2"/>
+                    <text x="233" y="104" font-family="sans-serif" font-size="10" font-weight="900" fill="#991b1b" text-anchor="middle">NÃO ❌</text>
+
+                    <rect x="30" y="118" width="190" height="52" rx="8" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+                    <text x="125" y="138" font-family="sans-serif" font-size="12" font-weight="900" fill="#ffffff" text-anchor="middle">2º TURNO (2 mais votados)</text>
+                    <text x="125" y="156" font-family="sans-serif" font-size="10" font-weight="700" fill="#eff6ff" text-anchor="middle">Dom, 25/Out • Quem tem mais ganha</text>
+
+                    <path d="M 220 144 L 255 144" stroke="#0f172a" stroke-width="2.5"/>
+                    <rect x="255" y="122" width="115" height="44" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                    <text x="312" y="142" font-family="sans-serif" font-size="11" font-weight="900" fill="#14532d" text-anchor="middle">+ Votos Válidos</text>
+                    <text x="312" y="157" font-family="sans-serif" font-size="11" font-weight="900" fill="#16a34a" text-anchor="middle">ELEITO 🎉</text>
+                  </svg>
+                </div>
+              </article>
+
+              <!-- BLOCO C: Voto Branco e Nulo (Full Width) -->
+              <article class="edu-card full-width">
+                <h3 class="edu-card-title">🗳️ VOTO BRANCO E VOTO NULO: O QUE ACONTECE?</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr; gap: 0.75rem;">
+                  <p>
+                    • <strong>Voto em BRANCO:</strong> você aperta a tecla BRANCO.<br>
+                    • <strong>Voto NULO:</strong> você digita um número que não existe (tipo 00).
+                  </p>
+                  <p>
+                    <strong>O que acontece com os dois?</strong> Têm o mesmo efeito: <strong>NÃO contam como voto válido</strong>. Não vão pra nenhum candidato. Não ajudam ninguém. Servem só pra mostrar que você não quis escolher.
+                  </p>
+                </div>
+
+                <div class="myth-alert-banner">
+                  ⚠️ <strong>MUITO CUIDADO COM O MITO:</strong> "se mais da metade votar nulo, a eleição é cancelada" — <strong>ISSO É MENTIRA!</strong> Segundo o TSE, voto nulo NÃO cancela eleição. Mesmo que 90% anulem, ganha quem tiver mais votos válidos.
+                </div>
+
+                <div class="edu-card-svg-wrap" title="Desenho mostrando que só voto em candidato conta no cálculo da vitória">
+                  <svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Urna eletrônica com 3 caminhos: candidato conta, branco e nulo não contam">
+                    <g transform="translate(15, 20)">
+                      <rect x="0" y="0" width="105" height="115" rx="10" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+                      <rect x="10" y="12" width="85" height="42" rx="4" fill="#cbd5e1"/>
+                      <text x="52" y="36" font-family="sans-serif" font-size="10" font-weight="900" fill="#0f172a" text-anchor="middle">JUSTIÇA</text>
+                      <text x="52" y="47" font-family="sans-serif" font-size="8" font-weight="700" fill="#475569" text-anchor="middle">ELEITORAL</text>
+                      <circle cx="28" cy="72" r="5" fill="#f1f5f9"/>
+                      <circle cx="52" cy="72" r="5" fill="#f1f5f9"/>
+                      <circle cx="76" cy="72" r="5" fill="#f1f5f9"/>
+                      <circle cx="28" cy="90" r="5" fill="#ffffff"/>
+                      <circle cx="52" cy="90" r="5" fill="#ea580c"/>
+                      <circle cx="76" cy="90" r="5" fill="#16a34a"/>
+                      <text x="52" y="110" font-family="sans-serif" font-size="9" font-weight="900" fill="#ffffff" text-anchor="middle">URNA</text>
+                    </g>
+
+                    <path d="M 125 45 L 205 35" stroke="#16a34a" stroke-width="3"/>
+                    <rect x="210" y="15" width="160" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                    <text x="290" y="32" font-family="sans-serif" font-size="12" font-weight="900" fill="#14532d" text-anchor="middle">Voto em Candidato</text>
+                    <text x="290" y="47" font-family="sans-serif" font-size="11" font-weight="800" fill="#15803d" text-anchor="middle">CONTA ✅ (Voto Válido)</text>
+
+                    <path d="M 370 35 L 415 55" stroke="#16a34a" stroke-width="2.5"/>
+                    <rect x="415" y="30" width="95" height="95" rx="10" fill="#1e3a8a" stroke="#1d4ed8" stroke-width="2"/>
+                    <text x="462" y="55" font-family="sans-serif" font-size="11" font-weight="900" fill="#ffffff" text-anchor="middle">CÁLCULO</text>
+                    <text x="462" y="72" font-family="sans-serif" font-size="10" font-weight="800" fill="#93c5fd" text-anchor="middle">DA VITÓRIA</text>
+                    <text x="462" y="94" font-family="sans-serif" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">Só entram</text>
+                    <text x="462" y="110" font-family="sans-serif" font-size="11" font-weight="900" fill="#4ade80" text-anchor="middle">os Válidos!</text>
+
+                    <path d="M 125 75 L 205 75" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="4,3"/>
+                    <rect x="210" y="62" width="160" height="30" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+                    <text x="290" y="78" font-family="sans-serif" font-size="11" font-weight="700" fill="#475569" text-anchor="middle">Em Branco ➔ NÃO conta 🚫</text>
+
+                    <path d="M 125 105 L 205 115" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4,3"/>
+                    <rect x="210" y="100" width="160" height="30" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+                    <text x="290" y="116" font-family="sans-serif" font-size="11" font-weight="700" fill="#991b1b" text-anchor="middle">Nulo (ex: 00) ➔ NÃO conta 🚫</text>
+                  </svg>
+                </div>
+              </article>
+            </div>
+
+            <!-- BLOCO D: Mitos e Verdades -->
+            <div style="margin-bottom: 1.25rem;">
+              <h3 style="font-size: 1.1rem; font-weight: 900; color: #0f172a; margin: 0 0 0.75rem;">
+                🤯 MITOS E VERDADES SOBRE A ELEIÇÃO
+              </h3>
+              <div class="myths-truths-grid">
+                <div class="mv-item myth">
+                  <span class="mv-tag">🚫 MENTIRA:</span>
+                  <span>"Voto em branco vai pro candidato que está ganhando."</span>
+                  <span class="mv-source">Fonte oficial: TSE</span>
+                </div>
+
+                <div class="mv-item myth">
+                  <span class="mv-tag">🚫 MENTIRA:</span>
+                  <span>"Voto nulo cancela a eleição se passar da metade."</span>
+                  <span class="mv-source">Fonte oficial: TSE</span>
+                </div>
+
+                <div class="mv-item truth">
+                  <span class="mv-tag">✅ VERDADE:</span>
+                  <span>"Pra ganhar no 1º turno precisa de mais da metade dos votos válidos."</span>
+                  <span class="mv-source">Fonte oficial: CF, art. 77</span>
+                </div>
+
+                <div class="mv-item truth">
+                  <span class="mv-tag">✅ VERDADE:</span>
+                  <span>"Ninguém descobre em quem você votou — o voto é secreto."</span>
+                  <span class="mv-source">Garantia Constitucional</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOCO E: FONTES OFICIAIS DA SEÇÃO -->
+            <div class="edu-sources-tray">
+              <span class="title">🔍 Links checados para você conferir:</span>
+              <div class="edu-sources-links">
+                <a href="https://portal.stf.jus.br/constituicao-supremo/artigo.asp?abrirArtigo=77&abrirBase=CF" target="_blank" rel="noopener noreferrer" class="edu-src-link">
+                  <span>📜</span> <span>Constituição, art. 77</span>
+                </a>
+                <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Julho/voto-branco-x-voto-nulo-saiba-a-diferenca-de-acordo-com-o-glossario-eleitoral" target="_blank" rel="noopener noreferrer" class="edu-src-link">
+                  <span>🗳️</span> <span>TSE: Diferença Branco x Nulo</span>
+                </a>
+                <a href="https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/faltam-17-dias-votos-nulos-e-brancos-nao-anulam-a-eleicao" target="_blank" rel="noopener noreferrer" class="edu-src-link">
+                  <span>⚖️</span> <span>TSE: Brancos e nulos não anulam</span>
+                </a>
+                <a href="https://www.tse.jus.br/comunicacao/noticias/2022/Outubro/votos-em-branco-ou-nulos-nao-sao-transferidos-para-o-vencedor-nem-cancelam-uma-eleicao" target="_blank" rel="noopener noreferrer" class="edu-src-link">
+                  <span>🚫</span> <span>TSE: Voto não transfere</span>
+                </a>
+                <a href="https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/18/por-que-tem-segundo-turno-nas-eleicoes.ghtml" target="_blank" rel="noopener noreferrer" class="edu-src-link">
+                  <span>📰</span> <span>Valor: Por que tem 2º turno</span>
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </details>
+
+      <!-- ACORDEÃO 2: Pesquisas Eleitorais -->
+      <details class="civic-accordion" id="pesquisas-eleitorais">
+        <summary class="civic-accordion-summary">
+          <div class="acc-summary-left">
+            <span class="acc-icon" aria-hidden="true">📊</span>
+            <div class="acc-title-wrap">
+              <span class="acc-title">QUEM ESTÁ NA FRENTE HOJE? PESQUISAS</span>
+              <span class="acc-badge">Estimativas proporcionais de votos (set/2026) e comparativo</span>
+            </div>
+          </div>
+          <span class="acc-arrow" aria-hidden="true">▶</span>
+        </summary>
+        <div class="acc-content-wrapper">
+          <section class="polls-box" aria-label="Pesquisas de intenção de voto">
+            <div class="polls-header">
+              <h2>Quem está na frente hoje?</h2>
+              <button class="btn btn-sm btn-print-hide" onclick="window.print()" style="cursor: pointer; background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px; padding: 0.4rem 0.8rem; font-size: 0.85rem; font-weight: 700;">
+                🖨️ Imprimir / Salvar PDF
+              </button>
+            </div>
+
+            <div class="poll-simple-alert">
+              📊 <strong>Pesquisas de set/2026 (números aproximados):</strong> Lula ~40%, Flávio ~36%, Cury ~5-6%, resto ~10%, branco/nulo ~4%. <strong>Lembre: pesquisa não é voto.</strong>
+            </div>
+
+            <!-- Barra Proporcional -->
+            <div class="poll-bar-container" title="Distribuição proporcional das intenções de voto">
+              <div class="poll-segment" style="width: 40%; background: #b91c1c;" title="Lula: ~40%">Lula ~40%</div>
+              <div class="poll-segment" style="width: 36%; background: #1e3a8a;" title="Flávio Bolsonaro: ~36%">Flávio B. ~36%</div>
+              <div class="poll-segment" style="width: 6%; background: #0284c7;" title="Augusto Cury: ~6%">Cury ~6%</div>
+              <div class="poll-segment" style="width: 14%; background: #64748b;" title="Demais: ~14%">Demais ~14%</div>
+              <div class="poll-segment" style="width: 4%; background: #94a3b8;" title="Brancos/Nulos: ~4%">B/N 4%</div>
+            </div>
+
+            <div class="poll-legend">
+              <div class="legend-item"><span class="legend-color" style="background: #b91c1c;"></span> <strong>Lula (PT):</strong> ~40%</div>
+              <div class="legend-item"><span class="legend-color" style="background: #1e3a8a;"></span> <strong>Flávio Bolsonaro (PL):</strong> ~36%</div>
+              <div class="legend-item"><span class="legend-color" style="background: #0284c7;"></span> <strong>Augusto Cury (AVANTE):</strong> ~5-6%</div>
+              <div class="legend-item"><span class="legend-color" style="background: #64748b;"></span> <strong>Outros somados:</strong> ~10%</div>
+              <div class="legend-item"><span class="legend-color" style="background: #94a3b8;"></span> <strong>Branco e Nulo:</strong> ~4%</div>
+            </div>
+          </section>
+        </div>
+      </details>
+
+      <!-- ACORDEÃO 3: Como Votar Certo -->
+      <details class="civic-accordion" id="como-votar">
+        <summary class="civic-accordion-summary">
+          <div class="acc-summary-left">
+            <span class="acc-icon" aria-hidden="true">🕵️</span>
+            <div class="acc-title-wrap">
+              <span class="acc-title">COMO VOTAR CERTO (SEM CAIR EM MENTIRA)</span>
+              <span class="acc-badge">5 regras de ouro pra checar promessas, histórico e ficha na Justiça</span>
+            </div>
+          </div>
+          <span class="acc-arrow" aria-hidden="true">▶</span>
+        </summary>
+        <div class="acc-content-wrapper">
+          <section class="votar-certo-box" aria-label="Como votar certo sem cair em mentira">
+            <div class="votar-certo-header">
+              <h2>🕵️ COMO VOTAR CERTO (sem cair em mentira)</h2>
+              <p class="votar-certo-subtitle">
+                Regras de ouro pra não votar em quem mente, promete o que nunca cumpriu e está enrolado na Justiça.
+              </p>
+            </div>
+
+            <!-- Grade de 5 cards compactos -->
+            <div class="votar-rules-grid">
+              <!-- Card 1 -->
+              <article class="rule-card">
+                <div class="rule-card-top">
+                  <div class="rule-card-icon">🚫</div>
+                  <h3 class="rule-card-title">QUEM PROMETE TUDO, TÁ MENTINDO</h3>
+                  <p class="rule-card-text">
+                    Promessa sem número e sem dizer de onde vem o dinheiro é furada. Desconfie.
+                  </p>
+                </div>
+                <div class="rule-card-action">
+                  <button type="button" class="rule-action-btn secondary" onclick="focusCandidateFilter('destaque')">
+                    Comparar promessas
+                  </button>
+                </div>
+              </article>
+
+              <!-- Card 2 -->
+              <article class="rule-card">
+                <div class="rule-card-top">
+                  <div class="rule-card-icon">📜</div>
+                  <h3 class="rule-card-title">OLHE O HISTÓRICO</h3>
+                  <p class="rule-card-text">
+                    O que ele já fez quando teve cargo? Prometeu e não cumpriu?
+                  </p>
+                </div>
+                <div class="rule-card-action">
+                  <a href="#candidatos" class="rule-action-btn">
+                    Ver os candidatos 👇
+                  </a>
+                </div>
+              </article>
+
+              <!-- Card 3 -->
+              <article class="rule-card">
+                <div class="rule-card-top">
+                  <div class="rule-card-icon">⚖️</div>
+                  <h3 class="rule-card-title">VEJA A FICHA</h3>
+                  <p class="rule-card-text">
+                    Quem está enrolado na Justiça aparece na aba 'NA JUSTIÇA' de cada card.
+                  </p>
+                </div>
+                <div class="rule-card-action">
+                  <button type="button" class="rule-action-btn" onclick="scrollToJusticaCards()">
+                    Ver na Justiça ⚖️
+                  </button>
+                </div>
+              </article>
+
+              <!-- Card 4 -->
+              <article class="rule-card">
+                <div class="rule-card-top">
+                  <div class="rule-card-icon">🎯</div>
+                  <h3 class="rule-card-title">O QUE IMPORTA PRA VOCÊ?</h3>
+                  <p class="rule-card-text">
+                    Emprego? Saúde? Educação? Segurança? Use o assistente e compare.
+                  </p>
+                </div>
+                <div class="rule-card-action">
+                  <button type="button" class="rule-action-btn" onclick="openCivicAssistant()">
+                    💬 Decidir junto
+                  </button>
+                </div>
+              </article>
+
+              <!-- Card 5 -->
+              <article class="rule-card">
+                <div class="rule-card-top">
+                  <div class="rule-card-icon">🤫</div>
+                  <h3 class="rule-card-title">VOTO É SECRETO</h3>
+                  <p class="rule-card-text">
+                    Ninguém pode te obrigar a votar em ninguém. Nem parente, nem patrão, nem igreja.
+                  </p>
+                </div>
+                <div class="rule-card-action">
+                  <a href="https://www.tse.jus.br/comunicacao/noticias/2022/Julho/aplicativo-pardal-permite-denunciar-propaganda-eleitoral-irregular" target="_blank" rel="noopener noreferrer" class="rule-action-btn secondary">
+                    Denunciar crime (TSE)
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- Fechamento em Destaque -->
+            <div class="votar-final-banner">
+              AQUI NINGUÉM TE DIZ EM QUEM VOTAR. Aqui você vê a verdade dos dois lados, com fonte — e escolhe CERTO. 🗳️
+            </div>
+          </section>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- Barra de Ferramentas / Filtros -->
+    <div class="toolbar-sticky" id="candidatos">
+      <div class="search-input-wrap">
+        <span class="search-icon-placeholder">🔍</span>
+        <input type="text" id="candidateSearch" class="search-input" placeholder="Digite o nome de um candidato ou tema...">
+      </div>
+
+      <div class="filter-pills" id="filterPillsGroup">
+        <button type="button" class="filter-btn active" data-filter="all">Todos (13)</button>
+        <button type="button" class="filter-btn" data-filter="destaque">Os 3 primeiros</button>
+        <button type="button" class="filter-btn" data-filter="esquerda">Esquerda</button>
+        <button type="button" class="filter-btn" data-filter="direita">Direita</button>
+        <button type="button" class="filter-btn" data-filter="centro">Centro / Outros</button>
+      </div>
+    </div>
+
+    <!-- Cards dos Candidatos -->
+    <section aria-label="Lista de Candidatos">
+      <div class="candidates-grid" id="candidatesContainer">
+        <!-- Renderizado dinamicamente via JS com linguagem simples e honesta -->
+      </div>
+    </section>
+
+    <!-- Fontes e Transparência -->
+    <section class="sources-box" id="fontes">
+      <h2>Fontes Oficiais e Base Documental</h2>
+      <p>Este painel consolida informações públicas checadas de repositórios oficiais e reportagens especiais das principais agências de notícias:</p>
+      
+      <div class="sources-list">
+        <a href="https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>TSE:</strong> Planos de Governo Oficiais Registrados</span>
+        </a>
+        <a href="https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>Valor Econômico:</strong> Lista completa e atualizada dos candidatos</span>
+        </a>
+        <a href="https://www.bbc.com/portuguese/articles/cm2gryker9mo" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>BBC News Brasil:</strong> Principais propostas dos presidenciáveis</span>
+        </a>
+        <a href="https://www.bbc.com/portuguese/articles/crmpv9r7mz9o" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>BBC News Brasil:</strong> Perfil e trajetória de Flávio Bolsonaro</span>
+        </a>
+        <a href="https://www.bbc.com/portuguese/articles/c5ywwwy4qx4o" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>BBC News Brasil:</strong> Análise jurídica e elegibilidade Pablo Marçal</span>
+        </a>
+        <a href="https://www.dw.com/pt-br/os-planos-econ%C3%B4micos-dos-presidenci%C3%A1veis-para-o-brasil/a-79301755" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>Deutsche Welle (DW):</strong> Planos econômicos dos concorrentes</span>
+        </a>
+        <a href="https://noticias.uol.com.br/eleicoes/2026/09/27/propostas-de-lula-veja-os-principais-pontos-do-plano-de-governo.ghtml" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>UOL Notícias:</strong> Detalhamento das propostas de Lula</span>
+        </a>
+        <a href="https://noticias.uol.com.br/eleicoes/2026/09/27/propostas-de-flavio-bolsonaro-veja-principais-pontos-do-plano-de-governo.ghtml" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>UOL Notícias:</strong> Detalhamento das propostas de Flávio Bolsonaro</span>
+        </a>
+        <a href="https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/augusto-cury-propoe-mandato-de-oito-anos-no-stf-e-semipresidencialismo" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>Agência Brasil (EBC):</strong> Propostas de Augusto Cury</span>
+        </a>
+        <a href="https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" target="_blank" rel="noopener noreferrer" class="source-item">
+          <span class="source-bullet"></span>
+          <span><strong>Estadão:</strong> Guia de propostas dos candidatos</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé Cívico -->
+  <footer class="civic-footer">
+    <div class="footer-inner">
+      <div class="footer-title">Dossiê Eleitor 2026 — Compromisso com o Voto Consciente</div>
+      
+      <div class="footer-disclaimer-box">
+        <p style="margin: 0 0 0.5rem;">
+          <strong>Termo de Isenção e Neutralidade:</strong> Este portal tem finalidade cívica, educativa e informativa. Não representa diretório partidário, coligação, empresa privada ou entidade governamental. Não há endosso ou aconselhamento de voto a nenhum concorrente.
+        </p>
+        <p style="margin: 0;">
+          <strong>Garantias Constitucionais:</strong> Todas as citações a inquéritos ou processos judiciais em andamento respeitam estritamente a garantia da presunção de inocência (Art. 5º, LVII da Constituição Federal). Conteúdos fundamentados nos registros oficiais do TSE e no escrutínio público documentado pela imprensa.
+        </p>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Dados atualizados em: <strong>1 de outubro de 2026</strong></div>
+        <div>Desenvolvido para máxima transparência democrática.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Botão Flutuante de Voto — Canto Inferior Esquerdo Compacto -->
+  <button type="button" id="voteFabBtn" class="vote-fab-btn" onclick="VOTACAO.abrirModal()" aria-label="Abrir enquete de intenção de voto">
+    <span class="vote-fab-icon" aria-hidden="true">🗳️</span>
+    <div class="vote-fab-label">
+      <span class="vote-fab-title">VOTAR</span>
+      <span class="vote-fab-sub">enquete</span>
+    </div>
+  </button>
+
+  <!-- Modal de Votação (Intenção de Voto Real) -->
+  <div id="voteModalOverlay" class="vote-modal-overlay" aria-hidden="true" onclick="VOTACAO.handleOverlayClick(event)">
+    <div class="vote-modal-card" role="dialog" aria-modal="true" aria-labelledby="voteModalTitle">
+      <button type="button" class="vote-modal-close" onclick="VOTACAO.fecharModal()" aria-label="Fechar enquete">✕</button>
+
+      <div class="vote-modal-header">
+        <h2 id="voteModalTitle" class="vote-modal-title">🗳️ INTENÇÃO DE VOTO REAL</h2>
+        <p class="vote-modal-subtitle" id="voteModalSubtitle">Toque no seu candidato. 1 voto por pessoa (registrado no banco).</p>
+      </div>
+
+      <div class="vote-modal-notice" id="voteModalNotice">
+        Enquete informal do site, não é pesquisa oficial. 1 voto por aparelho é garantido pelo banco. ⚠️ Votar de novo exigiria limpar todos os dados do navegador.
+      </div>
+
+      <!-- Barra de resumo do momento (liderança) -->
+      <div class="vote-leader-banner" id="voteLeaderBanner">
+        <!-- Preenchido via JS -->
+      </div>
+
+      <!-- Barra de status da conexão (online/local) -->
+      <div class="vote-status-bar" id="voteStatusBar" role="status">
+        🗄️ Conectando ao banco...
+      </div>
+
+      <!-- Mensagem / Alerta de Anti-spam ou Ações -->
+      <div id="voteModalAlert" class="vote-modal-alert" role="alert" style="display: none;"></div>
+
+      <!-- Barra de ações se já votou -->
+      <div id="voteActionsBar" class="vote-actions-bar" style="display: none;">
+        <span class="vote-my-choice-text" id="voteMyChoiceText"></span>
+        <div class="vote-actions-btns">
+          <button type="button" class="vote-sub-btn vote-swap-btn" onclick="VOTACAO.iniciarTroca()">
+            🔄 Trocar meu voto
+          </button>
+          <button type="button" class="vote-sub-btn vote-reset-btn" onclick="VOTACAO.zerarMeuVoto()">
+            🗑️ Zerar meu voto
+          </button>
+        </div>
+      </div>
+
+      <!-- Lista de Candidatos para Votar -->
+      <div class="vote-candidates-list" id="voteCandidatesList" role="group" aria-label="Candidatos para votação">
+        <!-- Preenchido dinamicamente via JS -->
+      </div>
+
+      <!-- Rodapé do modal -->
+      <div class="vote-modal-footer">
+        <div class="vote-total-badge" id="voteTotalBadge">0 votos registrados no site 🗄️</div>
+        <p class="vote-modal-legal-note" id="voteModalLegalNote">
+          Esta é uma enquete informal — não é pesquisa oficial.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botão Flutuante e Chat Modal "Decidir Junto" -->
+  <button type="button" id="chatTriggerBtn" class="chat-trigger-btn" aria-label="Abrir assistente Decidir Junto">
+    <span>💬</span>
+    <span>Decidir junto</span>
+  </button>
+
+  <aside id="chatModal" class="chat-modal" aria-hidden="true">
+    <div class="chat-modal-header">
+      <div>
+        <h3>💬 Assistente Decidir Junto</h3>
+        <span style="font-size: 0.75rem; opacity: 0.85;">Não dizemos em quem votar</span>
+      </div>
+      <button type="button" id="chatCloseBtn" class="chat-close-btn" aria-label="Fechar assistente">✕</button>
+    </div>
+    <div class="chat-modal-body" id="chatMessages">
+      <!-- Mensagens inseridas via script -->
+    </div>
+  </aside>
+
+  <!-- Lógica da Aplicação -->
+  <script>
+    // === 1. CONFIGURAÇÃO SUPABASE ===
+    const SUPABASE_URL = 'https://ohddqdyfzvjgvdrqcpab.supabase.co';
+    const SUPABASE_ANON = 'sb_publishable_UL0PrZF2vfQrVFefTrdOrA_osFH5WNo';
+    const TB_VOTOS = 'votos';
+    let bancoOnline = false;
+
+    // === 2. DEVICE ID PERSISTENTE (1 voto por aparelho) ===
+    let _volatileDeviceId = null;
+    function getDeviceId() {
+      try {
+        let id = localStorage.getItem('dossie_device_id');
+        if (!id) {
+          if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+            id = crypto.randomUUID();
+          } else {
+            id = 'dev-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+          }
+          localStorage.setItem('dossie_device_id', id);
+        }
+        return id;
+      } catch (e) {
+        if (!_volatileDeviceId) {
+          _volatileDeviceId = 'vol-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+        }
+        return _volatileDeviceId;
+      }
+    }
+
+    // === 3. LEITURA GLOBAL DOS VOTOS ===
+    async function carregarVotosGlobais() {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${TB_VOTOS}?select=candidato`, {
+          method: 'GET',
+          headers: {
+            'apikey': SUPABASE_ANON,
+            'Authorization': 'Bearer ' + SUPABASE_ANON
+          }
+        });
+        if (!res.ok) {
+          bancoOnline = false;
+          return null;
+        }
+        const rows = await res.json();
+        if (!Array.isArray(rows)) {
+          bancoOnline = false;
+          return null;
+        }
+        const votos = {};
+        CANDIDATES.forEach(c => { votos[c.id] = 0; });
+        let total = 0;
+        for (const row of rows) {
+          if (row && row.candidato) {
+            votos[row.candidato] = (votos[row.candidato] || 0) + 1;
+            total++;
+          }
+        }
+        bancoOnline = true;
+        return { votos, total };
+      } catch (err) {
+        bancoOnline = false;
+        return null;
+      }
+    }
+
+    // === 4. REGISTRO DE VOTO NO BANCO (com trava de unicidade no servidor) ===
+    async function registrarVotoGlobal(candidatoId) {
+      const deviceId = getDeviceId();
+      try {
+        // 1) Tenta INSERT
+        const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/${TB_VOTOS}`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON,
+            'Authorization': 'Bearer ' + SUPABASE_ANON,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ candidato: candidatoId, device_id: deviceId })
+        });
+
+        if (insertRes.ok) {
+          bancoOnline = true;
+          return 'novo';
+        }
+
+        // 2) Se falhar (unicidade violada por aparelho já existente), tenta UPDATE (PATCH)
+        const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/${TB_VOTOS}?device_id=eq.${encodeURIComponent(deviceId)}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': SUPABASE_ANON,
+            'Authorization': 'Bearer ' + SUPABASE_ANON,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ candidato: candidatoId })
+        });
+
+        if (patchRes.ok) {
+          bancoOnline = true;
+          return 'trocado';
+        }
+
+        // 3) Se ambos falharem
+        if (insertRes.status === 401 || insertRes.status === 403 || insertRes.status === 404) {
+          bancoOnline = false;
+        }
+        return null;
+      } catch (err) {
+        return null;
+      }
+    }
+
+    // Exclusão de voto no banco (ao zerar)
+    async function excluirVotoGlobal() {
+      const deviceId = getDeviceId();
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${TB_VOTOS}?device_id=eq.${encodeURIComponent(deviceId)}`, {
+          method: 'DELETE',
+          headers: {
+            'apikey': SUPABASE_ANON,
+            'Authorization': 'Bearer ' + SUPABASE_ANON
+          }
+        });
+        if (res.ok) {
+          bancoOnline = true;
+          return true;
+        }
+        if (res.status === 401 || res.status === 403 || res.status === 404) {
+          bancoOnline = false;
+        }
+        return false;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    // Fotos oficiais checadas dos candidatos
+    const FOTO_DOS_CANDIDATOS = {
+      lula: "https://www.tse.jus.br/imagens/imagens/lula/@@images/image-200-93d51d895f8ebc8900bf3e02c7052bef.png",
+      flavio: "https://www.tse.jus.br/imagens/imagens/flavio-bolsonaro/@@images/image-200-7092d276831e3453f70c59d07d5c9ae7.png",
+      cury: "https://www.tse.jus.br/imagens/imagens/escritor-augusto-cury/@@images/image-200-a49a0ad458e00ae031cca0a564cfe26f.png",
+      caiado: "https://www.tse.jus.br/imagens/imagens/caiado-1/@@images/image-200-909d3f1cbd7921f6cd0b406fb5da9eb9.png",
+      zema: "https://www.tse.jus.br/imagens/imagens/zema/@@images/image-200-11f485e6e05bb2f70215f3eade2164d6.png",
+      renan: "https://www.tse.jus.br/imagens/imagens/renan/@@images/image-200-6f47b729f509e28e153a7d0d7c7c128d.png",
+      hertz: "https://www.tse.jus.br/imagens/imagens/hertz-dias/@@images/image-200-b56d15015a7ff40e3c7b5e5da7a7033a.png",
+      rui: "https://www.tse.jus.br/imagens/imagens/foto-rui-costa",
+      samara: "https://www.tse.jus.br/imagens/imagens/samara/@@images/image-200-c53a317df01ad61b3f8eefe2a10b463c.png",
+      edmilson: "https://www.tse.jus.br/imagens/imagens/edmilson-silva-costa/@@images/image-200-3937c6013e3a4925dc6649cae9f96d45.png",
+      clariana: "https://www.tse.jus.br/imagens/imagens/foto-clariana-barao",
+      wilson: "https://www.tse.jus.br/imagens/imagens/veterinario-wilson-grassi/@@images/image-200-c9e23e7d8add40db9f777ea094aa18c9.png",
+      leonardo: "https://www.tse.jus.br/imagens/imagens/leonardo-avalanche/@@images/image-200-bad5d51d4e4727e5a46cbd8d7bf079ed.jpeg"
+    };
+
+    function getCandidatePhoto(id) {
+      if (FOTO_DOS_CANDIDATOS[id]) return FOTO_DOS_CANDIDATOS[id];
+      for (const key of Object.keys(FOTO_DOS_CANDIDATOS)) {
+        if (id.includes(key)) return FOTO_DOS_CANDIDATOS[key];
+      }
+      return '';
+    }
+
+    // Base de dados completa dos 13 candidatos
+    const CANDIDATES = [
+      {
+        id: "lula",
+        ballotName: "Lula",
+        fullName: "Luiz Inácio Lula da Silva",
+        party: "PT",
+        number: "13",
+        role: "Atual Presidente (Tenta a reeleição)",
+        avatarBg: "linear-gradient(135deg, #b91c1c, #ef4444)",
+        initials: "LS",
+        category: "esquerda",
+        isTop3: true,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Lula: já foi presidente 3 vezes. Quer voltar com mais programas sociais.",
+        essential: [
+          "Muita experiência de governo (foi presidente de 2003 a 2010 e agora).",
+          "Foco total em programas sociais como Bolsa Família e aumento do salário mínimo.",
+          "Críticos apontam aumento dos gastos públicos e da dívida do governo.",
+          "Teve prisões e condenações na Lava Jato que o STF anulou em 2021."
+        ],
+        fortes: [
+          "Tem muita experiência em comandar o país há mais de 10 anos.",
+          "Criou e manteve programas sociais fortes como o Bolsa Família e Farmácia Popular.",
+          "Sempre aumenta o salário mínimo acima da inflação todo ano.",
+          "Tem muito respeito e diálogo com líderes de outros países no mundo."
+        ],
+        fracos: [
+          "Tem idade avançada, gerando debate sobre o papel do vice na gestão.",
+          "Crescimento da economia ainda é moderado e os juros continuam altos.",
+          "Gastos do governo e a dívida pública subiram nos últimos anos."
+        ],
+        propostas: [
+          "Acabar com a escala 6x1 de trabalho, mudando para 40 horas por semana.",
+          "Construir mais casas populares pelo Minha Casa Minha Vida.",
+          "Cobrar mais impostos sobre os super-ricos e menos sobre quem ganha pouco.",
+          "Investir dinheiro público em energia limpa e proteger a Amazônia."
+        ],
+        justicaProvado: [
+          "Foi condenado na Operação Lava Jato e ficou preso entre 2018 e 2019. Essas condenações foram ANULADAS pelo STF em 2021 porque o ex-juiz Sergio Moro foi considerado suspeito e o tribunal do Paraná incompetente."
+        ],
+        justicaInvestigacao: [
+          "Críticas e questionamentos sobre o crescimento rápido da dívida pública.",
+          "Debates no Congresso sobre a liberação e controle de emendas parlamentares."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Propostas na BBC", url: "https://www.bbc.com/portuguese/articles/cm2gryker9mo" },
+          { name: "Plano de Lula no UOL", url: "https://noticias.uol.com.br/eleicoes/2026/09/27/propostas-de-lula-veja-os-principais-pontos-do-plano-de-governo.ghtml" }
+        ]
+      },
+      {
+        id: "flavio-bolsonaro",
+        ballotName: "Flávio Bolsonaro",
+        fullName: "Flávio Nantes Bolsonaro",
+        party: "PL",
+        number: "22",
+        role: "Senador pelo Rio de Janeiro",
+        avatarBg: "linear-gradient(135deg, #1e3a8a, #3b82f6)",
+        initials: "FB",
+        category: "direita",
+        isTop3: true,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Flávio: filho de Bolsonaro. Quer cortar ministérios e reduzir gastos do governo.",
+        essential: [
+          "Principal candidato do grupo político de Jair Bolsonaro.",
+          "Promete fechar 10 ministérios e diminuir o tamanho do governo.",
+          "Nunca governou uma prefeitura ou um estado antes.",
+          "Responde a denúncias de 'rachadinha' na Alerj, mas nega e não foi condenado."
+        ],
+        fortes: [
+          "Tem apoio fiel dos eleitores conservadores e de direita no Brasil.",
+          "Fala em tom mais moderado para atrair eleitores indecisos de centro.",
+          "Defende com força cortar privilégios e supersalários de políticos e juízes.",
+          "Quer simplificar as regras e baixar os impostos sobre as empresas."
+        ],
+        fracos: [
+          "Nunca exerceu cargo de prefeito ou governador no Poder Executivo.",
+          "Carrega o desgaste de denúncias antigas do seu tempo de deputado estadual.",
+          "Forte ligação com o pai Jair Bolsonaro, que está inelegível até 2030."
+        ],
+        propostas: [
+          "Fechar pelo menos 10 ministérios e cortar milhares de cargos políticos.",
+          "Proibir de vez os supersalários nos três poderes do governo.",
+          "Baixar impostos sobre indústrias e comércio para incentivar contratações.",
+          "Equilibrar as contas públicas com limite rígido para despesas da União."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Caso das 'rachadinhas': suspeita de desviar salários de funcionários quando era deputado na Alerj (ele nega qualquer crime).",
+          "Vínculo apontado em investigações com o ex-assessor Fabrício Queiroz e o ex-policial Adriano da Nóbrega (ele nega elos ilegais).",
+          "Recursos judiciais pedindo o afastamento de ministros do STF em casos da família."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Ficha na BBC", url: "https://www.bbc.com/portuguese/articles/crmpv9r7mz9o" },
+          { name: "Plano de Flávio no UOL", url: "https://noticias.uol.com.br/eleicoes/2026/09/27/propostas-de-flavio-bolsonaro-veja-principais-pontos-do-plano-de-governo.ghtml" }
+        ]
+      },
+      {
+        id: "augusto-cury",
+        ballotName: "Augusto Cury",
+        fullName: "Augusto Jorge Cury",
+        party: "AVANTE",
+        number: "70",
+        role: "Médico Psiquiatra e Escritor Famoso",
+        avatarBg: "linear-gradient(135deg, #0284c7, #38bdf8)",
+        initials: "AC",
+        category: "centro",
+        isTop3: true,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Augusto Cury: médico e escritor. Propõe cuidar da saúde mental e pacificar o país.",
+        essential: [
+          "Vendeu mais de 40 milhões de livros e é muito conhecido.",
+          "Aparece em 3º lugar nas pesquisas de intenção de voto com cerca de 6%.",
+          "Nunca disputou uma eleição nem trabalhou no governo.",
+          "Sem condenação criminal na Justiça."
+        ],
+        fortes: [
+          "Comunicação calma, voltada para diminuir brigas e polarização no país.",
+          "Foco pioneiro na saúde mental e inteligência emocional nas escolas públicas.",
+          "Iniciou a corrida em 3º lugar nas pesquisas eleitorais.",
+          "Discurso humanista para apoiar pequenos empreendedores e famílias."
+        ],
+        fracos: [
+          "Totalmente novato na política sem experiência em gestão pública.",
+          "Críticos dizem que suas propostas são poéticas e faltam cálculos de dinheiro.",
+          "Pouco apoio e estrutura de deputados e partidos grandes no Congresso."
+        ],
+        propostas: [
+          "Colocar aulas de inteligência emocional e combate à ansiedade em todas as escolas.",
+          "Limitar em 8 anos o mandato de ministros do Supremo Tribunal Federal (STF).",
+          "Adotar o semipresidencialismo para dividir o poder do presidente com um premiê.",
+          "Incentivar o microcrédito e pequenos negócios sem juros abusivos."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Dúvidas de especialistas se suas ideias de mudar a Constituição têm apoio no Congresso."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Notícia na Agência Brasil", url: "https://agenciabrasil.ebc.com.br/politica/noticia/2026-09/augusto-cury-propoe-mandato-de-oito-anos-no-stf-e-semipresidencialismo" },
+          { name: "Propostas na BBC", url: "https://www.bbc.com/portuguese/articles/cm2gryker9mo" }
+        ]
+      },
+      {
+        id: "pablo-marcal",
+        ballotName: "Pablo Marçal",
+        fullName: "Pablo Henrique Costa Marçal",
+        party: "PRTB",
+        number: "28",
+        role: "Empresário e Comunicador na Internet",
+        avatarBg: "linear-gradient(135deg, #059669, #34d399)",
+        initials: "PM",
+        category: "direita",
+        isTop3: false,
+        statusBadge: "Não pode ser candidato",
+        statusIrregular: true,
+        oneLiner: "Pablo Marçal: influenciador digital. A Justiça Eleitoral o proibiu de concorrer.",
+        essential: [
+          "Tem milhões de seguidores nas redes sociais e apelo com jovens.",
+          "PROVADO NA JUSTIÇA: Foi declarado inelegível até 2032 (chance zero de validação).",
+          "Defende desregulamentação total e empreendedorismo.",
+          "Sem experiência prévia em administração pública."
+        ],
+        fortes: [
+          "Enorme capacidade de chamar atenção nas redes sociais sem gastar TV.",
+          "Discurso fácil sobre como enriquecer trabalhando por conta própria."
+        ],
+        fracos: [
+          "Não possui nenhuma experiência governamental ou legislativa.",
+          "Promessas consideradas impossíveis de cumprir por especialistas técnicos."
+        ],
+        propostas: [
+          "Reduzir regras e burocracia para empresas e quem vende cursos na internet.",
+          "Ideia polêmica de mudar a capital de Brasília para o interior do Maranhão.",
+          "Digitalizar todos os serviços do governo para acabar com cartórios."
+        ],
+        justicaProvado: [
+          "INELEGÍVEL ATÉ 2032 por decisões da Justiça Eleitoral por abuso de poder e uso indevido de meios de comunicação. Reportagens apontam chance zero de ser candidato válido."
+        ],
+        justicaInvestigacao: [
+          "Processos e disputas por laudos controversos divulgados em campanhas anteriores."
+        ],
+        sources: [
+          { name: "Inelegibilidade na BBC", url: "https://www.bbc.com/portuguese/articles/c5ywwwy4qx4o" },
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Guia no Estadão", url: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" }
+        ]
+      },
+      {
+        id: "ronaldo-caiado",
+        ballotName: "Ronaldo Caiado",
+        fullName: "Ronaldo Ramos Caiado",
+        party: "PSD",
+        number: "55",
+        role: "Governador de Goiás",
+        avatarBg: "linear-gradient(135deg, #475569, #94a3b8)",
+        initials: "RC",
+        category: "direita",
+        isTop3: false,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Ronaldo Caiado: governador de Goiás. Tem fama de combater o crime com rigor.",
+        essential: [
+          "Governador muito bem avaliado em Goiás e ex-senador experiente.",
+          "Pauta principal é tolerância zero contra facções e crime organizado.",
+          "Menos conhecido fora do Centro-Oeste e do agronegócio.",
+          "Sem condenação criminal comprovada."
+        ],
+        fortes: [
+          "Larga experiência em cargos públicos e alta aprovação no seu estado.",
+          "Reduziu índices de violência em Goiás usando a força das polícias.",
+          "Forte ligação com os produtores do agronegócio nacional."
+        ],
+        fracos: [
+          "Dificuldade de se tornar popular nas regiões Norte e Nordeste.",
+          "Disputa os mesmos eleitores de direita com a chapa de Flávio Bolsonaro."
+        ],
+        propostas: [
+          "Levar para o Brasil o modelo de policiamento ostensivo usado em Goiás.",
+          "Modernizar ferrovias e estradas para escoar a produção de alimentos.",
+          "Mandar mais recursos federais diretamente para prefeituras e estados."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Questionamentos de entidades de direitos humanos sobre ações policiais duras.",
+          "Discussões pontuais sobre gastos de publicidade do estado de Goiás."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Guia no Estadão", url: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" },
+          { name: "Economia na DW", url: "https://www.dw.com/pt-br/os-planos-econ%C3%B4micos-dos-presidenci%C3%A1veis-para-o-brasil/a-79301755" }
+        ]
+      },
+      {
+        id: "romeu-zema",
+        ballotName: "Romeu Zema",
+        fullName: "Romeu Zema Neto",
+        party: "NOVO",
+        number: "30",
+        role: "Governador de Minas Gerais",
+        avatarBg: "linear-gradient(135deg, #ea580c, #fb923c)",
+        initials: "RZ",
+        category: "direita",
+        isTop3: false,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Romeu Zema: governador de Minas Gerais. Defende privatizar estatais e cortar custos.",
+        essential: [
+          "Administrador e empresário reeleito no 2º maior estado do país.",
+          "Defende vender empresas do governo para pagar dívidas públicas.",
+          "Enfrentou greves e atritos com servidores públicos em Minas.",
+          "Sem condenação criminal comprovada."
+        ],
+        fortes: [
+          "Perfil de gestor de empresas com foco em não gastar mais do que arrecada.",
+          "Governa o segundo colégio eleitoral mais importante do Brasil.",
+          "Ideias liberais claras sobre diminuir o peso do Estado na economia."
+        ],
+        fracos: [
+          "Perdeu parte da popularidade em Minas Gerais nos últimos anos.",
+          "Conflitos constantes com professores e policiais do estado por causa de salários."
+        ],
+        propostas: [
+          "Vender empresas estatais federais para abater a dívida do Brasil.",
+          "Cortar milhares de cargos de indicação política em Brasília.",
+          "Acabar com burocracias que atrapalham quem quer abrir e manter empresas."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Alegações locais em Minas Gerais sob análise de órgãos de controle sobre contratos e contas do governo estadual.",
+          "Discussões com o governo federal sobre o atraso no pagamento da dívida de Minas."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Economia na DW", url: "https://www.dw.com/pt-br/os-planos-econ%C3%B4micos-dos-presidenci%C3%A1veis-para-o-brasil/a-79301755" },
+          { name: "Guia no Estadão", url: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" }
+        ]
+      },
+      {
+        id: "renan-santos",
+        ballotName: "Renan Santos",
+        fullName: "Renan Antônio Ferreira dos Santos",
+        party: "MISSÃO",
+        number: "99",
+        role: "Ativista do MBL",
+        avatarBg: "linear-gradient(135deg, #7c3aed, #c084fc)",
+        initials: "RS",
+        category: "direita",
+        isTop3: false,
+        statusBadge: "Candidatura em Formação",
+        oneLiner: "Renan Santos: líder do MBL. Critica tanto a esquerda quanto Bolsonaro.",
+        essential: [
+          "Mobiliza jovens usando vídeos rápidos nas redes sociais.",
+          "Critica ao mesmo tempo Lula e a família Bolsonaro.",
+          "Partido novo com pouco tempo de rádio e TV.",
+          "Sem condenação criminal comprovada."
+        ],
+        fortes: [
+          "Usa as redes sociais com muita velocidade para debater assuntos quentes.",
+          "Tenta construir uma nova direita independente de velhos políticos."
+        ],
+        fracos: [
+          "Falta estrutura política clássica e quase não tem tempo de propaganda na TV.",
+          "Estilo agressivo de debate afasta muitos eleitores mais calmos."
+        ],
+        propostas: [
+          "Fechar órgãos reguladores federais que considera desnecessários.",
+          "Acabar com o fundo partidário com dinheiro público dos impostos.",
+          "Mudar leis sobre atuação da imprensa e debates políticos."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Processos cíveis por ofensas e debates inflamados na internet.",
+          "Polêmicas de bastidores envolvendo debates sobre sites de apostas e bets."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Valor Econômico", url: "https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" }
+        ]
+      },
+      {
+        id: "hertz-dias",
+        ballotName: "Hertz Dias",
+        fullName: "Hertz da Silva Dias",
+        party: "PSTU",
+        number: "16",
+        role: "Professor e Militante Social",
+        avatarBg: "linear-gradient(135deg, #991b1b, #dc2626)",
+        initials: "HD",
+        category: "esquerda",
+        isTop3: false,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Hertz Dias: professor e socialista. Quer bancos controlados pelos trabalhadores.",
+        essential: [
+          "Ligado ao movimento hip-hop, educação e luta contra o racismo.",
+          "Defende o socialismo tradicional sem aliança com empresários.",
+          "Sem experiência anterior em cargos de governo.",
+          "Sem condenação criminal comprovada."
+        ],
+        fortes: [
+          "Coerência total com a defesa da classe trabalhadora e das periferias.",
+          "Voz firme na defesa das escolas públicas e dos professores."
+        ],
+        fracos: [
+          "Partido muito pequeno e sem chances reais de ir ao segundo turno.",
+          "Ideias radicais que não encontram consenso na sociedade ampla."
+        ],
+        propostas: [
+          "Colocar todos os grandes bancos sob o controle do povo trabalhador.",
+          "Parar de pagar imediatamente as dívidas com banqueiros internacionais.",
+          "Reestatizar empresas que foram vendidas no passado."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Sem condenações ou processos criminais relevantes."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "BBC Notícias", url: "https://www.bbc.com/portuguese/articles/cm2gryker9mo" }
+        ]
+      },
+      {
+        id: "rui-costa-pimenta",
+        ballotName: "Rui Costa Pimenta",
+        fullName: "Rui Costa Pimenta",
+        party: "PCO",
+        number: "29",
+        role: "Jornalista e Presidente do PCO",
+        avatarBg: "linear-gradient(135deg, #831843, #db2777)",
+        initials: "RP",
+        category: "esquerda",
+        isTop3: false,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Rui Costa Pimenta: líder operário. Defende liberdade total de expressão.",
+        essential: [
+          "Fala o que pensa sem rodeios e critica os tribunais superiores.",
+          "Defende salário mínimo muito maior baseado em cálculos sindicais.",
+          "Quase nenhum tempo de televisão.",
+          "Sem condenação criminal transitada em julgado."
+        ],
+        fortes: [
+          "Discurso direto contra o que chama de abusos do sistema financeiro.",
+          "Defesa irrestrita da liberdade para qualquer pessoa falar o que quiser."
+        ],
+        fracos: [
+          "Partido sem deputados eleitos e sem estrutura nacional forte.",
+          "Posições internacionais controversas que causam espanto na opinião pública."
+        ],
+        propostas: [
+          "Multiplicar o valor do salário mínimo atual para garantir vida digna.",
+          "Alinhar a diplomacia do Brasil com países rivais dos Estados Unidos.",
+          "Dar armas e poder de decisão direta para os comitês de fábrica."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Investigações abertas no STF por críticas duras feitas contra ministros da Corte."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Valor Econômico", url: "https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" }
+        ]
+      },
+      {
+        id: "samara-martins",
+        ballotName: "Samara Martins",
+        fullName: "Samara Cristina Martins",
+        party: "UP",
+        number: "80",
+        role: "Líder Comunitária de Moradia",
+        avatarBg: "linear-gradient(135deg, #047857, #10b981)",
+        initials: "SM",
+        category: "esquerda",
+        isTop3: false,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Samara Martins: ativista popular. Luta por moradia digna para quem não tem teto.",
+        essential: [
+          "Mulher trabalhadora que vive o dia a dia das ocupações urbanas.",
+          "Quer desapropriar imóveis abandonados para entregar a famílias pobres.",
+          "Não possui experiência governamental no Poder Executivo.",
+          "Sem condenação criminal comprovada."
+        ],
+        fortes: [
+          "Representa a juventude da periferia e mulheres que batalham por casa própria.",
+          "Foco total em saúde pública gratuita e fim da fome."
+        ],
+        fracos: [
+          "Quase não tem espaço nas televisões ou debates grandes.",
+          "Nunca chefiou repartições públicas antes."
+        ],
+        propostas: [
+          "Entregar prédios vazios no centro das cidades para famílias sem moradia.",
+          "Aumentar o dinheiro da saúde e das escolas sem limite de teto de gastos.",
+          "Fazer reformas para aproximar a polícia das comunidades pacíficas."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Envolvimento em protestos e ocupações com pedidos judiciais de reintegração de posse."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "BBC Notícias", url: "https://www.bbc.com/portuguese/articles/cm2gryker9mo" }
+        ]
+      },
+      {
+        id: "edmilson-costa",
+        ballotName: "Edmilson Costa",
+        fullName: "Edmilson Silva Costa",
+        party: "PCB",
+        number: "21",
+        role: "Economista e Professor",
+        avatarBg: "linear-gradient(135deg, #7f1d1d, #b91c1c)",
+        initials: "EC",
+        category: "esquerda",
+        isTop3: false,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Edmilson Costa: economista comunista. Quer reforma agrária radical e fim dos latifúndios.",
+        essential: [
+          "Doutor em economia com vários livros escritos sobre o trabalho.",
+          "Fidelidade ao partido comunista mais antigo do Brasil.",
+          "Pouquíssimo tempo de televisão e recursos de campanha.",
+          "Sem condenação criminal comprovada."
+        ],
+        fortes: [
+          "Conhecimento técnico da história econômica e financeira nacional.",
+          "Defesa convicta dos direitos dos empregados contra a exploração."
+        ],
+        fracos: [
+          "Partido teve brigas internas recentes que diminuíram sua força.",
+          "Ideias de revolução popular não atraem a maioria dos eleitores comuns."
+        ],
+        propostas: [
+          "Tomar terras de grandes fazendeiros improdutivos para dividir com pequenos lavradores.",
+          "Romper acordos de pagamento de juros com órgãos internacionais.",
+          "Colocar o comércio de exportação sob comando do governo federal."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Sem processos de corrupção ou crimes financeiros na Justiça."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Valor Econômico", url: "https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" }
+        ]
+      },
+      {
+        id: "clariana-barao",
+        ballotName: "Clariana Barão",
+        fullName: "Clariana de Souza Barão",
+        party: "DC",
+        number: "27",
+        role: "Advogada e Líder Cristã",
+        avatarBg: "linear-gradient(135deg, #0369a1, #38bdf8)",
+        initials: "CB",
+        category: "centro",
+        isTop3: false,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Clariana Barão: advogada. Defende a família e ajuda social comunitária.",
+        essential: [
+          "Defende princípios de amor ao próximo e acolhimento das famílias.",
+          "Foi escolhida pelo partido após trocas de candidatos na diretoria.",
+          "Pouco conhecida pela população fora do seu estado.",
+          "Sem condenação criminal comprovada."
+        ],
+        fortes: [
+          "Mensagem de fé com tom moderado e sem discursos de ódio.",
+          "Foco em ajudar idosos e projetos de caridade nas igrejas."
+        ],
+        fracos: [
+          "Entrou na disputa aos 45 do segundo tempo com pouca verba de campanha.",
+          "Falta equipe política para negociar com os outros estados."
+        ],
+        propostas: [
+          "Dar descontos de impostos para asilos e obras de caridade.",
+          "Colocar aulas de ética e cidadania para as crianças nas escolas.",
+          "Empréstimos fáceis para mães de família começarem um negócio."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Sem condenações ou investigações criminais na ficha."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Guia no Estadão", url: "https://www.estadao.com.br/politica/eleicoes/eleicoes-2026-veja-as-propostas-dos-candidatos-a-presidencia-da-republica/" }
+        ]
+      },
+      {
+        id: "wilson-grassi",
+        ballotName: "Wilson Grassi",
+        fullName: "Wilson Grassi Júnior",
+        party: "DEMOCRATAS CRISTÃOS",
+        number: "36",
+        role: "Médico Veterinário e Ambientalista",
+        avatarBg: "linear-gradient(135deg, #15803d, #4ade80)",
+        initials: "WG",
+        category: "centro",
+        isTop3: false,
+        statusBadge: "Candidatura Registrada",
+        oneLiner: "Wilson Grassi: veterinário. Quer hospitais públicos gratuitos para animais.",
+        essential: [
+          "Defensor incansável dos animais de rua e do meio ambiente.",
+          "Focado em saúde única: quem cuida do bicho cuida do ser humano.",
+          "Campanha focada em nicho com poucos recursos partidários.",
+          "Sem condenação criminal comprovada."
+        ],
+        fortes: [
+          "Pauta autêntica e querida por quem ama cães, gatos e a natureza.",
+          "Discurso sereno e científico sem entrar em disputas partidárias raivosas."
+        ],
+        fracos: [
+          "Pouca proposta para temas gigantescos como a taxa de juros e indústria.",
+          "Falta de deputados apoiando a chapa no Congresso."
+        ],
+        propostas: [
+          "Construir hospitais veterinários públicos gratuitos em todas as cidades grandes.",
+          "Criar uma secretaria federal para proteger cães, gatos e fauna silvestre.",
+          "Dar incentivos a produtores rurais que preservarem matas e rios."
+        ],
+        justicaProvado: [],
+        justicaInvestigacao: [
+          "Sem nenhuma investigação ou condenação na Justiça."
+        ],
+        sources: [
+          { name: "Plano no TSE", url: "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026" },
+          { name: "Valor Econômico", url: "https://valor.globo.com/politica/eleicoes-2026/noticia/2026/09/25/candidatos-a-presidente-em-2026-veja-a-lista-completa-e-atualizada.ghtml" }
+        ]
+      }
+    ];
+
+    // Renderização dos Cards com formato acessível
+    function renderCandidates(list) {
+      const container = document.getElementById("candidatesContainer");
+      if (!list || list.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; background: #fff; border: 2px dashed #cbd5e1; border-radius: 14px;">
+            <p style="font-size: 1.15rem; color: #475569; font-weight: 700; margin: 0 0 0.8rem;">Nenhum candidato encontrado com essa palavra.</p>
+            <button class="filter-btn active" onclick="resetFilters()">Mostrar todos os candidatos</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(c => {
+        // Verifica bloco da Justiça e contadores
+        const hasProven = c.justicaProvado && c.justicaProvado.length > 0;
+        const hasInvestig = c.justicaInvestigacao && c.justicaInvestigacao.length > 0;
+        const totalJustica = (c.justicaProvado ? c.justicaProvado.length : 0) + (c.justicaInvestigacao ? c.justicaInvestigacao.length : 0);
+        const photoUrl = getCandidatePhoto(c.id);
+
+        return `
+        <article class="c-card" id="card-${c.id}" data-category="${c.category}">
+          <!-- Cabeçalho do Card -->
+          <div class="c-header">
+            <div class="c-avatar" style="background: ${c.avatarBg};" title="${c.fullName}" aria-hidden="true">
+              <span>${c.initials}</span>
+              ${photoUrl ? `<img src="${photoUrl}" alt="${c.ballotName}" class="c-avatar-img" onerror="this.remove()">` : ''}
+            </div>
+            <div class="c-info">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <h3 class="c-ballot-name">${c.ballotName}</h3>
+                <span class="status-pill ${c.statusIrregular ? 'irregular' : ''}">${c.statusBadge}</span>
+              </div>
+              <p class="c-full-name">${c.fullName}</p>
+              <div class="c-badges-row">
+                <span class="party-tag">${c.party} • Nº ${c.number}</span>
+                <span class="role-tag">${c.role}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumo em 1 frase -->
+          <div class="c-one-liner">
+            ${c.oneLiner}
+          </div>
+
+          <!-- O Essencial (Leia em 1 minuto) -->
+          <div class="c-essential-box">
+            <div class="c-essential-title">
+              <span>⚡</span>
+              <span>O Essencial (leia em 1 minuto):</span>
+            </div>
+            <ul class="essential-list">
+              ${c.essential.map(item => `
+                <li class="essential-item">
+                  <span class="essential-bullet">✔</span>
+                  <span>${item}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <!-- Botão para aprofundar (aberto por padrão com Na Justiça em 1º) -->
+          <button type="button" class="deep-dive-toggle-btn open" onclick="toggleDeepDive('${c.id}', this)" aria-expanded="true">
+            <span>📖 DETALHES COMPLETOS</span>
+            <span class="toggle-icon">▲</span>
+          </button>
+
+          <!-- Seção de Aprofundamento Aberta por Padrão com 'Na Justiça' selecionada -->
+          <div class="deep-dive-content open" id="deep-${c.id}">
+            <!-- Abas do Aprofundamento: Na Justiça em primeiro lugar -->
+            <nav class="card-tabs-nav" aria-label="Detalhes de ${c.ballotName}">
+              <button type="button" class="tab-btn active" onclick="switchCardTab('${c.id}', 'justica', this)">
+                ⚖️ NA JUSTIÇA (${totalJustica})
+              </button>
+              <button type="button" class="tab-btn" onclick="switchCardTab('${c.id}', 'propostas', this)">
+                📌 PROPOSTAS
+              </button>
+              <button type="button" class="tab-btn" onclick="switchCardTab('${c.id}', 'fortes', this)">
+                👍 BONS
+              </button>
+              <button type="button" class="tab-btn" onclick="switchCardTab('${c.id}', 'fracos', this)">
+                👎 RUINS
+              </button>
+            </nav>
+
+            <div class="c-body">
+              <!-- ⚖️ PROBLEMAS NA JUSTIÇA (PRIMEIRA ABA ABERTA POR PADRÃO) -->
+              <div id="${c.id}-justica" class="tab-pane active" data-type="justica">
+                
+                <!-- Bloco 1: PROVADO / CONDENADO -->
+                <div class="justice-group justice-group-proven">
+                  <div class="justice-header-proven">
+                    <span>🚨</span>
+                    <span>PROVADO / CONDENADO (fatos e decisões da Justiça)</span>
+                  </div>
+                  <div class="justice-items-box">
+                    ${hasProven ? `
+                      <ul class="c-list" style="gap: 0.5rem;">
+                        ${c.justicaProvado.map(p => `
+                          <li class="c-list-item" style="color: #991b1b; font-weight: 700;">
+                            ${p}
+                            <a href="${c.sources[1]?.url || c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
+                          </li>
+                        `).join('')}
+                      </ul>
+                    ` : `
+                      <p class="justice-empty-note">
+                        <span>✅</span>
+                        <span>Sem condenação criminal comprovada.</span>
+                      </p>
+                    `}
+                  </div>
+                </div>
+
+                <!-- Bloco 2: EM INVESTIGAÇÃO / ACUSAÇÃO -->
+                <div class="justice-group justice-group-investigation">
+                  <div class="justice-header-investigation">
+                    <span>⚠️</span>
+                    <span>EM INVESTIGAÇÃO / ACUSAÇÃO</span>
+                  </div>
+                  <div class="justice-items-box">
+                    <span class="justice-notice-banner">Lembrete: denúncia ainda não é culpa comprovada.</span>
+                    ${hasInvestig ? `
+                      <ul class="c-list" style="gap: 0.5rem;">
+                        ${c.justicaInvestigacao.map(inv => `
+                          <li class="c-list-item" style="color: #9a3412;">
+                            ${inv}
+                            <a href="${c.sources[1]?.url || c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
+                          </li>
+                        `).join('')}
+                      </ul>
+                    ` : `
+                      <p style="font-size: 0.85rem; color: #475569; margin: 0;">Sem investigações de grande repercussão registradas.</p>
+                    `}
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- 📌 O QUE PROMETE -->
+              <div id="${c.id}-propostas" class="tab-pane" data-type="propostas">
+                <ul class="c-list">
+                  ${c.propostas.map(item => `
+                    <li class="c-list-item">
+                      ${item}
+                      <a href="${c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+
+              <!-- 👍 PONTOS BONS -->
+              <div id="${c.id}-fortes" class="tab-pane" data-type="fortes">
+                <ul class="c-list">
+                  ${c.fortes.map(item => `
+                    <li class="c-list-item">
+                      ${item}
+                      <a href="${c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+
+              <!-- 👎 O QUE É RUIM -->
+              <div id="${c.id}-fracos" class="tab-pane" data-type="fracos">
+                <ul class="c-list">
+                  ${c.fracos.map(item => `
+                    <li class="c-list-item">
+                      ${item}
+                      <a href="${c.sources[1]?.url || c.sources[0]?.url || '#'}" target="_blank" rel="noopener noreferrer" class="src-inline-link">🔍 ver fonte</a>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rodapé do Card: QUER CONFERIR? com fontes reais -->
+          <div class="c-sources-footer">
+            <span class="c-sources-label">Quer conferir? Links diretos checados:</span>
+            <div class="c-sources-links">
+              ${c.sources.map(s => `
+                <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="c-sources-chip">
+                  <span>🔗</span>
+                  <span>${s.name}</span>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+
+        </article>
+      `;
+      }).join('');
+    }
+
+    // Alternar o bloco Quero Saber Mais
+    window.toggleDeepDive = function(candidateId, btn) {
+      const content = document.getElementById(`deep-${candidateId}`);
+      if (!content) return;
+      const isOpen = content.classList.contains('open');
+      if (isOpen) {
+        content.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.querySelector('.toggle-icon').textContent = '▼';
+      } else {
+        content.classList.add('open');
+        btn.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.querySelector('.toggle-icon').textContent = '▲';
+      }
+    };
+
+    // Alternar Abas no card
+    window.switchCardTab = function(candidateId, tabName, btnElement) {
+      const card = document.getElementById(`card-${candidateId}`);
+      if (!card) return;
+
+      const buttons = card.querySelectorAll('.tab-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      const panes = card.querySelectorAll('.tab-pane');
+      panes.forEach(p => p.classList.remove('active'));
+
+      const targetPane = document.getElementById(`${candidateId}-${tabName}`);
+      if (targetPane) {
+        targetPane.classList.add('active');
+      }
+    };
+
+    // Funções de Interação das Novas Seções Didáticas
+    window.focusCandidateFilter = function(filterVal) {
+      const candidatesEl = document.getElementById('candidatos');
+      if (candidatesEl) {
+        candidatesEl.scrollIntoView({ behavior: 'smooth' });
+      }
+      const btn = document.querySelector(`#filterPillsGroup .filter-btn[data-filter="${filterVal}"]`);
+      if (btn) btn.click();
+    };
+
+    window.scrollToJusticaCards = function() {
+      const candidatesEl = document.getElementById('candidatos');
+      if (candidatesEl) {
+        candidatesEl.scrollIntoView({ behavior: 'smooth' });
+      }
+      // Garante que todas as abas 'justica' estejam ativas e visíveis
+      CANDIDATES.forEach(c => {
+        const deep = document.getElementById(`deep-${c.id}`);
+        if (deep && !deep.classList.contains('open')) {
+          deep.classList.add('open');
+          const toggleBtn = deep.previousElementSibling;
+          if (toggleBtn && toggleBtn.classList.contains('deep-dive-toggle-btn')) {
+            toggleBtn.classList.add('open');
+          }
+        }
+        const justicaBtn = document.querySelector(`#card-${c.id} .tab-btn:first-child`);
+        if (justicaBtn) {
+          switchCardTab(c.id, 'justica', justicaBtn);
+        }
+      });
+    };
+
+    window.openCivicAssistant = function() {
+      const chatModal = document.getElementById('chatModal');
+      const chatMessages = document.getElementById('chatMessages');
+      if (chatModal) {
+        chatModal.classList.add('open');
+        chatModal.setAttribute('aria-hidden', 'false');
+        if (!chatMessages.hasChildNodes() || chatMessages.children.length === 0) {
+          initChat();
+        }
+      }
+    };
+
+    // Filtros e Pesquisa
+    let currentFilter = 'all';
+    let currentQuery = '';
+
+    function filterData() {
+      let filtered = CANDIDATES.filter(c => {
+        let matchCategory = true;
+        if (currentFilter === 'destaque') {
+          matchCategory = c.isTop3 === true;
+        } else if (currentFilter !== 'all') {
+          matchCategory = c.category === currentFilter;
+        }
+
+        let matchQuery = true;
+        if (currentQuery.trim() !== '') {
+          const q = currentQuery.toLowerCase().trim();
+          const searchable = `${c.ballotName} ${c.fullName} ${c.party} ${c.role} ${c.oneLiner} ${c.essential.join(' ')} ${c.propostas.join(' ')}`.toLowerCase();
+          matchQuery = searchable.includes(q);
+        }
+
+        return matchCategory && matchQuery;
+      });
+
+      renderCandidates(filtered);
+    }
+
+    function resetFilters() {
+      currentFilter = 'all';
+      currentQuery = '';
+      document.getElementById('candidateSearch').value = '';
+      document.querySelectorAll('#filterPillsGroup .filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-filter') === 'all');
+      });
+      renderCandidates(CANDIDATES);
+    }
+
+    // Chatbot "Decidir Junto"
+    const chatModal = document.getElementById('chatModal');
+    const chatTriggerBtn = document.getElementById('chatTriggerBtn');
+    const chatCloseBtn = document.getElementById('chatCloseBtn');
+    const chatMessages = document.getElementById('chatMessages');
+
+    function initChat() {
+      chatMessages.innerHTML = `
+        <div class="chat-bubble chat-bubble-bot">
+          Olá! 👋 Eu sou seu assistente cívico neutro. <strong>Não recomendamos voto em ninguém.</strong>
+        </div>
+        <div class="chat-bubble chat-bubble-bot">
+          O que é mais importante para você no Brasil hoje? Escolha uma opção abaixo:
+          <div class="chat-options-grid">
+            <button type="button" class="chat-option-btn" onclick="handleChatChoice('economia', '1) Emprego, salário e economia')">1) 💼 Emprego, salário e economia</button>
+            <button type="button" class="chat-option-btn" onclick="handleChatChoice('saude', '2) Saúde e bem-estar')">2) 🏥 Saúde e bem-estar</button>
+            <button type="button" class="chat-option-btn" onclick="handleChatChoice('educacao', '3) Educação e futuro')">3) 📚 Educação e juventude</button>
+            <button type="button" class="chat-option-btn" onclick="handleChatChoice('seguranca', '4) Segurança pública e combate ao crime')">4) 🛡️ Segurança pública e crime</button>
+            <button type="button" class="chat-option-btn" onclick="handleChatChoice('justica', '5) Ficha limpa e problemas na Justiça')">5) ⚖️ Candidato sem problemas na Justiça</button>
+          </div>
+        </div>
+      `;
+    }
+
+    window.handleChatChoice = function(topic, label) {
+      // Adiciona resposta do usuário
+      chatMessages.innerHTML += `
+        <div class="chat-bubble chat-bubble-user">
+          ${label}
+        </div>
+      `;
+
+      let botResponse = "";
+      if (topic === 'economia') {
+        botResponse = `
+          Para <strong>Emprego e Economia</strong>, você pode comparar visões bem diferentes:<br><br>
+          • <strong>Lula (PT):</strong> Foca em aumento real do salário mínimo, fim da escala 6x1 e programas sociais.<br>
+          • <strong>Flávio Bolsonaro (PL):</strong> Foca em cortar 10 ministérios e diminuir impostos sobre empresas.<br>
+          • <strong>Romeu Zema (NOVO):</strong> Propõe choque fiscal e privatizar estatais.<br><br>
+          👉 <em>Role os cards desses 3 e clique em "O que promete" para decidir o que você prefere.</em>
+        `;
+      } else if (topic === 'saude') {
+        botResponse = `
+          Para <strong>Saúde e Bem-estar</strong>:<br><br>
+          • <strong>Lula (PT):</strong> Foco no Farmácia Popular e investimentos pesados no SUS.<br>
+          • <strong>Augusto Cury (AVANTE):</strong> Foco em saúde mental, combate à ansiedade e inteligência emocional.<br>
+          • <strong>Wilson Grassi:</strong> Foco em saúde única e hospitais veterinários públicos gratuitos.<br><br>
+          👉 <em>Compare as propostas nos cards desses candidatos.</em>
+        `;
+      } else if (topic === 'educacao') {
+        botResponse = `
+          Para <strong>Educação</strong>:<br><br>
+          • <strong>Augusto Cury (AVANTE):</strong> Gestão da emoção e valorização humana nas escolas públicas.<br>
+          • <strong>Hertz Dias (PSTU):</strong> Mais verba direta para professores e valorização das escolas de periferia.<br>
+          • <strong>Clariana Barão (DC):</strong> Disciplinas de ética, valores familiares e cidadania.<br><br>
+          👉 <em>Veja os detalhes nos cards acima.</em>
+        `;
+      } else if (topic === 'seguranca') {
+        botResponse = `
+          Para <strong>Segurança Pública</strong>:<br><br>
+          • <strong>Ronaldo Caiado (PSD):</strong> Tolerância zero contra o crime organizado, com base no modelo de Goiás.<br>
+          • <strong>Flávio Bolsonaro (PL):</strong> Foco em endurecimento de penas e apoio irrestrito a policiais.<br>
+          • <strong>Lula (PT):</strong> Maior cooperação entre a Polícia Federal e estados com foco em inteligência.<br><br>
+          👉 <em>Abra a aba de propostas de cada um para ver o plano de segurança.</em>
+        `;
+      } else if (topic === 'justica') {
+        botResponse = `
+          Para quem se preocupa com <strong>Problemas na Justiça</strong>:<br><br>
+          • <strong>Pablo Marçal (PRTB):</strong> Está INELEGÍVEL pela Justiça até 2032.<br>
+          • <strong>Lula (PT):</strong> Foi condenado e preso na Lava Jato, mas o STF anulou tudo em 2021.<br>
+          • <strong>Flávio Bolsonaro (PL):</strong> Tem denúncias de 'rachadinha' em investigação (ele nega, não é condenação).<br>
+          • Candidatos como <strong>Cury, Caiado, Zema e outros</strong> não têm condenações criminais comprovadas.<br><br>
+          👉 <em>Abra a aba "⚖️ Na Justiça" nos cards vermelhos e laranjas para conferir tudo.</em>
+        `;
+      }
+
+      chatMessages.innerHTML += `
+        <div class="chat-bubble chat-bubble-bot">
+          ${botResponse}
+        </div>
+        <div class="chat-bubble chat-bubble-bot">
+          Quer testar outro assunto?
+          <div class="chat-options-grid" style="margin-top: 0.5rem;">
+            <button type="button" class="chat-option-btn" onclick="initChat()">🔄 Escolher outro assunto</button>
+          </div>
+        </div>
+      `;
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    chatTriggerBtn.addEventListener('click', () => {
+      const isOpen = chatModal.classList.contains('open');
+      if (isOpen) {
+        chatModal.classList.remove('open');
+        chatModal.setAttribute('aria-hidden', 'true');
+      } else {
+        chatModal.classList.add('open');
+        chatModal.setAttribute('aria-hidden', 'false');
+        if (!chatMessages.hasChildNodes() || chatMessages.children.length === 0) {
+          initChat();
+        }
+      }
+    });
+
+    chatCloseBtn.addEventListener('click', () => {
+      chatModal.classList.remove('open');
+      chatModal.setAttribute('aria-hidden', 'true');
+    });
+
+    // Módulo de Votação (Modo Híbrido Online/Local, Supabase Global, 1 voto por aparelho)
+    const VOTACAO = {
+      STORAGE_VOTOS_KEY: "dossie_votos_2026",
+      STORAGE_MEU_VOTO_KEY: "dossie_meu_voto_2026",
+      data: {
+        votos: {},
+        total: 0
+      },
+      meuVoto: null, // { id, ts, trocas: [] }
+      isTrocaMode: false,
+      lastAction: 0,
+      alertTimeout: null,
+
+      async init() {
+        CANDIDATES.forEach(c => {
+          this.data.votos[c.id] = 0;
+        });
+        this.carregarLocal();
+        this.render();
+
+        // Tenta carregar dados globais do banco em segundo plano
+        await this.sincronizarComBanco();
+      },
+
+      carregarLocal() {
+        try {
+          const storedVotos = localStorage.getItem(this.STORAGE_VOTOS_KEY);
+          if (storedVotos) {
+            const parsed = JSON.parse(storedVotos);
+            if (parsed && typeof parsed.votos === 'object') {
+              let calculatedTotal = 0;
+              CANDIDATES.forEach(c => {
+                const count = Number(parsed.votos[c.id]) || 0;
+                this.data.votos[c.id] = Math.max(0, count);
+                calculatedTotal += this.data.votos[c.id];
+              });
+              this.data.total = calculatedTotal;
+            }
+          }
+          const storedMeu = localStorage.getItem(this.STORAGE_MEU_VOTO_KEY);
+          if (storedMeu) {
+            const parsedMeu = JSON.parse(storedMeu);
+            if (parsedMeu && parsedMeu.id && CANDIDATES.some(c => c.id === parsedMeu.id)) {
+              this.meuVoto = {
+                id: parsedMeu.id,
+                ts: Number(parsedMeu.ts) || Date.now(),
+                trocas: Array.isArray(parsedMeu.trocas) ? parsedMeu.trocas : []
+              };
+            }
+          }
+        } catch (e) {
+          console.warn("Erro ao ler dados locais de voto:", e);
+        }
+      },
+
+      salvarLocal() {
+        try {
+          localStorage.setItem(this.STORAGE_VOTOS_KEY, JSON.stringify(this.data));
+          if (this.meuVoto) {
+            localStorage.setItem(this.STORAGE_MEU_VOTO_KEY, JSON.stringify(this.meuVoto));
+          } else {
+            localStorage.removeItem(this.STORAGE_MEU_VOTO_KEY);
+          }
+        } catch (e) {
+          console.warn("Erro ao salvar dados locais de voto:", e);
+        }
+      },
+
+      async sincronizarComBanco() {
+        const globais = await carregarVotosGlobais();
+        if (globais) {
+          this.data.votos = globais.votos;
+          this.data.total = globais.total;
+          this.render();
+          return true;
+        }
+        this.render();
+        return false;
+      },
+
+      async abrirModal() {
+        const overlay = document.getElementById("voteModalOverlay");
+        if (overlay) {
+          overlay.classList.add("open");
+          overlay.setAttribute("aria-hidden", "false");
+          this.isTrocaMode = false;
+          this.esconderAlerta();
+          this.render();
+        }
+        // Reconecta e atualiza os votos a cada abertura do modal
+        await this.sincronizarComBanco();
+      },
+
+      fecharModal() {
+        const overlay = document.getElementById("voteModalOverlay");
+        if (overlay) {
+          overlay.classList.remove("open");
+          overlay.setAttribute("aria-hidden", "true");
+          this.isTrocaMode = false;
+        }
+      },
+
+      handleOverlayClick(e) {
+        if (e.target.id === "voteModalOverlay") {
+          this.fecharModal();
+        }
+      },
+
+      mostrarAlerta(msg, tipo = "erro") {
+        const alertEl = document.getElementById("voteModalAlert");
+        if (!alertEl) return;
+        alertEl.textContent = msg;
+        alertEl.style.display = "block";
+        if (tipo === "sucesso") {
+          alertEl.style.background = "#dcfce7";
+          alertEl.style.color = "#166534";
+          alertEl.style.borderColor = "#bbf7d0";
+        } else {
+          alertEl.style.background = "#fee2e2";
+          alertEl.style.color = "#991b1b";
+          alertEl.style.borderColor = "#fecaca";
+        }
+        if (this.alertTimeout) clearTimeout(this.alertTimeout);
+        this.alertTimeout = setTimeout(() => {
+          this.esconderAlerta();
+        }, 4000);
+      },
+
+      esconderAlerta() {
+        const alertEl = document.getElementById("voteModalAlert");
+        if (alertEl) alertEl.style.display = "none";
+      },
+
+      async votar(candidatoId) {
+        const now = Date.now();
+
+        // Guard em memória contra cliques repetidos rápidos (<1s)
+        if (now - this.lastAction < 1000) return;
+        this.lastAction = now;
+
+        const candidato = CANDIDATES.find(c => c.id === candidatoId);
+        if (!candidato) return;
+
+        // Se o usuário já votou neste aparelho
+        if (this.meuVoto) {
+          // Se clicou no mesmo candidato
+          if (this.meuVoto.id === candidatoId) {
+            this.mostrarAlerta(`Você já votou em ${candidato.ballotName}.`, "sucesso");
+            return;
+          }
+
+          // Anti-spam 1: Intervalo mínimo de 30 segundos
+          const tempoDesdeUltimo = now - this.meuVoto.ts;
+          if (tempoDesdeUltimo < 30000) {
+            const faltam = Math.ceil((30000 - tempoDesdeUltimo) / 1000);
+            this.mostrarAlerta(`Calma! Tente de novo em alguns segundos (${faltam}s).`);
+            return;
+          }
+
+          // Anti-spam 2: Limite de 3 trocas
+          const trocas = this.meuVoto.trocas || [];
+          if (trocas.length >= 3) {
+            this.mostrarAlerta("Você já trocou bastante. Para votar de novo, use 'Zerar meu voto'.");
+            return;
+          }
+
+          // Pergunta de confirmação
+          const antigo = CANDIDATES.find(c => c.id === this.meuVoto.id);
+          const antigoNome = antigo ? antigo.ballotName : "seu candidato anterior";
+          const confirmou = window.confirm(`Trocar seu voto para ${candidato.ballotName}? Isso substitui o voto anterior em ${antigoNome}.`);
+          if (!confirmou) return;
+
+          // Se estiver conectado ao Supabase, registra a troca no servidor
+          if (bancoOnline) {
+            this.mostrarAlerta("Registrando troca de voto no banco...", "sucesso");
+            const res = await registrarVotoGlobal(candidatoId);
+            if (res) {
+              trocas.push(now);
+              this.meuVoto = {
+                id: candidatoId,
+                ts: now,
+                trocas: trocas
+              };
+              this.salvarLocal();
+              await this.sincronizarComBanco();
+              this.isTrocaMode = false;
+              this.mostrarAlerta(`Voto transferido com sucesso para ${candidato.ballotName}! ✅`, "sucesso");
+              this.render();
+              return;
+            } else {
+              this.mostrarAlerta("Não deu pra registrar agora. Tente de novo.");
+              return;
+            }
+          }
+
+          // Fallback modo offline/local
+          if (this.data.votos[this.meuVoto.id] > 0) {
+            this.data.votos[this.meuVoto.id]--;
+          }
+          this.data.votos[candidatoId] = (this.data.votos[candidatoId] || 0) + 1;
+          trocas.push(now);
+          this.meuVoto = {
+            id: candidatoId,
+            ts: now,
+            trocas: trocas
+          };
+          this.isTrocaMode = false;
+          this.salvarLocal();
+          this.mostrarAlerta(`Voto transferido com sucesso para ${candidato.ballotName}! ✅`, "sucesso");
+          this.render();
+          return;
+        }
+
+        // Primeiro voto do aparelho
+        if (bancoOnline) {
+          this.mostrarAlerta("Registrando voto no banco de dados...", "sucesso");
+          const res = await registrarVotoGlobal(candidatoId);
+          if (res) {
+            this.meuVoto = {
+              id: candidatoId,
+              ts: now,
+              trocas: []
+            };
+            this.salvarLocal();
+            await this.sincronizarComBanco();
+            this.mostrarAlerta(`Voto registrado com sucesso em ${candidato.ballotName}! ✅`, "sucesso");
+            this.render();
+            return;
+          } else {
+            this.mostrarAlerta("Não deu pra registrar agora. Tente de novo.");
+            return;
+          }
+        }
+
+        // Primeiro voto em modo local
+        this.data.votos[candidatoId] = (this.data.votos[candidatoId] || 0) + 1;
+        this.data.total++;
+        this.meuVoto = {
+          id: candidatoId,
+          ts: now,
+          trocas: []
+        };
+        this.salvarLocal();
+        this.mostrarAlerta(`Voto registrado com sucesso em ${candidato.ballotName}! ✅`, "sucesso");
+        this.render();
+      },
+
+      iniciarTroca() {
+        if (!this.meuVoto) return;
+        const now = Date.now();
+        const tempoDesdeUltimo = now - this.meuVoto.ts;
+        if (tempoDesdeUltimo < 30000) {
+          const faltam = Math.ceil((30000 - tempoDesdeUltimo) / 1000);
+          this.mostrarAlerta(`Calma! Tente de novo em alguns segundos (${faltam}s).`);
+          return;
+        }
+        const trocas = this.meuVoto.trocas || [];
+        if (trocas.length >= 3) {
+          this.mostrarAlerta("Você já trocou bastante. Para votar de novo, use 'Zerar meu voto'.");
+          return;
+        }
+
+        this.isTrocaMode = true;
+        this.mostrarAlerta("Toque no novo candidato que você deseja escolher.", "sucesso");
+        this.render();
+      },
+
+      async zerarMeuVoto() {
+        if (!this.meuVoto) return;
+        const confirmou = window.confirm("Tem certeza? Isso apaga seu voto desta enquete.");
+        if (!confirmou) return;
+
+        if (bancoOnline) {
+          this.mostrarAlerta("Excluindo seu voto no servidor...", "sucesso");
+          const ok = await excluirVotoGlobal();
+          if (ok) {
+            this.meuVoto = null;
+            this.isTrocaMode = false;
+            this.salvarLocal();
+            await this.sincronizarComBanco();
+            this.mostrarAlerta("Seu voto foi zerado. Você já pode votar novamente.", "sucesso");
+            this.render();
+            return;
+          } else {
+            this.mostrarAlerta("Não foi possível zerar seu voto agora. Tente novamente.");
+            return;
+          }
+        }
+
+        // Modo offline
+        if (this.data.votos[this.meuVoto.id] > 0) {
+          this.data.votos[this.meuVoto.id]--;
+        }
+        if (this.data.total > 0) {
+          this.data.total--;
+        }
+        this.meuVoto = null;
+        this.isTrocaMode = false;
+        this.salvarLocal();
+        this.mostrarAlerta("Seu voto foi zerado. Você já pode votar novamente.", "sucesso");
+        this.render();
+      },
+
+      atualizarLideranca() {
+        const banner = document.getElementById("voteLeaderBanner");
+        if (!banner) return;
+
+        if (this.data.total === 0) {
+          banner.innerHTML = "<span>📊</span> <span>Nenhum voto registrado ainda. Seja o primeiro a votar!</span>";
+          return;
+        }
+
+        let lider = null;
+        let maiorVotos = -1;
+        CANDIDATES.forEach(c => {
+          const v = this.data.votos[c.id] || 0;
+          if (v > maiorVotos) {
+            maiorVotos = v;
+            lider = c;
+          }
+        });
+
+        if (lider && maiorVotos > 0) {
+          const pct = Math.round((maiorVotos / this.data.total) * 100);
+          banner.innerHTML = `<span>🏆</span> <span>Hoje a liderança aqui é: <strong>${lider.ballotName}</strong> (${pct}% dos votos)</span>`;
+        } else {
+          banner.innerHTML = "<span>📊</span> <span>Votação empatada no topo.</span>";
+        }
+      },
+
+      render() {
+        this.atualizarLideranca();
+
+        // Atualização da barra de status da conexão
+        const statusBar = document.getElementById("voteStatusBar");
+        if (statusBar) {
+          if (bancoOnline) {
+            statusBar.className = "vote-status-bar online";
+            statusBar.innerHTML = "<span>🗄️</span> <span>Conectado ao banco — votos de todo mundo.</span>";
+          } else {
+            statusBar.className = "vote-status-bar offline";
+            statusBar.innerHTML = "<span>🔌</span> <span>Modo local (sem banco): votos só deste aparelho.</span>";
+          }
+        }
+
+        // Barra de Ações do meu voto
+        const actionsBar = document.getElementById("voteActionsBar");
+        const myChoiceText = document.getElementById("voteMyChoiceText");
+        if (this.meuVoto) {
+          const cand = CANDIDATES.find(c => c.id === this.meuVoto.id);
+          const candNome = cand ? cand.ballotName : "";
+          const trocasFeitas = (this.meuVoto.trocas || []).length;
+          const trocasRestantes = 3 - trocasFeitas;
+          if (myChoiceText) {
+            myChoiceText.innerHTML = `✓ Seu voto atual: <strong>${candNome}</strong> • ${trocasRestantes} trocas restantes`;
+          }
+          if (actionsBar) actionsBar.style.display = "flex";
+        } else {
+          if (actionsBar) actionsBar.style.display = "none";
+        }
+
+        // Total no rodapé
+        const totalBadge = document.getElementById("voteTotalBadge");
+        const legalNote = document.getElementById("voteModalLegalNote");
+        if (totalBadge) {
+          const totalNum = this.data.total;
+          const plural = totalNum === 1 ? "voto registrado" : "votos registrados";
+          if (bancoOnline) {
+            totalBadge.textContent = `${totalNum} ${plural} no site 🗄️`;
+          } else {
+            totalBadge.textContent = `${totalNum} ${plural} neste aparelho 🔌`;
+          }
+        }
+        if (legalNote) {
+          if (bancoOnline) {
+            legalNote.innerHTML = `${this.data.total} votos registrados no site 🗄️ | Esta é uma enquete informal — não é pesquisa oficial.`;
+          } else {
+            legalNote.innerHTML = "🔌 Modo local (sem banco): os votos somam apenas neste aparelho. Esta é uma enquete informal — não é pesquisa oficial.";
+          }
+        }
+
+        // Renderiza lista ordenada pelos mais votados
+        const container = document.getElementById("voteCandidatesList");
+        if (!container) return;
+
+        const ordered = [...CANDIDATES].sort((a, b) => {
+          const vA = this.data.votos[a.id] || 0;
+          const vB = this.data.votos[b.id] || 0;
+          if (vB !== vA) return vB - vA;
+          return 0;
+        });
+
+        const total = this.data.total;
+        const jaVotou = !!this.meuVoto;
+        const emTroca = this.isTrocaMode;
+
+        container.innerHTML = ordered.map(c => {
+          const count = this.data.votos[c.id] || 0;
+          const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+          const isVoted = this.meuVoto && this.meuVoto.id === c.id;
+          const isLocked = jaVotou && !isVoted && !emTroca;
+          const photoUrl = getCandidatePhoto(c.id);
+          const voteLabel = count === 1 ? "1 voto" : `${count} votos`;
+
+          return `
+            <button type="button"
+                    class="vote-candidate-btn ${isVoted ? 'voted' : ''} ${isLocked ? 'locked' : ''}"
+                    onclick="VOTACAO.votar('${c.id}')"
+                    aria-pressed="${isVoted}"
+                    aria-label="Votar em ${c.ballotName}. ${count} votos, ${total > 0 ? pct + '%' : '0%'}. ${isVoted ? 'Seu voto atual.' : ''}">
+              
+              <div class="vote-progress-fill" style="width: ${pct}%;"></div>
+
+              <div class="vote-card-content">
+                <div class="vote-avatar" style="background: ${c.avatarBg};" aria-hidden="true">
+                  <span>${c.initials}</span>
+                  ${photoUrl ? `<img src="${photoUrl}" alt="" class="vote-avatar-img" onerror="this.remove()">` : ''}
+                </div>
+                <div class="vote-cand-meta">
+                  <div class="vote-cand-name-row">
+                    <span class="vote-cand-name">${c.ballotName}</span>
+                    ${isVoted ? '<span class="vote-cand-badge">✓ seu voto</span>' : ''}
+                  </div>
+                  <span class="vote-cand-party">${c.party} • Nº ${c.number}</span>
+                </div>
+              </div>
+
+              <div class="vote-cand-metrics">
+                <span class="vote-cand-pct">${total > 0 ? pct + '%' : '0%'}</span>
+                <span class="vote-cand-count">${total > 0 ? voteLabel : '0 votos'}</span>
+              </div>
+            </button>
+          `;
+        }).join('');
+      }
+    };
+
+    // Inicialização ao carregar o DOM
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCandidates(CANDIDATES);
+      VOTACAO.init();
+      initChat();
+
+      // Eventos de Busca
+      const searchInput = document.getElementById('candidateSearch');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentQuery = e.target.value;
+          filterData();
+        });
+      }
+
+      // Eventos de Filtro
+      const filterButtons = document.querySelectorAll('#filterPillsGroup .filter-btn');
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.getAttribute('data-filter');
+          filterData();
+        });
+      });
+
+      // Abre automaticamente acordeão se acessado por âncora (#como-funciona, #como-votar)
+      function checkUrlHash() {
+        const hash = window.location.hash.replace('#', '');
+        if (hash) {
+          const target = document.getElementById(hash);
+          if (target && target.tagName === 'DETAILS') {
+            target.open = true;
+          }
+        }
+      }
+      checkUrlHash();
+      window.addEventListener('hashchange', checkUrlHash);
+    });
+  </script>
+<script>
+/* Skip artifact shell — fixed helpers served beside every artifact. */
+(function () {
+  "use strict";
+
+  var fmt = {
+    num: function (v, opts) { return new Intl.NumberFormat("pt-BR", opts || {}).format(v); },
+    brl: function (v) { return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v); },
+    pct: function (v) { return new Intl.NumberFormat("pt-BR", { style: "percent", maximumFractionDigits: 1 }).format(v); }
+  };
+
+  // axisFmt keeps axis tick labels short (compact notation) so long values
+  // (e.g. full BRL amounts) never clip against the plot edge.
+  function axisFmt(v) {
+    return fmt.num(v, { notation: "compact", maximumFractionDigits: 1 });
+  }
+
+  // format accepts a function OR one of the fmt names ("num" | "brl" | "pct").
+  function coerceFormat(spec) {
+    if (typeof spec === "function") return spec;
+    if (typeof spec === "string" && fmt[spec]) return fmt[spec];
+    return function (v) { return fmt.num(v); };
+  }
+
+  function accent() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#2563eb";
+  }
+  function mutedColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue("--text-muted").trim() || "#5b6472";
+  }
+  function svgEl(tag, attrs) {
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  }
+  function frame(el, w, h) {
+    var svg = svgEl("svg", { viewBox: "0 0 " + w + " " + h, role: "img" });
+    el.innerHTML = "";
+    el.appendChild(svg);
+    return svg;
+  }
+
+  // maxOf guards the axis scale: empty values would give -Infinity (truthy,
+  // so "|| 1" can't catch it) and a non-positive max would flip the chart.
+  function maxOf(values) {
+    var m = values.length ? Math.max.apply(null, values) : 0;
+    return m > 0 ? m : 1;
+  }
+
+  // bar(el, {labels:[], values:[], color?, format?}) — vertical bar chart.
+  function bar(el, cfg) {
+    var W = 640, H = 280, padL = 46, padB = 30, padT = 12;
+    var svg = frame(el, W, H);
+    var max = maxOf(cfg.values);
+    var n = cfg.values.length;
+    var plotW = W - padL - 12, plotH = H - padT - padB;
+    var step = plotW / n, bw = Math.min(step * 0.62, 64);
+    var color = cfg.color || accent();
+    var f = coerceFormat(cfg.format);
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + plotH - (plotH * g) / 4;
+      svg.appendChild(svgEl("line", { x1: padL, y1: gy, x2: W - 12, y2: gy, stroke: "currentColor", "stroke-opacity": 0.08 }));
+      var lbl = svgEl("text", { x: padL - 8, y: gy + 4, "text-anchor": "end", "font-size": 10, fill: mutedColor() });
+      lbl.textContent = axisFmt((max * g) / 4);
+      svg.appendChild(lbl);
+    }
+    cfg.values.forEach(function (v, i) {
+      var bh = Math.max(0, (v / max) * plotH);
+      var x = padL + i * step + (step - bw) / 2;
+      var y = padT + plotH - bh;
+      var r = svgEl("rect", { x: x, y: y, width: bw, height: bh, rx: 4, fill: color });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + f(v);
+      r.appendChild(t);
+      svg.appendChild(r);
+      var tx = svgEl("text", { x: x + bw / 2, y: H - 10, "text-anchor": "middle", "font-size": 11, fill: mutedColor() });
+      tx.textContent = cfg.labels[i];
+      svg.appendChild(tx);
+    });
+  }
+
+  // line(el, {labels:[], values:[], color?, format?}) — single-series line.
+  function line(el, cfg) {
+    var W = 640, H = 280, padL = 46, padB = 30, padT = 12;
+    var svg = frame(el, W, H);
+    var max = maxOf(cfg.values);
+    var n = cfg.values.length;
+    var plotW = W - padL - 16, plotH = H - padT - padB;
+    var color = cfg.color || accent();
+    var f = coerceFormat(cfg.format);
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + plotH - (plotH * g) / 4;
+      svg.appendChild(svgEl("line", { x1: padL, y1: gy, x2: W - 16, y2: gy, stroke: "currentColor", "stroke-opacity": 0.08 }));
+      var lbl = svgEl("text", { x: padL - 8, y: gy + 4, "text-anchor": "end", "font-size": 10, fill: mutedColor() });
+      lbl.textContent = axisFmt((max * g) / 4);
+      svg.appendChild(lbl);
+    }
+    var pts = cfg.values.map(function (v, i) {
+      var x = padL + (n === 1 ? plotW / 2 : (plotW * i) / (n - 1));
+      var y = padT + plotH - (v / max) * plotH;
+      return [x, y];
+    });
+    var d = pts.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join(" ");
+    svg.appendChild(svgEl("path", { d: d, fill: "none", stroke: color, "stroke-width": 2, "stroke-linejoin": "round" }));
+    pts.forEach(function (p, i) {
+      var c = svgEl("circle", { cx: p[0], cy: p[1], r: 3.5, fill: color });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + f(cfg.values[i]);
+      c.appendChild(t);
+      svg.appendChild(c);
+      var tx = svgEl("text", { x: p[0], y: H - 10, "text-anchor": "middle", "font-size": 11, fill: mutedColor() });
+      tx.textContent = cfg.labels[i];
+      svg.appendChild(tx);
+    });
+  }
+
+  // donut(el, {labels:[], values:[], colors?}) — donut with center total.
+  function donut(el, cfg) {
+    var W = 320, H = 280, cx = W / 2, cy = H / 2, R = 92, r = 58;
+    var svg = frame(el, W, H);
+    var total = cfg.values.reduce(function (a, b) { return a + b; }, 0) || 1;
+    var palette = cfg.colors || [accent(), "#1baf7a", "#eda100", "#e34948", "#4a3aa7", "#e87ba4"];
+    var a0 = -Math.PI / 2;
+    cfg.values.forEach(function (v, i) {
+      var a1 = a0 + (v / total) * Math.PI * 2;
+      var large = a1 - a0 > Math.PI ? 1 : 0;
+      var p = ["M", cx + R * Math.cos(a0), cy + R * Math.sin(a0),
+        "A", R, R, 0, large, 1, cx + R * Math.cos(a1), cy + R * Math.sin(a1),
+        "L", cx + r * Math.cos(a1), cy + r * Math.sin(a1),
+        "A", r, r, 0, large, 0, cx + r * Math.cos(a0), cy + r * Math.sin(a0), "Z"].join(" ");
+      var path = svgEl("path", { d: p, fill: palette[i % palette.length] });
+      var t = svgEl("title", {});
+      t.textContent = cfg.labels[i] + ": " + fmt.num(v) + " (" + fmt.pct(v / total) + ")";
+      path.appendChild(t);
+      svg.appendChild(path);
+      a0 = a1;
+    });
+    var center = svgEl("text", { x: cx, y: cy + 5, "text-anchor": "middle", "font-size": 20, "font-weight": 650, fill: "currentColor" });
+    center.textContent = fmt.num(total);
+    svg.appendChild(center);
+  }
+
+  window.skipShell = { fmt: fmt };
+  window.skipChart = { bar: bar, line: line, donut: donut };
+})();
+
+</script>
+</body>
+</html>
